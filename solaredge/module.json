@@ -1,11 +1,11 @@
 {
-	"id": "{D40C120A-C525-4DEC-9A44-ED6E43890C61}",
-	"name": "Umrechnen",
+	"id": "{AC70A484-97B1-4580-B9D2-5AC62323A47A}",
+	"name": "solaredge",
 	"type": 3,
 	"vendor": "",
 	"aliases": 
 	[
-		"Umrechnen"
+		"solaredge API auslesen"
 	],
 	"parentRequirements": [],
 	"childRequirements": [],
