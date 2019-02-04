@@ -3,4 +3,4 @@
 Folgende Module beinhaltet das symcon-modules Repository:
 
 - __solaredge__ ([Dokumentation](solaredge))  
-	Auslesen Daten Ã¼ber solaredge API
+	Auslesen Anlagendaten über solaredge API
