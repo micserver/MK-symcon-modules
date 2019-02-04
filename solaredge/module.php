@@ -11,7 +11,7 @@
 			$this->RegisterPropertyInteger("SourceVariable", 0);
 			$this->RegisterPropertyString("Formula", "\$Value/10*sin(30)*pi()");
 			
-			$this->RegisterVariableFloat("Value", "Value", "", 0);
+			$this->RegisterVariableFloat("GridPower", "Value", "", 0);
 		}
 	
 		public function ApplyChanges()
