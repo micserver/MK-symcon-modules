@@ -52,6 +52,5 @@
 			return $Value;
 		
 		}
-	
 	}
 ?>
