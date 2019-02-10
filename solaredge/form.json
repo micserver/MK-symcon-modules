@@ -5,6 +5,10 @@
 
 	[
 
+		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
+		
+		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },
+		
 		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
 
 		{ "name": "Formula", "type": "ValidationTextBox", "caption": "Formula" }
