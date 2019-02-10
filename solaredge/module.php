@@ -14,8 +14,8 @@
 			$this->RegisterPropertyString("API_Key", "");
 			$this->RegisterPropertyString("ID", "");
 			
-			#$this->RegisterVariableFloat("GridPower", "Value", "", 0);
-			$this->RegisterVariableFloat("Value", "Value", "", 0);	
+			#$this->RegisterVariableFloat("GridPower", "Value", "abc", 0);
+			$this->RegisterVariableFloat("Value", "Value", "123", 0);	
 		}
 	
 		public function ApplyChanges()
