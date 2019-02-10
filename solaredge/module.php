@@ -31,7 +31,7 @@
 					IPS_SetName($eid, "Trigger for #".$this->ReadPropertyInteger("SourceVariable"));
 				}
 				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("SourceVariable"));
-				IPS_SetEventScript($eid, "SetValue(IPS_GetObjectIDByIdent(\"Value\", \$_IPS['TARGET']), UMR_Calculate(\$_IPS['TARGET'], \$_IPS['VALUE']));");
+				IPS_SetEventScript($eid, "SetValue(IPS_GetObjectIDByIdent(\"Value\", \$_IPS['TARGET']), API_Calculate(\$_IPS['TARGET'], \$_IPS['VALUE']));");
 				IPS_SetEventActive($eid, true);
 			}
 			
@@ -41,7 +41,7 @@
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
 		*
-		* UMR_Calculate($id);
+		* API_Calculate($id);
 		*
 		*/
 		public function Calculate(float $Value)
