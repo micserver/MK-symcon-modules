@@ -11,11 +11,11 @@
 			$this->RegisterPropertyInteger("SourceVariable", 0);
 			$this->RegisterPropertyString("Formula", "\$Value/10*sin(30)*pi()");
 			
-			$this->RegisterPropertyString("API_Key", "");
-			$this->RegisterPropertyString("ID", "");
+			$this->RegisterPropertyString("API_Key", "abc");
+			$this->RegisterPropertyString("ID", "123");
 			
-			#$this->RegisterVariableFloat("GridPower", "Value", "abc", 0);
-			$this->RegisterVariableFloat("Value", "Value", "123", 0);	
+			#$this->RegisterVariableFloat("GridPower", "Value", "", 0);
+			$this->RegisterVariableFloat("Value", "Value", "", 0);	
 		}
 	
 		public function ApplyChanges()
