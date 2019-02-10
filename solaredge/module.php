@@ -11,8 +11,8 @@
 			$this->RegisterPropertyInteger("SourceVariable", 0);
 			$this->RegisterPropertyString("Formula", "\$Value/10*sin(30)*pi()");
 			
-			$this->RegisterPropertyString("API_Key", "abc");
-			$this->RegisterPropertyString("ID", "123");
+			$this->RegisterPropertyString("API_Key", "deinAPIKey");
+			$this->RegisterPropertyString("ID", "deineID");
 			
 			#$this->RegisterVariableFloat("GridPower", "Value", "", 0);
 			$this->RegisterVariableFloat("Value", "Value", "", 0);	
