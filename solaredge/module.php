@@ -57,6 +57,13 @@
 			return $Value;
 		
 		}
+		public function RequestInfo()
+		{
+			
+			$apikey = $this->ReadPropertyString("API_Key");
+			$id = $this->ReadPropertyString("ID");
+			$this->SendDebug("API_Key: ",$apikey,0);
+		}
 	
 	}
 ?>
