@@ -25,10 +25,7 @@
 			
 			//Never delete this line!
 			parent::ApplyChanges();
-			
-			$test = "Test send debug";
-			$this->SendDebug("API_Key: ",$test,0);
-			
+				
 			//Create our trigger
 			#if(IPS_VariableExists($this->ReadPropertyInteger("SourceVariable"))) {
 			#	$eid = @IPS_GetObjectIDByIdent("SourceTrigger", $this->InstanceID);
@@ -63,11 +60,11 @@
 		#}
 		public function RequestInfo()
 		{
-			$test = "Test send debug";
-			$this->SendDebug("API_Key: ",$test,0);
+
 			$apikey = $this->ReadPropertyString("API_Key");
 			$id = $this->ReadPropertyString("ID");
 			$this->SendDebug("API_Key: ",$apikey,0);
+			$this->SendDebug("ID: ",$id,0);
 		}
 	
 	}
