@@ -14,7 +14,7 @@
 			$this->RegisterPropertyString("API_Key", "deinAPIKey");
 			$this->RegisterPropertyString("ID", "deineID");
 			
-			#$this->RegisterVariableFloat("GridPower", "Value", "", 0);
+			$this->RegisterVariableFloat("GridPower", "Value", "", 0);
 			$this->RegisterVariableFloat("Value", "Value", "", 0);
 			
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
