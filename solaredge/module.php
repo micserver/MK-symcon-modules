@@ -65,6 +65,8 @@
 			$id = $this->ReadPropertyString("ID");
 			$this->SendDebug("API_Key: ",$apikey,0);
 			$this->SendDebug("ID: ",$id,0);
+			$gridpower = 17,5;
+			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
 		}
 	
 	}
