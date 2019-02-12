@@ -69,7 +69,7 @@
 			$this->SendDebug("API_Key: ",$apikey,0);
 			$this->SendDebug("ID: ",$id,0);
 			
-			$content = Sys_GetURLContent("https://monitoringapi.solaredge.com/site/".$ID."/currentPowerFlow?api_key=".$APIkey );
+			$content = Sys_GetURLContent("https://monitoringapi.solaredge.com/site/".$id."/currentPowerFlow?api_key=".$apikey );
 			$json=json_decode($content);
 			
 			
