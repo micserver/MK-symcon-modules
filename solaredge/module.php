@@ -26,6 +26,9 @@
 			//Never delete this line!
 			parent::ApplyChanges();
 			
+			$test = "Test send debug";
+			$this->SendDebug("API_Key: ",$test,0);
+			
 			//Create our trigger
 			#if(IPS_VariableExists($this->ReadPropertyInteger("SourceVariable"))) {
 			#	$eid = @IPS_GetObjectIDByIdent("SourceTrigger", $this->InstanceID);
@@ -46,20 +49,22 @@
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
 		*
-		* API_Calculate($id);
+		* API_RequestInfo($id);
 		*
 		*/
-		public function Calculate(float $Value)
-		{
-			
-			eval("\$Value = " . $this->ReadPropertyString("Formula") . ";");
-			
-			return $Value;
 		
-		}
+		#public function Calculate(float $Value)
+		#{
+			
+		#	eval("\$Value = " . $this->ReadPropertyString("Formula") . ";");
+			
+		#	return $Value;
+		
+		#}
 		public function RequestInfo()
 		{
-			
+			$test = "Test send debug";
+			$this->SendDebug("API_Key: ",$test,0);
 			$apikey = $this->ReadPropertyString("API_Key");
 			$id = $this->ReadPropertyString("ID");
 			$this->SendDebug("API_Key: ",$apikey,0);
