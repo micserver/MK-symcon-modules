@@ -11,6 +11,9 @@
 			$this->RegisterPropertyInteger("SourceVariable", 0);
 			$this->RegisterPropertyString("Formula", "\$Value/10*sin(30)*pi()");
 			
+			#$apikey = "4TBYELPQL0BSZADT4AJJQ89ASHL010E2"; 
+			#$ID = "487010";
+			
 			$this->RegisterPropertyString("API_Key", "deinAPIKey");
 			$this->RegisterPropertyString("ID", "deineID");
 			
@@ -65,6 +68,11 @@
 			$id = $this->ReadPropertyString("ID");
 			$this->SendDebug("API_Key: ",$apikey,0);
 			$this->SendDebug("ID: ",$id,0);
+			
+			$content = Sys_GetURLContent("https://monitoringapi.solaredge.com/site/".$ID."/currentPowerFlow?api_key=".$APIkey );
+			$json=json_decode($content);
+			
+			
 			$gridpower = 17.5;
 			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
 		}
