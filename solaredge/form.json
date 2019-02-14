@@ -1,12 +1,30 @@
+
+
 {
+
 	"elements":
+
 	[
+
+		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
+		
+		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },
+		
 		{ "name": "SourceVariable", "type": "SelectVariable", "caption": "Source" },
+
 		{ "name": "Formula", "type": "ValidationTextBox", "caption": "Formula" }
+
 	],
+
 	"actions":
+
 	[
+
 		{ "name": "Value", "type": "ValidationTextBox", "caption": "Value" },
-		{ "type": "Button", "label": "Calculate", "onClick": "echo UMR_Calculate($id, $Value);" }
+
+		{ "type": "Button", "label": "API Abruf", "onClick": "echo API_RequestInfo($id, $Value);" }
+
 	]
+
+
 }
