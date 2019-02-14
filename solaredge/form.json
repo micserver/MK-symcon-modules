@@ -1,4 +1,5 @@
 
+
 {
 
 	"elements":
@@ -24,5 +25,6 @@
 		{ "type": "Button", "label": "API Abruf", "onClick": "echo API_RequestInfo($id, $Value);" }
 
 	]
+
 
 }

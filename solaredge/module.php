@@ -11,6 +11,7 @@
 			$this->RegisterPropertyInteger("SourceVariable", 0);
 			$this->RegisterPropertyString("Formula", "\$Value/10*sin(30)*pi()");
 			
+
 			#$apikey = "4TBYELPQL0BSZADT4AJJQ89ASHL010E2"; 
 			#$ID = "487010";
 			
@@ -21,7 +22,7 @@
 			#$this->RegisterVariableFloat("Value", "Value", "", 0);
 			
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
-		}
+
 	
 		public function ApplyChanges()
 		{
@@ -76,6 +77,6 @@
 			$gridpower = 17.5;
 			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
 		}
-	
+		
 	}
 ?>
