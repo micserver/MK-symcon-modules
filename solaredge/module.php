@@ -70,12 +70,16 @@
 			$this->SendDebug("API_Key: ",$apikey,0);
 			$this->SendDebug("ID: ",$id,0);
 			
+			// PV-Anlage abfragen
 			$content = Sys_GetURLContent("https://monitoringapi.solaredge.com/site/".$id."/currentPowerFlow?api_key=".$apikey );
 			$json=json_decode($content);
 			
+			$PV_Status=$json->siteCurrentPowerFlow->PV->status; // PV - Status
+			$PV_Leistung=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
 			
 			$gridpower = 17.5;
-			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
+			#SetValue($this->GetIDForIdent("GridPower"), $gridpower);
+			SetValue($this->GetIDForIdent("GridPower"), $PV_Leistung);
 		}
 		
 	}
