@@ -49,7 +49,7 @@
 			$json=json_decode($content);
 			
 			$PV_State=$json->siteCurrentPowerFlow->PV->status; // PV - State
-			$this->SendDebug("PV Status: ",$PV_Status,0);
+			$this->SendDebug("PV State: ",$PV_State,0);
 			$Gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
 			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			
