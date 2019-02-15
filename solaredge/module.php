@@ -29,7 +29,7 @@
 			// Get ObjectID for first archive
 			$archives = IPS_GetInstanceListByModuleID("{43192F0B-135B-4CE7-A0A7-1475603F3060}");
 			$this->SendDebug("Archive ID: ",$archives[0],0);
-			AC_SetLoggingStatus($this->GetIDForIdent($archives[0],'GridPower'), true);
+			#AC_SetLoggingStatus($this->GetIDForIdent($archives[0],'GridPower'), true);
 			
 		}
 	
