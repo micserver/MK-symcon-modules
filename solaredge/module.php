@@ -53,7 +53,7 @@
 			$this->SendDebug("Grid Power: ",$gridpower,0);
 			
 			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
-			return $gridpower
+			return $gridpower;
 		}
 		
 	}
