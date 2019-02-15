@@ -6,6 +6,6 @@
 	],
 	"actions":
 	[
-		{ "type": "Button", "label": "API Abruf", "onClick": "echo API_RequestInfo($id, $Value);" }
+		{ "type": "Button", "label": "API Abruf", "onClick": "echo API_RequestInfo($id);" }
 	]
 }
