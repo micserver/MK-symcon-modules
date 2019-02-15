@@ -7,6 +7,6 @@
 	"actions":
 	[
 		{ "name": "GridPower", "type": "ValidationTextBox", "caption": "GridPower" },
-		{ "type": "Button", "caption": "API Abruf", "onClick": "echo API_RequestInfo($id,$gridpower);" }
+		{ "type": "Button", "caption": "API Abruf", "onClick": "echo API_RequestInfo($id, $gridpower);" }
 	]
 }
