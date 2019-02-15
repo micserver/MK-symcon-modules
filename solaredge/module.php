@@ -55,7 +55,7 @@
 			
 			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
 			SetValue($this->GetIDForIdent("PV_Status"), $PV_Status);
-			return $Gridpower;
+			return $PV_Status;
 		}
 		
 	}
