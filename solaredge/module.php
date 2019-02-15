@@ -14,8 +14,9 @@
 			$this->RegisterPropertyString("API_Key", "deinAPIKey");
 			$this->RegisterPropertyString("ID", "deineID");
 			
-			$this->RegisterVariableFloat("GridPower", "GridPower", "", 0);
-			
+			$this->RegisterVariableString("PV_Status", "PV_Status", "", 0);
+			$this->RegisterVariableFloat("GridPower", "GridPower", "", 1);
+						
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
 		}
 	
@@ -53,6 +54,7 @@
 			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			
 			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
+			SetValue($this->GetIDForIdent("PV_Status"), $PV_Status);
 			return $Gridpower;
 		}
 		
