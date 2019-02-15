@@ -14,7 +14,7 @@
 			$this->RegisterPropertyString("API_Key", "deinAPIKey");
 			$this->RegisterPropertyString("ID", "deineID");
 			
-			$this->RegisterVariableString("PV_Status", "PV_Status", "", 0);
+			$this->RegisterVariableString("PV State", "PV State", "", 0);
 			$this->RegisterVariableFloat("GridPower", "GridPower", "", 1);
 						
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
@@ -48,14 +48,14 @@
 			$content = Sys_GetURLContent("https://monitoringapi.solaredge.com/site/".$id."/currentPowerFlow?api_key=".$apikey );
 			$json=json_decode($content);
 			
-			$PV_Status=$json->siteCurrentPowerFlow->PV->status; // PV - Status
+			$PV_State=$json->siteCurrentPowerFlow->PV->status; // PV - State
 			$this->SendDebug("PV Status: ",$PV_Status,0);
 			$Gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
 			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			
 			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
-			SetValue($this->GetIDForIdent("PV_Status"), $PV_Status);
-			return $PV_Status;
+			SetValue($this->GetIDForIdent("PV_Status"), $PV_State);
+			return $PV_State;
 		}
 		
 	}
