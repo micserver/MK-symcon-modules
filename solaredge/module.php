@@ -49,11 +49,11 @@
 			
 			$PV_Status=$json->siteCurrentPowerFlow->PV->status; // PV - Status
 			$this->SendDebug("PV Status: ",$PV_Status,0);
-			$gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
-			$this->SendDebug("Grid Power: ",$gridpower,0);
+			$Gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
+			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			
-			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
-			return $gridpower;
+			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
+			return $Gridpower;
 		}
 		
 	}
