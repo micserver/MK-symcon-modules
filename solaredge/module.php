@@ -53,7 +53,7 @@
 			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			
 			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
-			SetValue($this->GetIDForIdent("PV_Status"), $PV_State);
+			SetValue($this->GetIDForIdent("PV Status"), $PV_State);
 			return $PV_State;
 		}
 		
