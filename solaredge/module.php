@@ -8,11 +8,10 @@
 			//Never delete this line!
 			parent::Create();		
 
-			#$apikey = "4TBYELPQL0BSZADT4AJJQ89ASHL010E2"; 
-			#$ID = "487010";
-			
-			$this->RegisterPropertyString("API_Key", "deinAPIKey");
-			$this->RegisterPropertyString("ID", "deineID");
+			$this->RegisterPropertyString("API_Key", "4TBYELPQL0BSZADT4AJJQ89ASHL010E2");
+			$this->RegisterPropertyString("ID", "487010");
+			#$this->RegisterPropertyString("API_Key", "deinAPIKey");
+			#$this->RegisterPropertyString("ID", "deineID");
 			
 			$this->RegisterVariableString("PV_State", "PV State", "", 0);
 			$this->RegisterVariableFloat("GridPower", "GridPower", "", 1);
