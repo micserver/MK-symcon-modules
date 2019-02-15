@@ -6,7 +6,7 @@
 	],
 	"actions":
 	[
-		{ "name": "PV_Status", "type": "ValidationTextBox", "caption": "PV Status" },
+		{ "name": "PV Status", "type": "ValidationTextBox", "caption": "PV Status" },
 		{ "type": "Button", "caption": "API Abruf", "onClick": "echo API_RequestInfo($id, $PV_Status);" }
 	]
 }
