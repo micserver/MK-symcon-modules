@@ -31,6 +31,9 @@
 			$this->SendDebug("Archive ID: ",$archives[0],0);
 			$this->SendDebug("GridPower ID: ",$this->GetIDForIdent('GridPower'),0);
 			$this->SendDebug("PV State: ",$this->GetIDForIdent('PV_State'),0);
+			
+			$this->SendDebug("Archive PV Status: ",$archive_PV_Status,0);
+			
 			AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), true);
 			AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
 		}
