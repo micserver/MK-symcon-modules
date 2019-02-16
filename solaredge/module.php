@@ -43,7 +43,7 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), false);	
 				break;
 			}
-			if (($this->ReadPropertyBoolean('archive_Gridpower')){
+			if ($this->ReadPropertyBoolean('archive_Gridpower')){
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
 			} else {
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
