@@ -34,8 +34,6 @@
 			$this->SendDebug("GridPower ID: ",$this->GetIDForIdent('GridPower'),0);
 			$this->SendDebug("PV State: ",$this->GetIDForIdent('PV_State'),0);
 			
-			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_Status'),0);
-			
 			//Logging Status setzen
 			switch ($this->ReadPropertyBoolean('archive_PV_Status')){
 				case true:
@@ -45,11 +43,14 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), false);	
 				break;
 			}
-			if ($this->GetIDForIdent('GridPower')){
+			if (($this->ReadPropertyBoolean('archive_Gridpower')){
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
 			} else {
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
 			}
+			    
+			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_Status'),0);
+			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_Gridpower'),0);
 		}
 	
 		/**
