@@ -50,7 +50,7 @@
 			}
 			    
 			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_Status'),0);
-			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_Gridpower'),0);
+			$this->SendDebug("Archive GridPower: ",$this->ReadPropertyBoolean('archive_GridPower'),0);
 		}
 	
 		/**
