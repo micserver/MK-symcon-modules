@@ -14,8 +14,8 @@
 			#$this->RegisterPropertyString("ID", "deineID");
 			
 			$this->RegisterVariableString("PV_State", "PV State", "", 0);
-			$this->RegisterPropertyBoolean("archive_PV_Status", false);
-			$this->RegisterVariableFloat("GridPower", "GridPower", "", 1);
+			$this->RegisterPropertyBoolean("archive_PV_State", false);
+			$this->RegisterVariableFloat("GridPower", "Grid Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_GridPower", false);
 						
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
@@ -31,11 +31,11 @@
 			// Get ObjectID for first archive
 			$archives = IPS_GetInstanceListByModuleID("{43192F0B-135B-4CE7-A0A7-1475603F3060}");
 			$this->SendDebug("Archive ID: ",$archives[0],0);
-			$this->SendDebug("GridPower ID: ",$this->GetIDForIdent('GridPower'),0);
+			$this->SendDebug("Grid Power ID: ",$this->GetIDForIdent('GridPower'),0);
 			$this->SendDebug("PV State ID: ",$this->GetIDForIdent('PV_State'),0);
 			
 			//Logging Status setzen
-			switch ($this->ReadPropertyBoolean('archive_PV_Status')){
+			switch ($this->ReadPropertyBoolean('archive_PV_State')){
 				case true:
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), true);	
 				break;
@@ -49,8 +49,8 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
 			}
 			    
-			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_Status'),0);
-			$this->SendDebug("Archive GridPower: ",$this->ReadPropertyBoolean('archive_GridPower'),0);
+			$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
+			$this->SendDebug("Archive Grid Power: ",$this->ReadPropertyBoolean('archive_GridPower'),0);
 		}
 	
 		/**
