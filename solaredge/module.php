@@ -14,7 +14,9 @@
 			#$this->RegisterPropertyString("ID", "deineID");
 			
 			$this->RegisterVariableString("PV_State", "PV State", "", 0);
+			$this->RegisterPropertyBoolean("archive_PV_Status", false);
 			$this->RegisterVariableFloat("GridPower", "GridPower", "", 1);
+			$this->RegisterPropertyBoolean("archive_GridPower", false);
 						
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
 		}
