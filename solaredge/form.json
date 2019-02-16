@@ -3,7 +3,7 @@
 	[
 		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
 		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },
-		{ "type": "CheckBox", "name": "archive_PV_Status", "caption": "PV State archivieren?" },
+		{ "type": "CheckBox", "name": "archive_PV_State", "caption": "PV State archivieren?" },
 		{ "type": "CheckBox", "name": "archive_GridPower", "caption": "Gridpower archivieren?" }
 	],
 	"actions":
