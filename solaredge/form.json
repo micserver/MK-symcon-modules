@@ -4,7 +4,7 @@
 		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
 		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },
 		{ "type": "CheckBox", "name": "archive_PV_State", "caption": "PV State archivieren?" },
-		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power archivieren?" }
+		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power to be archived?" }
 	],
 	"actions":
 	[
