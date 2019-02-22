@@ -1,17 +1,10 @@
 {
-
-
 	"translations": {
-
 		"de": { 
-
 			"API Key": "API Key",
 			"ID": "ID",
 			"PV State": "PV Status",
 			"GridPower": "GridPower"
 		}
-
 	}
-}
-
 }
