@@ -31,6 +31,11 @@
 			$this->RegisterPropertyBoolean("archive_connection_0_to", false);
 			
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
+			
+			$this->SendDebug("C=> PV current Power ID: ",$this->GetIDForIdent('PV_currentPower'),0);
+			$this->SendDebug("C=> archive PV current Power: ",$this->ReadPropertyBoolean('archive_PV_currentPower'),0);
+			$this->SendDebug("C=> PV State ID: ",$this->GetIDForIdent('PV_State'),0);
+			$this->SendDebug("C=> archive PV State: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 		}
 	
 		public function ApplyChanges()
@@ -105,6 +110,7 @@
 			$this->SendDebug("connetion 0 from: ",$connection_0_from,0);
     			$connection_0_to=$json->siteCurrentPowerFlow->connections[0]->to; // Connections - From LOAD
 			$this->SendDebug("connection 0 to: ",$connection_0_to,0);
+			
 			
 			SetValue($this->GetIDForIdent("PV current Power"), $PV_currentPower);
 			SetValue($this->GetIDForIdent("PV_State"), $PV_State);
