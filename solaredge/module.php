@@ -17,9 +17,11 @@
 			$this->RegisterPropertyBoolean("archive_PV_State", false);
 			$this->RegisterVariableFloat("GridPower", "Grid Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_GridPower", false);
-			#$this->RegisterVariableFloat("Load_Status", "Load Status", "", 1);
-			#$this->RegisterPropertyBoolean("archive_Load_Status", false);			
-						
+			$this->RegisterVariableFloat("Load_Status", "Load Status", "", 1);
+			$this->RegisterPropertyBoolean("archive_Load_Status", false);			
+			$this->RegisterVariableFloat("LOAD_currentPower", "LOAD currentPower", "", 1);
+			$this->RegisterPropertyBoolean("archive_LOAD_currentPower", false);
+			
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
 		}
 	
