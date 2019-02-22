@@ -16,7 +16,7 @@
 			$this->RegisterVariableString("PV_State", "PV State", "", 0);
 			$this->RegisterPropertyBoolean("archive_PV_State", false);
 			$this->RegisterVariableFloat("PV_currentPower", "PV current Power", "", 1);
-			$this->RegisterPropertyBoolean("archive_GridPower", false);
+			$this->RegisterPropertyBoolean("archive_PV_currentPower", false);
 			$this->RegisterVariableString("Load_Status", "Load Status", "", 1);
 			$this->RegisterPropertyBoolean("archive_Load_Status", false);			
 			$this->RegisterVariableFloat("LOAD_currentPower", "LOAD current Power", "", 1);
