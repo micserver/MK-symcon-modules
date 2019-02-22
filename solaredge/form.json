@@ -5,6 +5,7 @@
 		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },
 		{ "type": "CheckBox", "name": "archive_PV_State", "caption": "PV State archivieren?" },
 		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power to be archived?" }
+		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "Load state to be archived?" }
 	],
 	"actions":
 	[
