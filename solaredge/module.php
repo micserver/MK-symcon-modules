@@ -89,12 +89,12 @@
 			$this->SendDebug("LOAD current Power: ",$LOAD_currentPower,0);
 			$Grid_Status=$json->siteCurrentPowerFlow->GRID->status; // Grid - Status
 			$this->SendDebug("Grid Status: ",$Grid_Status,0);
-			#$Grid_CurrentPower= $json->siteCurrentPowerFlow->GRID->currentPower*1000; // Grid - Current Power
-			#$this->SendDebug("Grid Power: ",$Grid_CurrentPower,0);
-			#$connection_0_from=$json->siteCurrentPowerFlow->connections[0]->from; // Connections - From LOAD
-			#$this->SendDebug("Grid Power: ",$connection_0_from,0);
-    			#$connection_0_to=$json->siteCurrentPowerFlow->connections[0]->to; // Connections - From LOAD
-			#$this->SendDebug("Grid Power: ",$connection_0_to,0);
+			$Grid_currentPower= $json->siteCurrentPowerFlow->GRID->currentPower*1000; // Grid - Current Power
+			$this->SendDebug("Grid current Power: ",$Grid_currentPower,0);
+			$connection_0_from=$json->siteCurrentPowerFlow->connections[0]->from; // Connections - From LOAD
+			$this->SendDebug("connetion 0 from: ",$connection_0_from,0);
+    			$connection_0_to=$json->siteCurrentPowerFlow->connections[0]->to; // Connections - From LOAD
+			$this->SendDebug("connection 0 to: ",$connection_0_to,0);
 			
 			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
 			SetValue($this->GetIDForIdent("PV_State"), $PV_State);
