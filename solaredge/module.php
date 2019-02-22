@@ -81,8 +81,8 @@
 			$this->SendDebug("PV State: ",$PV_State,0);
 			$Gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
 			$this->SendDebug("Grid Power: ",$Gridpower,0);
-			#$Load_Status=$json->siteCurrentPowerFlow->LOAD->status; // Load - Status
-			#$this->SendDebug("Load_Status: "$Load_Status,0);
+			$Load_Status=$json->siteCurrentPowerFlow->LOAD->status; // Load - Status
+			$this->SendDebug("Load_Status: "$Load_Status,0);
 			#$LOAD_currentPower=$json->siteCurrentPowerFlow->LOAD->currentPower*-1000; // Load - Current Power
 			#$this->SendDebug("Grid Power: ",$LOAD_currentPower,0);
 			#$Grid_Status=$json->siteCurrentPowerFlow->GRID->status; // Grid - Status
