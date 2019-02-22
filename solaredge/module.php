@@ -53,11 +53,6 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
 				break;
 			}
-			#if ($this->ReadPropertyBoolean('archive_GridPower')){
-			#	AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
-			#} else {
-			#	AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
-			#}
 			IPS_ApplyChanges($archives[0]);    
 
 		}
