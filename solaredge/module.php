@@ -17,8 +17,8 @@
 			$this->RegisterPropertyBoolean("archive_PV_State", false);
 			$this->RegisterVariableFloat("GridPower", "Grid Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_GridPower", false);
-			$this->RegisterVariableFloat("Load_Status", "Load Status", "", 1);
-			$this->RegisterPropertyBoolean("archive_Load_Status", false);			
+			#$this->RegisterVariableFloat("Load_Status", "Load Status", "", 1);
+			#$this->RegisterPropertyBoolean("archive_Load_Status", false);			
 						
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
 		}
@@ -85,8 +85,8 @@
 			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			$Load_Status=$json->siteCurrentPowerFlow->LOAD->status; // Load - Status
 			$this->SendDebug("Load Status: ",$Load_Status,0);
-			#$LOAD_currentPower=$json->siteCurrentPowerFlow->LOAD->currentPower*-1000; // Load - Current Power
-			#$this->SendDebug("Grid Power: ",$LOAD_currentPower,0);
+			$LOAD_currentPower=$json->siteCurrentPowerFlow->LOAD->currentPower*-1000; // Load - Current Power
+			$this->SendDebug("Grid Power: ",$LOAD_currentPower,0);
 			#$Grid_Status=$json->siteCurrentPowerFlow->GRID->status; // Grid - Status
 			#$this->SendDebug("Grid Power: ",$Grid_Status,0);
 			#$Grid_CurrentPower= $json->siteCurrentPowerFlow->GRID->currentPower*1000; // Grid - Current Power
