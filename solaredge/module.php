@@ -112,7 +112,7 @@
 			$this->SendDebug("connection 0 to: ",$connection_0_to,0);
 			
 			
-			SetValue($this->GetIDForIdent("PV current Power"), $PV_currentPower);
+			#SetValue($this->GetIDForIdent("PV current Power"), $PV_currentPower);
 			SetValue($this->GetIDForIdent("PV_State"), $PV_State);
 			SetValue($this->GetIDForIdent("Load_Status"), $Load_Status);
 			SetValue($this->GetIDForIdent("LOAD_currentPower"), $LOAD_currentPower);
