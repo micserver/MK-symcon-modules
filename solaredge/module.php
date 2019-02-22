@@ -65,6 +65,55 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_currentPower'), false);
 				break;
 			}
+			switch ($this->ReadPropertyBoolean('archive_Load_Status')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('Load_Status'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('Load_Status'), false);
+				break;
+			}
+			switch ($this->ReadPropertyBoolean('archive_LOAD_currentPower')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('LOAD_currentPower'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('LOAD_currentPower'), false);
+				break;
+			}			
+			switch ($this->ReadPropertyBoolean('archive_Grid_Status')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('Grid_Status'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('Grid_Status'), false);
+				break;
+			}
+			switch ($this->ReadPropertyBoolean('archive_Grid_currentPower')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('Grid_currentPower'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('Grid_currentPower'), false);
+				break;
+			}			
+			switch ($this->ReadPropertyBoolean('archive_connection_0_from')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('connection_0_from'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('connection_0_from'), false);
+				break;
+			}			
+			switch ($this->ReadPropertyBoolean('archive_connection_0_to')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('connection_0_to'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('connection_0_to'), false);
+				break;
+			}
+			
 			IPS_ApplyChanges($archives[0]);    
 
 		}
