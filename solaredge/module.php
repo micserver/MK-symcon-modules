@@ -15,7 +15,7 @@
 			
 			$this->RegisterVariableString("PV_State", "PV State", "", 0);
 			$this->RegisterPropertyBoolean("archive_PV_State", false);
-			$this->RegisterVariableFloat("GridPower", "Grid Power", "", 1);
+			$this->RegisterVariableFloat("PV_currentPower", "PV current Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_GridPower", false);
 			$this->RegisterVariableString("Load_Status", "Load Status", "", 1);
 			$this->RegisterPropertyBoolean("archive_Load_Status", false);			
@@ -91,8 +91,8 @@
 			
 			$PV_State=$json->siteCurrentPowerFlow->PV->status; // PV - State
 			$this->SendDebug("PV State: ",$PV_State,0);
-			$Gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
-			$this->SendDebug("Grid Power: ",$Gridpower,0);
+			$PV_currentPower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
+			$this->SendDebug("PV current Power: ",$PV_currentPower,0);
 			$Load_Status=$json->siteCurrentPowerFlow->LOAD->status; // Load - Status
 			$this->SendDebug("Load Status: ",$Load_Status,0);
 			$LOAD_currentPower=$json->siteCurrentPowerFlow->LOAD->currentPower*-1000; // Load - Current Power
@@ -106,7 +106,7 @@
     			$connection_0_to=$json->siteCurrentPowerFlow->connections[0]->to; // Connections - From LOAD
 			$this->SendDebug("connection 0 to: ",$connection_0_to,0);
 			
-			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
+			SetValue($this->GetIDForIdent("PV current Power"), $PV_currentPower);
 			SetValue($this->GetIDForIdent("PV_State"), $PV_State);
 			SetValue($this->GetIDForIdent("Load_Status"), $Load_Status);
 			SetValue($this->GetIDForIdent("LOAD_currentPower"), $LOAD_currentPower);
