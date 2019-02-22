@@ -40,25 +40,26 @@
 			switch ($this->ReadPropertyBoolean('archive_PV_State')){
 				case true:
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), true);
-				$this->SendDebug("Sw=> Archive PV Status true: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 				break;
 				case false:
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), false);
-				$this->SendDebug("Sw=> Archive PV Status false: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 				break;
-				default:
-				$this->SendDebug("Sw=> war wohl nix: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 			}
-			if ($this->ReadPropertyBoolean('archive_GridPower')){
+			switch ($this->ReadPropertyBoolean('archive_GridPower')){
+				case true:
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
-				$this->SendDebug("IF=> Archive Grid Power true: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
-			} else {
+				break;
+				case false:
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
-				$this->SendDebug("If=> Archive Grid Power false: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
+				break;
 			}
+			#if ($this->ReadPropertyBoolean('archive_GridPower')){
+			#	AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
+			#} else {
+			#	AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
+			#}
 			IPS_ApplyChanges($archives[0]);    
-			#$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
-			#$this->SendDebug("Archive Grid Power: ",$this->ReadPropertyBoolean('archive_GridPower'),0);
+
 		}
 	
 		/**
