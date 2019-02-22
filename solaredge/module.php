@@ -86,9 +86,9 @@
 			$Load_Status=$json->siteCurrentPowerFlow->LOAD->status; // Load - Status
 			$this->SendDebug("Load Status: ",$Load_Status,0);
 			$LOAD_currentPower=$json->siteCurrentPowerFlow->LOAD->currentPower*-1000; // Load - Current Power
-			$this->SendDebug("Grid Power: ",$LOAD_currentPower,0);
-			#$Grid_Status=$json->siteCurrentPowerFlow->GRID->status; // Grid - Status
-			#$this->SendDebug("Grid Power: ",$Grid_Status,0);
+			$this->SendDebug("LOAD current Power: ",$LOAD_currentPower,0);
+			$Grid_Status=$json->siteCurrentPowerFlow->GRID->status; // Grid - Status
+			$this->SendDebug("Grid Status: ",$Grid_Status,0);
 			#$Grid_CurrentPower= $json->siteCurrentPowerFlow->GRID->currentPower*1000; // Grid - Current Power
 			#$this->SendDebug("Grid Power: ",$Grid_CurrentPower,0);
 			#$connection_0_from=$json->siteCurrentPowerFlow->connections[0]->from; // Connections - From LOAD
