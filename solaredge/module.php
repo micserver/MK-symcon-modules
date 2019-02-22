@@ -115,7 +115,6 @@
 			SetValue($this->GetIDForIdent("connection_0_from"), $connection_0_from);
 			SetValue($this->GetIDForIdent("connection_0_to"), $connection_0_to);			
 			return $PV_State;
-		}
-		
+		}	
 	}
 ?>
