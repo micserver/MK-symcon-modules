@@ -17,17 +17,17 @@
 			$this->RegisterPropertyBoolean("archive_PV_State", false);
 			$this->RegisterVariableFloat("GridPower", "Grid Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_GridPower", false);
-			$this->RegisterVariableFloat("Load_Status", "Load Status", "", 1);
+			$this->RegisterVariableString("Load_Status", "Load Status", "", 1);
 			$this->RegisterPropertyBoolean("archive_Load_Status", false);			
 			$this->RegisterVariableFloat("LOAD_currentPower", "LOAD current Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_LOAD_currentPower", false);
-			$this->RegisterVariableFloat("Grid_Status", "Grid Status", "", 1);
+			$this->RegisterVariableString("Grid_Status", "Grid Status", "", 1);
 			$this->RegisterPropertyBoolean("archive_Grid_Status", false);
 			$this->RegisterVariableFloat("Grid_currentPower", "Grid current Power", "", 1);
 			$this->RegisterPropertyBoolean("archive_Grid_currentPower", false);			
-			$this->RegisterVariableFloat("connection_0_from", "connection 0 from", "", 1);
+			$this->RegisterVariableString("connection_0_from", "connection 0 from", "", 1);
 			$this->RegisterPropertyBoolean("archive_connection_0_from", false);
-			$this->RegisterVariableFloat("connection_0_to", "connection 0 to", "", 1);
+			$this->RegisterVariableString("connection_0_to", "connection 0 to", "", 1);
 			$this->RegisterPropertyBoolean("archive_connection_0_to", false);
 			
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
