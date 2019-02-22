@@ -32,7 +32,9 @@
 			$archives = IPS_GetInstanceListByModuleID("{43192F0B-135B-4CE7-A0A7-1475603F3060}");
 			$this->SendDebug("Archive ID: ",$archives[0],0);
 			$this->SendDebug("Grid Power ID: ",$this->GetIDForIdent('GridPower'),0);
+			$this->SendDebug("archive PV State: ",$this->ReadPropertyBoolean('GridPower'),0);
 			$this->SendDebug("PV State ID: ",$this->GetIDForIdent('PV_State'),0);
+			$this->SendDebug("archive PV State: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 			
 			//Logging Status setzen
 			switch ($this->ReadPropertyBoolean('archive_PV_State')){
