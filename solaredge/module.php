@@ -108,6 +108,12 @@
 			
 			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
 			SetValue($this->GetIDForIdent("PV_State"), $PV_State);
+			SetValue($this->GetIDForIdent("Load_Status"), $Load_Status);
+			SetValue($this->GetIDForIdent("LOAD_currentPower"), $LOAD_currentPower);
+			SetValue($this->GetIDForIdent("Grid_Status"), $Grid_Status);			
+			SetValue($this->GetIDForIdent("Grid_currentPower"), $Grid_currentPower);
+			SetValue($this->GetIDForIdent("connection_0_from"), $connection_0_from);
+			SetValue($this->GetIDForIdent("connection_0_to"), $connection_0_to);			
 			return $PV_State;
 		}
 		
