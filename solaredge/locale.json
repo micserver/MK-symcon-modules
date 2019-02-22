@@ -4,7 +4,8 @@
 			"API Key": "API Key",
 			"ID": "ID",
 			"PV State": "PV Status",
-			"PV current Power": "PV aktuelle Leistung"
+			"PV current Power": "PV aktuelle Leistung",
+			"PV current Power to be archived?": "PV aktuelle Leistung archivieren?"
 		}
 	}
 }
