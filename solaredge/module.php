@@ -46,6 +46,8 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), false);
 				$this->SendDebug("Switch => Archive PV Status auf false: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 				break;
+				default:
+				$this->SendDebug("Switch => war wohl nix: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 			}
 			if ($this->ReadPropertyBoolean('archive_GridPower')){
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
