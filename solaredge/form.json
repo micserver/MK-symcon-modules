@@ -4,8 +4,13 @@
 		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
 		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },
 		{ "type": "CheckBox", "name": "archive_PV_State", "caption": "PV State archivieren?" },
-		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power to be archived?" }
-		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "Load state to be archived?" }
+		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power to be archived?" },
+		{ "type": "CheckBox", "name": "archive_Load_Status", "caption": "Load state to be archived?" },
+		{ "type": "CheckBox", "name": "archive_LOAD_currentPower", "caption": "Load current Power to be archived?" },
+		{ "type": "CheckBox", "name": "archive_Grid_Status", "caption": "Grid Status to be archived?" },
+		{ "type": "CheckBox", "name": "archive_Grid_currentPower", "caption": "Grid current Power to be archived?" },
+		{ "type": "CheckBox", "name": "archive_connection_0_from", "caption": "connection 0 from to be archived?" },
+		{ "type": "CheckBox", "name": "archive_connection_0_to", "caption": "connection 0 to to be archived?" }
 	],
 	"actions":
 	[
