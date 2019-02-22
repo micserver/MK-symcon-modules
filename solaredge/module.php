@@ -6,44 +6,55 @@
 		public function Create()
 		{
 			//Never delete this line!
-			parent::Create();
-			
-			$this->RegisterPropertyInteger("SourceVariable", 0);
-			$this->RegisterPropertyString("Formula", "\$Value/10*sin(30)*pi()");
-			
+			parent::Create();		
 
-			#$apikey = "4TBYELPQL0BSZADT4AJJQ89ASHL010E2"; 
-			#$ID = "487010";
+			$this->RegisterPropertyString("API_Key", "4TBYELPQL0BSZADT4AJJQ89ASHL010E2");
+			$this->RegisterPropertyString("ID", "487010");
+			#$this->RegisterPropertyString("API_Key", "deinAPIKey");
+			#$this->RegisterPropertyString("ID", "deineID");
 			
-			$this->RegisterPropertyString("API_Key", "deinAPIKey");
-			$this->RegisterPropertyString("ID", "deineID");
-			
-			$this->RegisterVariableFloat("GridPower", "GridPower", "", 0);
-			#$this->RegisterVariableFloat("Value", "Value", "", 0);
-			
+			$this->RegisterVariableString("PV_State", "PV State", "", 0);
+			$this->RegisterPropertyBoolean("archive_PV_State", false);
+			$this->RegisterVariableFloat("GridPower", "Grid Power", "", 1);
+			$this->RegisterPropertyBoolean("archive_GridPower", false);
+						
 			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
-
+		}
 	
 		public function ApplyChanges()
 		{
 			
 			//Never delete this line!
 			parent::ApplyChanges();
-				
-			//Create our trigger
-			#if(IPS_VariableExists($this->ReadPropertyInteger("SourceVariable"))) {
-			#	$eid = @IPS_GetObjectIDByIdent("SourceTrigger", $this->InstanceID);
-			#	if($eid === false) {
-			#		$eid = IPS_CreateEvent(0 /* Trigger */);
-			#		IPS_SetParent($eid, $this->InstanceID);
-			#		IPS_SetIdent($eid, "SourceTrigger");
-			#		IPS_SetName($eid, "Trigger for #".$this->ReadPropertyInteger("SourceVariable"));
-			#	}
-			#	IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("SourceVariable"));
-			#	IPS_SetEventScript($eid, "SetValue(IPS_GetObjectIDByIdent(\"Value\", \$_IPS['TARGET']), API_Calculate(\$_IPS['TARGET'], \$_IPS['VALUE']));");
-			#	IPS_SetEventActive($eid, true);
-			#}
 			
+			//Set Logging Status
+			// Get ObjectID for first archive
+			$archives = IPS_GetInstanceListByModuleID("{43192F0B-135B-4CE7-A0A7-1475603F3060}");
+			$this->SendDebug("AC=> Archive ID: ",$archives[0],0);
+			$this->SendDebug("AC=> Grid Power ID: ",$this->GetIDForIdent('GridPower'),0);
+			$this->SendDebug("AC=> archive Grid Power: ",$this->ReadPropertyBoolean('archive_GridPower'),0);
+			$this->SendDebug("AC=> PV State ID: ",$this->GetIDForIdent('PV_State'),0);
+			$this->SendDebug("AC=> archive PV State: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
+			
+			//Logging Status setzen
+			switch ($this->ReadPropertyBoolean('archive_PV_State')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('PV_State'), false);
+				break;
+			}
+			switch ($this->ReadPropertyBoolean('archive_GridPower')){
+				case true:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), true);
+				break;
+				case false:
+				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
+				break;
+			}
+			IPS_ApplyChanges($archives[0]);    
+
 		}
 	
 		/**
@@ -54,14 +65,6 @@
 		*
 		*/
 		
-		#public function Calculate(float $Value)
-		#{
-			
-		#	eval("\$Value = " . $this->ReadPropertyString("Formula") . ";");
-			
-		#	return $Value;
-		
-		#}
 		public function RequestInfo()
 		{
 
@@ -70,12 +73,18 @@
 			$this->SendDebug("API_Key: ",$apikey,0);
 			$this->SendDebug("ID: ",$id,0);
 			
+			// PV-Anlage abfragen
 			$content = Sys_GetURLContent("https://monitoringapi.solaredge.com/site/".$id."/currentPowerFlow?api_key=".$apikey );
 			$json=json_decode($content);
 			
+			$PV_State=$json->siteCurrentPowerFlow->PV->status; // PV - State
+			$this->SendDebug("PV State: ",$PV_State,0);
+			$Gridpower=$json->siteCurrentPowerFlow->PV->currentPower*1000; // PV - Current Power
+			$this->SendDebug("Grid Power: ",$Gridpower,0);
 			
-			$gridpower = 17.5;
-			SetValue($this->GetIDForIdent("GridPower"), $gridpower);
+			SetValue($this->GetIDForIdent("GridPower"), $Gridpower);
+			SetValue($this->GetIDForIdent("PV_State"), $PV_State);
+			return $PV_State;
 		}
 		
 	}

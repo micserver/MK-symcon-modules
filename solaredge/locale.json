@@ -6,19 +6,12 @@
 		"de": { 
 
 			"API Key": "API Key",
-			
 			"ID": "ID",
-			
-			"Source": "Quelle",
-
-			"Formula": "Formel",
-
-			"Value": "Wert",
-
-			"Calculate": "Berechne"
-
+			"PV State": "PV Status",
+			"GridPower": "GridPower"
 		}
 
 	}
 }
 
+}
