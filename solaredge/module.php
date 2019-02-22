@@ -56,7 +56,7 @@
 				AC_SetLoggingStatus($archives[0], $this->GetIDForIdent('GridPower'), false);
 				$this->SendDebug("If=> Archive Grid Power false: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 			}
-			    
+			IPS_ApplyChanges($archives[0]);    
 			#$this->SendDebug("Archive PV Status: ",$this->ReadPropertyBoolean('archive_PV_State'),0);
 			#$this->SendDebug("Archive Grid Power: ",$this->ReadPropertyBoolean('archive_GridPower'),0);
 		}
