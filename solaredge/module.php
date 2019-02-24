@@ -11,7 +11,7 @@
 			$this->RegisterPropertyString("API_Key", "4TBYELPQL0BSZADT4AJJQ89ASHL010E2");
 			$this->RegisterPropertyString("ID", "487010");
 			#$this->RegisterPropertyString("API_Key", "deinAPIKey");
-			#$this->RegisterPropertyString("ID", "deineID");
+			#$this->RegisterPropertyString("ID", "deineStandortID");
 			
 			$this->RegisterVariableString("PV_State", "PV State", "", 0);
 			$this->RegisterPropertyBoolean("archive_PV_State", false);
@@ -32,15 +32,12 @@
 			
 			$this->RegisterPropertyInteger('Interval', 300);
 			
-			$this->RegisterTimer("API_UpdateTimer", 0, 'API_RequestInfo($_IPS[\'TARGET\']);');
-			#$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
-					
+			$this->RegisterTimer("API_UpdateTimer", 0, 'API_RequestInfo($_IPS[\'TARGET\']);');			
 		}
     
 		public function Destroy()
     		{
-        		#$this->UnregisterTimer('API_UpdateStatus');
-			$this->UnregisterTimer('API_RequestInfo');
+ 			$this->UnregisterTimer('API_RequestInfo');
    		}
 		
 		
@@ -50,7 +47,6 @@
 			//Never delete this line!
 			parent::ApplyChanges();
 		
-			#$this->SetTimerInterval('API_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
 			$this->SetTimerInterval('API_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
 			
 			//Set Logging Status
