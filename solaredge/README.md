@@ -42,33 +42,16 @@ Update Intervall | Intervall API AUfruf (Achtung, solaredge limitiert die Anzahl
 
 ### 5. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Die Variablen werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
 
 ##### Statusvariablen
 
 Name         | Typ       | Beschreibung
 ------------ | --------- | ----------------
-Active       | Boolean   | De-/Aktiviert die Alarmierung. Wird die Alarmierung deaktiviert, so wird auch der ggf. vorhandene Alarm deaktiviert.
-Alert        | Boolean   | De-/Aktiviert den Alarm.
+Archive      | Boolean   | De-/Aktiviert der Archivierung
+
 
 ##### Profile:
 
 Es werden keine zusätzlichen Profile hinzugefügt
 
-### 6. WebFront
-
-Über das WebFront kann ...
-
-### 7. PHP-Befehlsreferenz
-
-todo
-
-`boolean ARM_SetActive(integer $InstanzID, boolean $Value);`
-Schaltet das Alarmierungsmodul mit der InstanzID $InstanzID  auf den Wert $Value (true = An; false = Aus).  
-Die Funktion liefert keinerlei Rückgabewert.  
-`ARM_SetActive(12345, true);`
-
-`boolean ARM_SetAlert(integer $InstanzID, boolean $Value);`
-Schaltet den Alarm mit der InstanzID $InstanzID auf den Wert $Value (true = An; false = Aus).  
-Die Funktion liefert keinerlei Rückgabewert.  
-`ARM_SetAlert(12345, false);`
