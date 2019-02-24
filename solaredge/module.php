@@ -32,7 +32,7 @@
 			
 			$this->RegisterPropertyInteger('Interval', 300);
 			
-			$this->RegisterTimer("UpdateTimer", 0, 'API_RequestInfo($_IPS[\'TARGET\']);');
+			$this->RegisterTimer("API_UpdateTimer", 0, 'API_RequestInfo($_IPS[\'TARGET\']);');
 			#$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
 					
 		}
@@ -51,7 +51,7 @@
 			parent::ApplyChanges();
 		
 			#$this->SetTimerInterval('API_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
-			$this->SetTimerInterval('API_RequestInfo', $this->ReadPropertyInteger('Interval') * 1000);
+			$this->SetTimerInterval('API_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
 			
 			//Set Logging Status
 			// Get ObjectID for first archive
