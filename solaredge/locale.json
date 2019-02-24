@@ -1,17 +1,17 @@
 {
-
-
 	"translations": {
-
 		"de": { 
-
 			"API Key": "API Key",
 			"ID": "ID",
 			"PV State": "PV Status",
-			"GridPower": "GridPower"
+			"PV current Power": "PV aktuelle Leistung",
+			"PV current Power to be archived?": "PV aktuelle Leistung archivieren?",
+			"Load state to be archived?": "Last Status archivieren?",			
+			"Load current Power to be archived?": "Last aktuelle Leistung archivieren?",			
+			"Grid Status to be archived?": "Grid Status archivieren?",			
+			"Grid current Power to be archived?": "Grid aktuelle Leistung archivieren?",			
+			"connection 0 => 'from' to be archived?": "Verbindung 0 => Richtung 'von' archivieren?",	
+			"connection 0 => 'to' to be archived?": "Verbindung 0 => Richtung 'nach' archivieren?"	
 		}
-
 	}
-}
-
 }
