@@ -15,8 +15,8 @@ Das Modul liest die Inverter Daten über die solaredge API
 ### 1. Funktionsumfang
 
 * Auslesen der Daten einer solaredge PV Anlage
-* 
-* ...
+  * Stand 02/2019 => Abfrage des'Site Power Flow'
+
 
 ### 2. Voraussetzungen
 
