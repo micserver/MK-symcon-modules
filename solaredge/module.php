@@ -30,7 +30,11 @@
 			$this->RegisterVariableString("connection_0_to", "connection 0 to", "", 1);
 			$this->RegisterPropertyBoolean("archive_connection_0_to", false);
 			
-			$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
+			$this->RegisterPropertyInteger('Interval', 300);
+			
+			$this->RegisterTimer("UpdateTimer", 0, 'API_RequestInfo($_IPS[\'TARGET\']);');
+			#$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
+					
 		}
 	
 		public function ApplyChanges()
