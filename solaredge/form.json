@@ -3,7 +3,7 @@
 	[
 		{ "type": "Label", "caption": "API Parameter eingeben:" },
 		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
-		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },		
+		{ "name": "ID", "type": "ValidationTextBox", "caption": "Standort ID" },		
 		{ "type": "Label", "caption": "Welche Variablen sollen archiviert werden?" },
 		{ "type": "CheckBox", "name": "archive_PV_State", "caption": "PV State archivieren?" },
 		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power to be archived?" },
