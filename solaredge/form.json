@@ -3,9 +3,11 @@
 	[
 		{ "type": "Label", "caption": "API Parameter to be filled in:" },
 		{ "name": "API_Key", "type": "ValidationTextBox", "caption": "API Key" },
-		{ "name": "ID", "type": "ValidationTextBox", "caption": "ID" },		
+
+		{ "name": "ID", "type": "ValidationTextBox", "caption": "Standort ID" },	
 		{ "type": "Label", "caption": "Which variables shall be archived?" },
 		{ "type": "CheckBox", "name": "archive_PV_State", "caption": "PV State to be archived?" },
+
 		{ "type": "CheckBox", "name": "archive_PV_currentPower", "caption": "PV current Power to be archived?" },
 		{ "type": "CheckBox", "name": "archive_Load_Status", "caption": "Load state to be archived?" },
 		{ "type": "CheckBox", "name": "archive_LOAD_currentPower", "caption": "Load current Power to be archived?" },
