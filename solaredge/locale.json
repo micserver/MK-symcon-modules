@@ -12,6 +12,7 @@
 			"Grid current Power to be archived?": "Grid aktuelle Leistung archivieren?",			
 			"connection 0 => 'from' to be archived?": "Verbindung 0 => Richtung 'von' archivieren?",	
 			"connection 0 => 'to' to be archived?": "Verbindung 0 => Richtung 'nach' archivieren?",
+			"API Parameter to be filled in:": "API Parameter eingeben:",
 			"Which variables shall be archived?": "Welche Variablen sollen archiviert werden?"
 		}
 	}
