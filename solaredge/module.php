@@ -36,12 +36,20 @@
 			#$this->RegisterTimer("UpdateTimer", 900 * 1000, 'API_RequestInfo($_IPS[\'TARGET\']);');
 					
 		}
-	
+    
+		public function Destroy()
+    		{
+        		$this->UnregisterTimer('API_UpdateStatus');
+   		}
+		
+		
 		public function ApplyChanges()
 		{
 			
 			//Never delete this line!
 			parent::ApplyChanges();
+		
+			$this->SetTimerInterval('DM_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
 			
 			//Set Logging Status
 			// Get ObjectID for first archive
