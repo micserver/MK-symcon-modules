@@ -14,8 +14,8 @@ Das Modul liest die Inverter Daten über die solaredge API
 
 ### 1. Funktionsumfang
 
-* Auslesen der Daten
-* ...
+* Auslesen der Daten einer solaredge PV Anlage
+* 
 * ...
 
 ### 2. Voraussetzungen
@@ -25,19 +25,20 @@ Das Modul liest die Inverter Daten über die solaredge API
 ### 3. Software-Installation
 
 Über das Modul-Control folgende URL hinzufügen.  
-`git://github.com/micserver/symcon-modules.git`  
+`git://github.com/micserver/MK-symcon-modules.git`  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- Unter "Instanz hinzufügen" ist das 'solaredge'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
+- Unter "Instanz hinzufügen" ist das 'solaredge API auslesen'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
 
 __Konfigurationsseite__:
 
 Name                   | Beschreibung
 ---------------------- | ---------------------------------
-Button "Konvertierung" | (Wird nur angezeigt, wenn die Listen leer und alte Links vorhanden sind) Wenn eine alte Version des Moduls erkannt wurde, können die alten Links in die neuen Listen via Knopfdruck eingepflegt werden. Ist dies Erfolgreich erscheint ein Meldungsfenster.
-Sensorvariablen        | Diese Liste beinhaltet die Variablen, welche bei Aktualisierung einen Alarm auslösen.
-Zielvariablen          | Diese Liste beinhaltet die Variablen, welche bei Alarm geschaltet werden. Diese müssen eine Standardaktion oder Aktionsskript beinhalten.
+API Key | ...erhält man über den 'Admin' Reiter des solaredge Web Interface im Bereich 'Anlagenzugriff'
+Standort-ID | ...erhält man über den 'Admin' Reiter des solaredge Web Interface im Bereich 'Anlagenzugriff'
+Archivierung | Flag zum Aktivieren der Archovierung (je Variable)
+Update Intervall | Intervall API AUfruf (Achtung, solaredge limitiert die Anzahl der Aufrufe/Tag. Siehe 'Daily Limitation' API-Handbuch 
 
 ### 5. Statusvariablen und Profile
 
