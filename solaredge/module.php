@@ -39,7 +39,8 @@
     
 		public function Destroy()
     		{
-        		$this->UnregisterTimer('API_UpdateStatus');
+        		#$this->UnregisterTimer('API_UpdateStatus');
+			$this->UnregisterTimer('API_RequestInfo');
    		}
 		
 		
@@ -49,7 +50,8 @@
 			//Never delete this line!
 			parent::ApplyChanges();
 		
-			$this->SetTimerInterval('API_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
+			#$this->SetTimerInterval('API_UpdateTimer', $this->ReadPropertyInteger('Interval') * 1000);
+			$this->SetTimerInterval('API_RequestInfo', $this->ReadPropertyInteger('Interval') * 1000);
 			
 			//Set Logging Status
 			// Get ObjectID for first archive
