@@ -44,6 +44,7 @@ class LeuchtmittelSzenenMK extends IPSModule
     {
         foreach (IPS_GetChildrenIDs($parentID) as $childID) {
             $object = IPS_GetObject($childID);
+            print_r($object);
             if (isset($object['ObjectName']) && $object['ObjectName'] !== '') {
                 $fullPath = $this->GetFullTopicPath($childID);
                 if ($fullPath !== '') {
