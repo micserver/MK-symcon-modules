@@ -80,6 +80,8 @@ class LeuchtmittelSzenenMK extends IPSModule
         // Annahme: im Konfigurationsstring steht eine JSON-Struktur mit allen Topics
         $data = json_decode($configurator, true);
 
+        print_r($data);
+
         if (!is_array($data)) {
             $this->SendDebug('GetMQTTTopics', 'Konfigurationsdaten konnten nicht als Array gelesen werden', 0);
             return [];
