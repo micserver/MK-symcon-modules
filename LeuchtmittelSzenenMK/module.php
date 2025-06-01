@@ -34,6 +34,7 @@ class LeuchtmittelSzenenMK extends IPSModule
                         'caption' => $entry['Topic'],
                         'value'   => $entry['Topic']
                     ];
+                    $this->SendDebug('Gefiltertes Topic', $entry['Topic'], 0);
                 }
             }
         }
