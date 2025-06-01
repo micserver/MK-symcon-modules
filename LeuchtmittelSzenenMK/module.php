@@ -27,6 +27,19 @@ class LeuchtmittelSzenenMK extends IPSModule
             $data = json_decode($config, true);
             $this->SendDebug("Decoded Data", print_r($data, true), 0);
 
+        // Zusätzliche Prüfung und Debug-Ausgabe
+        if (isset($data['values'])) {
+            $this->SendDebug('Check isset($data[values])', 'JA', 0);
+        } else {
+            $this->SendDebug('Check isset($data[values])', 'NEIN', 0);
+        }
+
+        if (is_array($data['values'])) {
+            $this->SendDebug('Check is_array($data[values])', 'JA', 0);
+        } else {
+            $this->SendDebug('Check is_array($data[values])', 'NEIN', 0);
+        }
+
         if (isset($data['values']) && is_array($data['values'])) {
             $this->SendDebug('MQTT Configurator', 'values count: ' . count($data['values']), 0);
             foreach ($data['values'] as $entry) {
