@@ -28,33 +28,33 @@ class LeuchtmittelSzenenMK extends IPSModule
             $this->SendDebug("Decoded Data", print_r($data, true), 0);
 
         // Zusätzliche Prüfung und Debug-Ausgabe
-        if (isset($data['values'])) {
+        if (isset($data['actions'][1]['values'])) {
             $this->SendDebug('Check isset($data[values])', 'JA', 0);
         } else {
             $this->SendDebug('Check isset($data[values])', 'NEIN', 0);
         }
 
-        if (is_array($data['values'])) {
+        if (is_array($data['actions'][1]['values'])) {
             $this->SendDebug('Check is_array($data[values])', 'JA', 0);
         } else {
             $this->SendDebug('Check is_array($data[values])', 'NEIN', 0);
         }
 
-        if (isset($data['values']) && is_array($data['values'])) {
-            $this->SendDebug('MQTT Configurator', 'values count: ' . count($data['values']), 0);
-            foreach ($data['values'] as $entry) {
-                if (isset($entry['Topic']) && str_contains($entry['Topic'], 'Leuchtmittel')) {
+        if (isset($data['actions'][1]['values']) && is_array($data['actions'][1]['values'])) {
+            $this->SendDebug('MQTT Configurator', 'values count: ' . count($data['actions'][1]['values']), 0);
+
+            foreach ($data['actions'][1]['values'] as $entry) {
+                if (isset($entry['topic']) && strpos($entry['topic'], 'Leuchtmittel') !== false) {
                     $options[] = [
-                        'caption' => $entry['Topic'],
-                        'value'   => $entry['Topic']
+                        'caption' => $entry['topic'],
+                        'value'   => $entry['topic']
                     ];
-                    $this->SendDebug('Gefiltertes Topic', $entry['Topic'], 0);
+                    $this->SendDebug('Gefiltertes Topic', $entry['topic'], 0);
                 }
             }
-        }
-    } else {
-        $this->SendDebug("MQTT Config", "Keine Daten", 0);
-    }
+        } else {
+    $this->SendDebug('MQTT Configurator', 'Keine values gefunden unter actions[1]', 0);
+}
 
     $this->SendDebug("FormOptions", json_encode($options), 0);
 
@@ -69,5 +69,6 @@ class LeuchtmittelSzenenMK extends IPSModule
         ],
         'actions' => []
     ]);
+}
 }
 }
