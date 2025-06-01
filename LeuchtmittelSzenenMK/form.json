@@ -5,11 +5,11 @@
       "caption": "Leuchtmittel-Auswahl",
       "items": [
         {
-          "type": "Tree",
+          "type": "Select",
           "name": "DeviceTopics",
-          "caption": "Verfügbare Leuchtmittel",
+          "caption": "Verfügbare Leuchtmittel (aus MQTT)",
           "multiple": true,
-          "values": []
+          "options": []
         }
       ]
     },

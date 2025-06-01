@@ -1,6 +1,7 @@
 <?php
 
 class LeuchtmittelSzenenMK extends IPSModule
+
 {
     public function Create()
     {
@@ -10,57 +11,57 @@ class LeuchtmittelSzenenMK extends IPSModule
 
     public function GetConfigurationForm()
     {
-        $topics = [
-            "zigbee2mqtt/Leuchtmittel/Terrasse/T0",
-            "zigbee2mqtt/Leuchtmittel/Kueche/Spuele/Rechts1",
-            "zigbee2mqtt/Leuchtmittel/Wohnzimmer/roteLaterne"
-        ];
+        $topics = $this->GetMQTTTopicsWithLeuchtmittel();
 
-        $tree = $this->BuildTopicTree($topics);
+        $options = array_map(function ($topic) {
+            return [
+                'caption' => $topic,
+                'value'   => $topic
+            ];
+        }, $topics);
 
         $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-        $form['elements'][0]['items'][0]['values'] = $tree;
+        $form['elements'][0]['items'][0]['options'] = $options;
         return json_encode($form);
     }
 
-    private function BuildTopicTree(array $topics): array
+    private function GetMQTTTopicsWithLeuchtmittel(): array
     {
-        $tree = [];
+        $topics = [];
+        $rootID = 41847; // MQTT-Konfigurator-ID
 
-        foreach ($topics as $topic) {
-            $parts = explode('/', str_replace('zigbee2mqtt/Leuchtmittel/', '', $topic));
-            $current =& $tree;
+        $this->CollectTopicsRecursive($rootID, $topics);
 
-            foreach ($parts as $i => $part) {
-                $existing = &$this->FindChild($current, $part);
-
-                if (!isset($existing)) {
-                    $entry = [
-                        'caption' => $part,
-                        'value'   => ($i === count($parts) - 1) ? 'zigbee2mqtt/Leuchtmittel/' . implode('/', $parts) : null,
-                        'children' => []
-                    ];
-                    $current[] = $entry;
-                    end($current);
-                    $existing = &$current[key($current)];
-                }
-
-                $current =& $existing['children'];
-            }
-        }
-
-        return $tree;
+        return array_filter($topics, function ($topic) {
+            return stripos($topic, 'Leuchtmittel') !== false;
+        });
     }
 
-    private function &FindChild(array &$array, string $caption)
+    private function CollectTopicsRecursive(int $parentID, array &$topics)
     {
-        foreach ($array as &$entry) {
-            if ($entry['caption'] === $caption) {
-                return $entry;
+        foreach (IPS_GetChildrenIDs($parentID) as $childID) {
+            $object = IPS_GetObject($childID);
+            if (isset($object['ObjectName']) && $object['ObjectName'] !== '') {
+                $fullPath = $this->GetFullTopicPath($childID);
+                if ($fullPath !== '') {
+                    $topics[] = $fullPath;
+                }
             }
+            $this->CollectTopicsRecursive($childID, $topics);
         }
+    }
 
-        $null = null;
-        return $null;
+    private function GetFullTopicPath(int $objectID): string
+    {
+        $parts = [];
+        while ($objectID != 0) {
+            $object = IPS_GetObject($objectID);
+            if (trim($object['ObjectName']) === '') {
+                break;
+            }
+            array_unshift($parts, $object['ObjectName']);
+            $objectID = $object['ParentID'];
+        }
+        return implode('/', $parts);
     }
 }
