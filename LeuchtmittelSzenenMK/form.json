@@ -11,7 +11,7 @@
           "validParentTypes": ["MQTTConfigurator"]
         }
       ]
-    }
+    },
     {
       "type": "ExpansionPanel",
       "caption": "Leuchtmittel-Auswahl",
@@ -23,7 +23,7 @@
           "values": []
         }
       ]
-    },
+    }
 
   ],
   "actions": []
