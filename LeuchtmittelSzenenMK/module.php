@@ -32,7 +32,7 @@ class LeuchtmittelSzenenMK extends IPSModule
     {
         $topics = [];
         $rootID = 41847; // MQTT-Konfigurator-ID
-
+        IPS_LogMessage("SzenenMK", "ID: " . $rootID);
         $this->CollectTopicsRecursive($rootID, $topics);
 
         return array_filter($topics, function ($topic) {
