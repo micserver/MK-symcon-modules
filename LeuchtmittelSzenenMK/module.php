@@ -28,6 +28,7 @@ class LeuchtmittelSzenenMK extends IPSModule
             $this->SendDebug("Decoded Data", print_r($data, true), 0);
 
         if (isset($data['values']) && is_array($data['values'])) {
+            $this->SendDebug('MQTT Configurator', 'values count: ' . count($data['values']), 0);
             foreach ($data['values'] as $entry) {
                 if (isset($entry['Topic']) && str_contains($entry['Topic'], 'Leuchtmittel')) {
                     $options[] = [
