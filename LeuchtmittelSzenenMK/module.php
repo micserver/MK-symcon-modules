@@ -28,7 +28,7 @@ class LeuchtmittelSzenenMK extends IPSModule
         $topics = [];
         $configuratorID = 41847;
 
-        IPS_LogMessage("SzenenMK", "ID: " . $rootID);
+        IPS_LogMessage("SzenenMK", "ID: " . $configuratorID);
 
         if (!IPS_InstanceExists($configuratorID)) {
             IPS_LogMessage("SzenenMK", "MQTT Konfigurator (ID 41847) nicht gefunden!");
