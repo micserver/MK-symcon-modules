@@ -4,7 +4,7 @@
   "name": "MK-symcon-modules",
   "url": "https://github.com/micserver/MK-symcon-modules",
   "compatibility": {
-    "version": "5.0"
+    "version": "8.1"
   },
   "version": "1.0",
   "build": 0,
