@@ -1,106 +1,112 @@
 <?php
 
+declare(strict_types=1);
+
 class LeuchtmittelSzenenMK extends IPSModule
 {
     public function Create()
     {
+        // Diese Zeile nicht entfernen!
         parent::Create();
-        $this->RegisterPropertyInteger('MQTTConfiguratorID', 0);
+
+        // Beispiel: eine Property zum Speichern von gewählten Geräten
+        $this->RegisterPropertyString('DeviceTopics', '[]');
+    }
+
+    public function ApplyChanges()
+    {
+        // Diese Zeile nicht entfernen!
+        parent::ApplyChanges();
     }
 
     public function GetConfigurationForm()
     {
         $topics = $this->GetMQTTTopicsWithLeuchtmittel();
-        if (!is_array($topics)) {
-            $topics = [];
-        }
-
-        $tree = $this->BuildTopicTree($topics);
-        if (!is_array($tree)) {
-            $tree = [];
-        }
-
-        IPS_LogMessage("LeuchtmittelSzenenMK", "Gefundene Topics: " . json_encode($topics));
-        IPS_LogMessage("LeuchtmittelSzenenMK", "Tree-Struktur: " . json_encode($tree));
-
-        $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-        $form['elements'][0]['items'][0]['values'] = $tree;
-
-        return json_encode($form);
-    }
-
-private function GetMQTTTopicsWithLeuchtmittel(): array
-{
-    $topics = [];
-    $configuratorID = 41847;
-
-    if (!IPS_InstanceExists($configuratorID)) {
-        $this->SendDebug("MQTT", "Konfigurator-ID nicht gefunden", 0);
-        return $topics;
-    }
-
-    $config = json_decode(IPS_GetConfiguration($configuratorID), true);
-    $this->SendDebug("MQTT", "Konfigurator-Konfiguration: " . print_r($config, true), 0);
-
-    if (!isset($config['Values'])) {
-        $this->SendDebug("MQTT", "Keine Values im Konfigurator", 0);
-        return $topics;
-    }
-
-    $values = json_decode($config['Values'], true);
-    if (!is_array($values)) {
-        $this->SendDebug("MQTT", "Values konnte nicht geparst werden", 0);
-        return $topics;
-    }
-
-    foreach ($values as $entry) {
-        if (isset($entry['topic']) && strpos($entry['topic'], 'Leuchtmittel') !== false) {
-            $topics[] = $entry['topic'];
-        }
-    }
-
-    $this->SendDebug("MQTT", "Gefundene Topics: " . print_r($topics, true), 0);
-    return $topics;
-}
-
-    private function BuildTopicTree(array $topics): array
-    {
-        $tree = [];
+        $options = [];
 
         foreach ($topics as $topic) {
-            $parts = explode('/', str_replace('zigbee2mqtt/Leuchtmittel/', '', $topic));
-            $current =& $tree;
-
-            foreach ($parts as $i => $part) {
-                $existing = &$this->FindChild($current, $part);
-
-                if (!isset($existing)) {
-                    $entry = [
-                        'caption' => $part,
-                        'value'   => ($i === count($parts) - 1) ? $topic : null,
-                        'children' => []
-                    ];
-                    $current[] = $entry;
-                    end($current);
-                    $existing = &$current[key($current)];
-                }
-
-                $current =& $existing['children'];
-            }
+            $options[] = [
+                'caption' => $topic,
+                'value'   => $topic
+            ];
         }
 
-        return $tree;
+        return json_encode([
+            'elements' => [
+                [
+                    'type'    => 'ExpansionPanel',
+                    'caption' => 'Leuchtmittel-Auswahl',
+                    'items'   => [
+                        [
+                            'type'    => 'Select',
+                            'name'    => 'DeviceTopics',
+                            'caption' => 'Verfügbare Leuchtmittel',
+                            'options' => $options,
+                            'multiple' => true
+                        ]
+                    ]
+                ],
+                [
+                    'type'    => 'ExpansionPanel',
+                    'caption' => 'Szenensteuerung',
+                    'items'   => [
+                        [
+                            'type'    => 'Button',
+                            'caption' => 'Szene speichern',
+                            'onClick' => 'SaveScene'
+                        ],
+                        [
+                            'type'    => 'Select',
+                            'name'    => 'SceneList',
+                            'caption' => 'Gespeicherte Szenen',
+                            'options' => []
+                        ],
+                        [
+                            'type'    => 'Button',
+                            'caption' => 'Szene anwenden',
+                            'onClick' => 'ApplyScene'
+                        ]
+                    ]
+                ]
+            ],
+            'actions' => []
+        ]);
     }
 
-    private function &FindChild(array &$array, string $caption)
+    private function GetMQTTTopicsWithLeuchtmittel(): array
     {
-        foreach ($array as &$entry) {
-            if ($entry['caption'] === $caption) {
-                return $entry;
+        $topics = [];
+        $configuratorID = 41847;
+
+        $form = @IPS_GetConfigurationForm($configuratorID);
+        if ($form === false) {
+            $this->SendDebug("MQTT", "Fehler beim Laden der Konfigurationsform", 0);
+            return $topics;
+        }
+
+        $data = json_decode($form, true);
+        if (!isset($data['values']) || !is_array($data['values'])) {
+            $this->SendDebug("MQTT", "Keine gültigen Values im Konfigurator gefunden", 0);
+            return $topics;
+        }
+
+        foreach ($data['values'] as $entry) {
+            if (isset($entry['Topic']) && stripos($entry['Topic'], 'Leuchtmittel') !== false) {
+                $topics[] = $entry['Topic'];
             }
         }
 
-        $null = null;
-        return $null;
+        $this->SendDebug("MQTT", "Gefundene Leuchtmittel-Themen: " . print_r($topics, true), 0);
+        return $topics;
+    }
+
+    public function SaveScene()
+    {
+        // Szenenspeicherung implementieren
+    }
+
+    public function ApplyScene()
+    {
+        // Szenenanwendung implementieren
     }
 }
