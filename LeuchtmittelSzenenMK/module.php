@@ -13,6 +13,9 @@ class LeuchtmittelSzenenMK extends IPSModule
     {
         $topics = $this->GetMQTTTopicsWithLeuchtmittel();
 
+        // Debug-Ausgabe ins IP-Symcon Log
+        IPS_LogMessage("SzenenMK", "Gefundene Topics: " . json_encode($topics));
+
         $options = array_map(function ($topic) {
             return [
                 'caption' => $topic,
