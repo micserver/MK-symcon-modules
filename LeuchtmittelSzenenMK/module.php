@@ -14,7 +14,7 @@ class SzenenMK extends IPSModule
 
         // Debug-Ausgabe ins IP-Symcon Log
         IPS_LogMessage("SzenenMK", "Gefundene Topics: " . json_encode($topics));
-        
+
         $tree = $this->BuildTopicTree($topics);
 
         $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
@@ -27,6 +27,7 @@ class SzenenMK extends IPSModule
     {
         $topics = [];
         $configuratorID = 41847;
+
         IPS_LogMessage("SzenenMK", "ID: " . $rootID);
 
         if (!IPS_InstanceExists($configuratorID)) {
