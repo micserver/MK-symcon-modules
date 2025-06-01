@@ -29,10 +29,10 @@ class LeuchtmittelSzenenMK extends IPSModule
 
         if (isset($data['values']) && is_array($data['values'])) {
             foreach ($data['values'] as $entry) {
-                if (isset($entry['topic']) && str_contains($entry['topic'], 'Leuchtmittel')) {
+                if (isset($entry['Topic']) && str_contains($entry['Topic'], 'Leuchtmittel')) {
                     $options[] = [
-                        'caption' => $entry['topic'],
-                        'value'   => $entry['topic']
+                        'caption' => $entry['Topic'],
+                        'value'   => $entry['Topic']
                     ];
                 }
             }
