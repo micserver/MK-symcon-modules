@@ -5,71 +5,66 @@ class LeuchtmittelSzenenMK extends IPSModule
     public function Create()
     {
         parent::Create();
-        $this->RegisterPropertyString("DeviceTopics", "[]");
+        $this->RegisterPropertyInteger('MQTTConfiguratorID', 0);
     }
 
     public function GetConfigurationForm()
     {
         $topics = $this->GetMQTTTopicsWithLeuchtmittel();
         if (!is_array($topics)) {
-            $topics = []; // Fallback bei Fehler
+            $topics = [];
         }
-
-
-        // Debug-Ausgabe ins IP-Symcon Log
-        IPS_LogMessage("SzenenMK", "Gefundene Topics: " . json_encode($topics));
 
         $tree = $this->BuildTopicTree($topics);
         if (!is_array($tree)) {
-            $tree = []; // Fallback bei Fehler
+            $tree = [];
         }
-        
+
+        IPS_LogMessage("LeuchtmittelSzenenMK", "Gefundene Topics: " . json_encode($topics));
+        IPS_LogMessage("LeuchtmittelSzenenMK", "Tree-Struktur: " . json_encode($tree));
+
         $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
         $form['elements'][0]['items'][0]['values'] = $tree;
 
         return json_encode($form);
     }
 
-private function GetMQTTTopicsWithLeuchtmittel(): array
-{
-    $topics = [];
-    $configuratorID = 41847;
-
-    if (!IPS_InstanceExists($configuratorID)) {
-        IPS_LogMessage("LeuchtmittelSzenenMK", "MQTT Konfigurator (ID 41847) nicht gefunden!");
-        return [];
-    }
-
-    $configJSON = IPS_GetConfiguration($configuratorID);
-    $config = json_decode($configJSON, true);
-
-    if (!isset($config['Data'])) {
-        IPS_LogMessage("LeuchtmittelSzenenMK", "Konfigurations-Daten nicht gefunden!");
-        return [];
-    }
-
-    $data = json_decode($config['Data'], true);
-
-    if (!isset($data['Values'])) {
-        IPS_LogMessage("LeuchtmittelSzenenMK", "Keine Topics im MQTT Konfigurator gefunden!");
-        return [];
-    }
-
-    foreach ($data['Values'] as $entry) {
-        if (isset($entry['Topic']) && strpos($entry['Topic'], 'Leuchtmittel') !== false) {
-            $topics[] = $entry['Topic'];
+    private function GetMQTTTopicsWithLeuchtmittel(): array
+    {
+        $topics = [];
+        $configuratorID = $this->ReadPropertyInteger('MQTTConfiguratorID');
+        if ($configuratorID <= 0 || !IPS_InstanceExists($configuratorID)) {
+            IPS_LogMessage("LeuchtmittelSzenenMK", "Ungültige MQTT Configurator ID: $configuratorID");
+            return [];
         }
-    }
 
-    return $topics;
-}
+        $configuratorData = json_decode(IPS_GetConfiguration($configuratorID), true);
+        if (!isset($configuratorData['Data'])) {
+            IPS_LogMessage("LeuchtmittelSzenenMK", "Keine Daten im Konfigurator gefunden");
+            return [];
+        }
+
+        $entries = json_decode($configuratorData['Data'], true);
+        if (!is_array($entries)) {
+            IPS_LogMessage("LeuchtmittelSzenenMK", "Datenformat ungültig im Konfigurator");
+            return [];
+        }
+
+        foreach ($entries as $entry) {
+            if (isset($entry['Topic']) && stripos($entry['Topic'], 'Leuchtmittel') !== false) {
+                $topics[] = $entry['Topic'];
+            }
+        }
+
+        return $topics;
+    }
 
     private function BuildTopicTree(array $topics): array
     {
         $tree = [];
 
         foreach ($topics as $topic) {
-            $parts = explode('/', $topic);
+            $parts = explode('/', str_replace('zigbee2mqtt/Leuchtmittel/', '', $topic));
             $current =& $tree;
 
             foreach ($parts as $i => $part) {

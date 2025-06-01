@@ -8,30 +8,19 @@
           "type": "Tree",
           "name": "DeviceTopics",
           "caption": "Verfügbare Leuchtmittel",
-          "multiple": true,
           "values": []
         }
       ]
     },
     {
       "type": "ExpansionPanel",
-      "caption": "Szenensteuerung",
+      "caption": "Konfiguration",
       "items": [
         {
-          "type": "Button",
-          "caption": "Szene speichern",
-          "onClick": "SaveScene"
-        },
-        {
-          "type": "Select",
-          "name": "SceneList",
-          "caption": "Gespeicherte Szenen",
-          "options": []
-        },
-        {
-          "type": "Button",
-          "caption": "Szene anwenden",
-          "onClick": "ApplyScene"
+          "type": "SelectInstance",
+          "name": "MQTTConfiguratorID",
+          "caption": "MQTT Konfigurator",
+          "validParentTypes": ["MQTTConfigurator"]
         }
       ]
     }
