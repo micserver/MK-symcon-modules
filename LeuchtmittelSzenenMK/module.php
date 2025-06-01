@@ -77,8 +77,16 @@ class LeuchtmittelSzenenMK extends IPSModule
         $configurator = IPS_GetConfiguration($configuratorID);
         $this->SendDebug('MQTT Configurator Config', $configurator, 0);
 
-        $children = IPS_GetChildrenIDs($configuratorID);
-        $this->SendDebug('GetMQTTTopics', 'Anzahl Children: ' . count($children), 0);
+        // Annahme: im Konfigurationsstring steht eine JSON-Struktur mit allen Topics
+        $data = json_decode($config, true);
+
+        if (!is_array($data)) {
+            $this->SendDebug('GetMQTTTopics', 'Konfigurationsdaten konnten nicht als Array gelesen werden', 0);
+            return [];
+        }
+
+        //$children = IPS_GetChildrenIDs($configuratorID);
+        //$this->SendDebug('GetMQTTTopics', 'Anzahl Children: ' . count($children), 0);
 
         $topics = [];
 
