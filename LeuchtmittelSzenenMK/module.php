@@ -23,6 +23,10 @@ class LeuchtmittelSzenenMK extends IPSModule
 
         $options = [];
 
+        if ($config !== false) {
+            $data = json_decode($config, true);
+            $this->SendDebug("Decoded Data", print_r($data, true), 0);
+
         if (isset($data['values']) && is_array($data['values'])) {
             foreach ($data['values'] as $entry) {
                 if (isset($entry['topic']) && str_contains($entry['topic'], 'Leuchtmittel')) {
@@ -50,4 +54,5 @@ class LeuchtmittelSzenenMK extends IPSModule
         ],
         'actions' => []
     ]);
+}
 }
