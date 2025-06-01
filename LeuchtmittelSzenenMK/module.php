@@ -1,6 +1,6 @@
 <?php
 
-class SzenenMK extends IPSModule
+class LeuchtmittelSzenenMK extends IPSModule
 {
     public function Create()
     {
