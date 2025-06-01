@@ -6,30 +6,21 @@ class LeuchtmittelSzenenMK extends IPSModule
 {
     public function Create()
     {
-        // Diese Zeile nicht entfernen!
         parent::Create();
-
-        // Beispiel: eine Property zum Speichern von gewählten Geräten
+        $this->RegisterPropertyInteger('MQTTConfiguratorID', 41847);
         $this->RegisterPropertyString('DeviceTopics', '[]');
     }
 
     public function ApplyChanges()
     {
-        // Diese Zeile nicht entfernen!
         parent::ApplyChanges();
     }
 
     public function GetConfigurationForm()
     {
-        $topics = $this->GetMQTTTopicsWithLeuchtmittel();
-        $options = [];
+        $options = $this->GetMQTTTopicsWithLeuchtmittel();
 
-        foreach ($topics as $topic) {
-            $options[] = [
-                'caption' => $topic,
-                'value'   => $topic
-            ];
-        }
+        $this->SendDebug("FormOptions", json_encode($options), 0);
 
         return json_encode([
             'elements' => [
@@ -38,11 +29,11 @@ class LeuchtmittelSzenenMK extends IPSModule
                     'caption' => 'Leuchtmittel-Auswahl',
                     'items'   => [
                         [
-                            'type'    => 'Select',
-                            'name'    => 'DeviceTopics',
-                            'caption' => 'Verfügbare Leuchtmittel',
-                            'options' => $options,
-                            'multiple' => true
+                            'type'     => 'Select',
+                            'name'     => 'DeviceTopics',
+                            'caption'  => 'Verfügbare Leuchtmittel',
+                            'multiple' => true,
+                            'options'  => $options
                         ]
                     ]
                 ],
@@ -75,38 +66,58 @@ class LeuchtmittelSzenenMK extends IPSModule
 
     private function GetMQTTTopicsWithLeuchtmittel(): array
     {
+        $configuratorID = $this->ReadPropertyInteger('MQTTConfiguratorID');
+        $this->SendDebug('GetMQTTTopics', 'MQTT Konfigurator ID: ' . $configuratorID, 0);
+
+        if (!IPS_InstanceExists($configuratorID)) {
+            $this->SendDebug('GetMQTTTopics', 'Konfigurator existiert nicht', 0);
+            return [];
+        }
+
+        $configurator = IPS_GetConfiguration($configuratorID);
+        $this->SendDebug('MQTT Configurator Config', $configurator, 0);
+
+        $children = IPS_GetChildrenIDs($configuratorID);
+        $this->SendDebug('GetMQTTTopics', 'Anzahl Children: ' . count($children), 0);
+
         $topics = [];
-        $configuratorID = 41847;
 
-        $form = @IPS_GetConfigurationForm($configuratorID);
-        if ($form === false) {
-            $this->SendDebug("MQTT", "Fehler beim Laden der Konfigurationsform", 0);
-            return $topics;
-        }
+        foreach ($children as $id) {
+            if (!IPS_InstanceExists($id)) {
+                continue;
+            }
 
-        $data = json_decode($form, true);
-        if (!isset($data['values']) || !is_array($data['values'])) {
-            $this->SendDebug("MQTT", "Keine gültigen Values im Konfigurator gefunden", 0);
-            return $topics;
-        }
+            $instance = IPS_GetInstance($id);
+            if (!isset($instance['ModuleInfo']['ModuleID']) || $instance['ModuleInfo']['ModuleID'] !== '{018EF6B5-AB94-40C6-AA53-46943E824ACF}') {
+                continue;
+            }
 
-        foreach ($data['values'] as $entry) {
-            if (isset($entry['Topic']) && stripos($entry['Topic'], 'Leuchtmittel') !== false) {
-                $topics[] = $entry['Topic'];
+            $topic = @IPS_GetProperty($id, 'Topic');
+            if ($topic === false || $topic === null || $topic === '') {
+                continue;
+            }
+
+            $this->SendDebug('Topic gefunden', $topic, 0);
+
+            if (stripos($topic, 'Leuchtmittel') !== false) {
+                $topics[] = [
+                    'caption' => $topic,
+                    'value'   => $topic
+                ];
             }
         }
 
-        $this->SendDebug("MQTT", "Gefundene Leuchtmittel-Themen: " . print_r($topics, true), 0);
+        $this->SendDebug('Gefilterte Topics', json_encode($topics), 0);
         return $topics;
     }
 
     public function SaveScene()
     {
-        // Szenenspeicherung implementieren
+        $this->SendDebug('SaveScene', 'Szene speichern aufgerufen', 0);
     }
 
     public function ApplyScene()
     {
-        // Szenenanwendung implementieren
+        $this->SendDebug('ApplyScene', 'Szene anwenden aufgerufen', 0);
     }
 }
