@@ -9,6 +9,7 @@ class LeuchtmittelSzenenMK extends IPSModule
         parent::Create();
         $this->RegisterPropertyInteger('MQTTConfiguratorID', 41847);
         $this->RegisterPropertyString('DeviceTopics', '[]');
+        echo IPS_GetConfiguration(41847);
     }
 
     public function ApplyChanges()
