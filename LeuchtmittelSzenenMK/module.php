@@ -18,50 +18,36 @@ class LeuchtmittelSzenenMK extends IPSModule
 
     public function GetConfigurationForm()
     {
+        $config = @IPS_GetConfigurationForm(41847);
+        $this->SendDebug("RAW", $config, 0);
+
         $options = [];
 
-        // Die ID deines MQTT-Konfigurators (muss korrekt sein)
-        $mqttConfiguratorID = 41847;
-
-        $formJson = @IPS_GetConfigurationForm($mqttConfiguratorID);
-        if ($formJson === false) {
-            $this->SendDebug("MQTT Konfigurator", "Keine Konfigurationsdaten gefunden", 0);
-            return json_encode([
-                'elements' => [],
-                'actions' => []
-            ]);
-        }
-
-        $configPage = json_decode($formJson, true);
-        if (!isset($configPage['values']) || !is_array($configPage['values'])) {
-            $this->SendDebug("MQTT Konfigurator", "Fehlerhafte Struktur in Formdaten", 0);
-            return json_encode([
-                'elements' => [],
-                'actions' => []
-            ]);
-        }
-
-        foreach ($configPage['values'] as $entry) {
-            if (isset($entry['Topic']) && stripos($entry['Topic'], 'Leuchtmittel') !== false) {
-                $options[] = [
-                    'caption' => $entry['Topic'],
-                    'value'   => $entry['Topic']
-                ];
+        if (isset($data['values']) && is_array($data['values'])) {
+            foreach ($data['values'] as $entry) {
+                if (isset($entry['topic']) && str_contains($entry['topic'], 'Leuchtmittel')) {
+                    $options[] = [
+                        'caption' => $entry['topic'],
+                        'value'   => $entry['topic']
+                    ];
+                }
             }
         }
-
-        $this->SendDebug("Gefundene Optionen", json_encode($options), 0);
-
-        return json_encode([
-            'elements' => [
-                [
-                    'type'    => 'Select',
-                    'name'    => 'DeviceTopics',
-                    'caption' => 'Verfügbare Leuchtmittel',
-                    'options' => $options
-                ]
-            ],
-            'actions' => []
-        ]);
+    } else {
+        $this->SendDebug("MQTT Config", "Keine Daten", 0);
     }
+
+    $this->SendDebug("FormOptions", json_encode($options), 0);
+
+    return json_encode([
+        'elements' => [
+            [
+                'type'    => 'Select',
+                'name'    => 'DeviceTopics',
+                'caption' => 'Leuchtmittel-Auswahl',
+                'options' => $options
+            ]
+        ],
+        'actions' => []
+    ]);
 }
