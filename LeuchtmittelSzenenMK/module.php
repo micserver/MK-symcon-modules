@@ -63,43 +63,4 @@ class LeuchtmittelSzenenMK extends IPSModule
         $null = null;
         return $null;
     }
-} und die 'form-json': {
-  "elements": [
-    {
-      "type": "ExpansionPanel",
-      "caption": "Leuchtmittel-Auswahl",
-      "items": [
-        {
-          "type": "SelectTree",
-          "name": "DeviceTopics",
-          "caption": "Verfügbare Leuchtmittel",
-          "multiple": true,
-          "values": []
-        }
-      ]
-    },
-    {
-      "type": "ExpansionPanel",
-      "caption": "Szenensteuerung",
-      "items": [
-        {
-          "type": "Button",
-          "caption": "Szene speichern",
-          "onClick": "SaveScene"
-        },
-        {
-          "type": "Select",
-          "name": "SceneList",
-          "caption": "Gespeicherte Szenen",
-          "options": []
-        },
-        {
-          "type": "Button",
-          "caption": "Szene anwenden",
-          "onClick": "ApplyScene"
-        }
-      ]
-    }
-  ],
-  "actions": []
-} 
+}
