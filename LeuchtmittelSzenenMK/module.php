@@ -1,7 +1,6 @@
 <?php
 
-class LeuchtmittelSzenenMK extends IPSModule
-
+class SzenenMK extends IPSModule
 {
     public function Create()
     {
@@ -15,57 +14,81 @@ class LeuchtmittelSzenenMK extends IPSModule
 
         // Debug-Ausgabe ins IP-Symcon Log
         IPS_LogMessage("SzenenMK", "Gefundene Topics: " . json_encode($topics));
-
-        $options = array_map(function ($topic) {
-            return [
-                'caption' => $topic,
-                'value'   => $topic
-            ];
-        }, $topics);
+        
+        $tree = $this->BuildTopicTree($topics);
 
         $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-        $form['elements'][0]['items'][0]['options'] = $options;
+        $form['elements'][0]['items'][0]['values'] = $tree;
+
         return json_encode($form);
     }
 
     private function GetMQTTTopicsWithLeuchtmittel(): array
     {
         $topics = [];
-        $rootID = 41847; // MQTT-Konfigurator-ID
+        $configuratorID = 41847;
         IPS_LogMessage("SzenenMK", "ID: " . $rootID);
-        $this->CollectTopicsRecursive($rootID, $topics);
 
-        return array_filter($topics, function ($topic) {
-            return stripos($topic, 'Leuchtmittel') !== false;
-        });
+        if (!IPS_InstanceExists($configuratorID)) {
+            IPS_LogMessage("SzenenMK", "MQTT Konfigurator (ID 41847) nicht gefunden!");
+            return [];
+        }
+
+        $config = IPS_GetConfiguration($configuratorID);
+        $data = json_decode($config['Data'], true);
+
+        if (!isset($data['Values'])) {
+            IPS_LogMessage("SzenenMK", "Keine Topics im MQTT Konfigurator gefunden!");
+            return [];
+        }
+
+        foreach ($data['Values'] as $entry) {
+            if (isset($entry['Topic']) && strpos($entry['Topic'], 'Leuchtmittel') !== false) {
+                $topics[] = $entry['Topic'];
+            }
+        }
+
+        return $topics;
     }
 
-    private function CollectTopicsRecursive(int $parentID, array &$topics)
+    private function BuildTopicTree(array $topics): array
     {
-        foreach (IPS_GetChildrenIDs($parentID) as $childID) {
-            $object = IPS_GetObject($childID);
-            print_r($object);
-            if (isset($object['ObjectName']) && $object['ObjectName'] !== '') {
-                $fullPath = $this->GetFullTopicPath($childID);
-                if ($fullPath !== '') {
-                    $topics[] = $fullPath;
+        $tree = [];
+
+        foreach ($topics as $topic) {
+            $parts = explode('/', $topic);
+            $current =& $tree;
+
+            foreach ($parts as $i => $part) {
+                $existing = &$this->FindChild($current, $part);
+
+                if (!isset($existing)) {
+                    $entry = [
+                        'caption' => $part,
+                        'value'   => ($i === count($parts) - 1) ? $topic : null,
+                        'children' => []
+                    ];
+                    $current[] = $entry;
+                    end($current);
+                    $existing = &$current[key($current)];
                 }
+
+                $current =& $existing['children'];
             }
-            $this->CollectTopicsRecursive($childID, $topics);
         }
+
+        return $tree;
     }
 
-    private function GetFullTopicPath(int $objectID): string
+    private function &FindChild(array &$array, string $caption)
     {
-        $parts = [];
-        while ($objectID != 0) {
-            $object = IPS_GetObject($objectID);
-            if (trim($object['ObjectName']) === '') {
-                break;
+        foreach ($array as &$entry) {
+            if ($entry['caption'] === $caption) {
+                return $entry;
             }
-            array_unshift($parts, $object['ObjectName']);
-            $objectID = $object['ParentID'];
         }
-        return implode('/', $parts);
+
+        $null = null;
+        return $null;
     }
 }
