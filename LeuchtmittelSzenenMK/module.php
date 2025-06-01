@@ -11,12 +11,19 @@ class LeuchtmittelSzenenMK extends IPSModule
     public function GetConfigurationForm()
     {
         $topics = $this->GetMQTTTopicsWithLeuchtmittel();
+        if (!is_array($topics)) {
+            $topics = []; // Fallback bei Fehler
+        }
+
 
         // Debug-Ausgabe ins IP-Symcon Log
         IPS_LogMessage("SzenenMK", "Gefundene Topics: " . json_encode($topics));
 
         $tree = $this->BuildTopicTree($topics);
-
+        if (!is_array($tree)) {
+            $tree = []; // Fallback bei Fehler
+        }
+        
         $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
         $form['elements'][0]['items'][0]['values'] = $tree;
 
