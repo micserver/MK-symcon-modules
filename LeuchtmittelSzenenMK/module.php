@@ -23,34 +23,39 @@ class LeuchtmittelSzenenMK extends IPSModule
         return json_encode($form);
     }
 
-    private function GetMQTTTopicsWithLeuchtmittel(): array
-    {
-        $topics = [];
-        $configuratorID = 41847;
+private function GetMQTTTopicsWithLeuchtmittel(): array
+{
+    $topics = [];
+    $configuratorID = 41847;
 
-        IPS_LogMessage("SzenenMK", "ID: " . $configuratorID);
-
-        if (!IPS_InstanceExists($configuratorID)) {
-            IPS_LogMessage("SzenenMK", "MQTT Konfigurator (ID 41847) nicht gefunden!");
-            return [];
-        }
-
-        $config = IPS_GetConfiguration($configuratorID);
-        $data = json_decode($config['Data'], true);
-
-        if (!isset($data['Values'])) {
-            IPS_LogMessage("SzenenMK", "Keine Topics im MQTT Konfigurator gefunden!");
-            return [];
-        }
-
-        foreach ($data['Values'] as $entry) {
-            if (isset($entry['Topic']) && strpos($entry['Topic'], 'Leuchtmittel') !== false) {
-                $topics[] = $entry['Topic'];
-            }
-        }
-
-        return $topics;
+    if (!IPS_InstanceExists($configuratorID)) {
+        IPS_LogMessage("LeuchtmittelSzenenMK", "MQTT Konfigurator (ID 41847) nicht gefunden!");
+        return [];
     }
+
+    $configJSON = IPS_GetConfiguration($configuratorID);
+    $config = json_decode($configJSON, true);
+
+    if (!isset($config['Data'])) {
+        IPS_LogMessage("LeuchtmittelSzenenMK", "Konfigurations-Daten nicht gefunden!");
+        return [];
+    }
+
+    $data = json_decode($config['Data'], true);
+
+    if (!isset($data['Values'])) {
+        IPS_LogMessage("LeuchtmittelSzenenMK", "Keine Topics im MQTT Konfigurator gefunden!");
+        return [];
+    }
+
+    foreach ($data['Values'] as $entry) {
+        if (isset($entry['Topic']) && strpos($entry['Topic'], 'Leuchtmittel') !== false) {
+            $topics[] = $entry['Topic'];
+        }
+    }
+
+    return $topics;
+}
 
     private function BuildTopicTree(array $topics): array
     {
