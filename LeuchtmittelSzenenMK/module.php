@@ -90,33 +90,25 @@ class LeuchtmittelSzenenMK extends IPSModule
 
         $topics = [];
 
-        foreach ($children as $id) {
-            if (!IPS_InstanceExists($id)) {
-                continue;
+        // Beispiel: je nachdem wie das JSON aufgebaut ist, 
+        // musst du ggf. den Pfad zu den Topics anpassen:
+        if (isset($data['Topics']) && is_array($data['Topics'])) {
+            foreach ($data['Topics'] as $topic) {
+                // Prüfen, ob 'Leuchtmittel' im Topic vorkommt
+                if (stripos($topic, 'Leuchtmittel') !== false) {
+                    $topics[] = [
+                        'caption' => $topic,
+                        'value'   => $topic
+                    ];
+                }
             }
-
-            $instance = IPS_GetInstance($id);
-            if (!isset($instance['ModuleInfo']['ModuleID']) || $instance['ModuleInfo']['ModuleID'] !== '{018EF6B5-AB94-40C6-AA53-46943E824ACF}') {
-                continue;
-            }
-
-            $topic = @IPS_GetProperty($id, 'Topic');
-            if ($topic === false || $topic === null || $topic === '') {
-                continue;
-            }
-
-            $this->SendDebug('Topic gefunden', $topic, 0);
-
-            if (stripos($topic, 'Leuchtmittel') !== false) {
-                $topics[] = [
-                    'caption' => $topic,
-                    'value'   => $topic
-                ];
-            }
+        } else {
+            $this->SendDebug('GetMQTTTopics', 'Keine "Topics" im Konfigurationsarray gefunden', 0);
         }
 
         $this->SendDebug('Gefilterte Topics', json_encode($topics), 0);
         return $topics;
+
     }
 
     public function SaveScene()
