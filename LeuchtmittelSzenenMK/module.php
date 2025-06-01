@@ -1,102 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 class LeuchtmittelSzenenMK extends IPSModule
 {
     public function Create()
     {
+        // MQTT-Konfigurator-ID hier eintragen
+        $this->RegisterPropertyInteger("MQTTConfiguratorID", 41847);
         parent::Create();
-        $this->RegisterPropertyInteger('MQTTConfiguratorID', 0);
     }
 
     public function GetConfigurationForm()
     {
-        $topics = $this->GetMQTTTopicsWithLeuchtmittel();
-        if (!is_array($topics)) {
-            $topics = [];
-        }
+        $values = $this->GetMQTTLeuchtmittelTopics();
 
-        $tree = $this->BuildTopicTree($topics);
-        if (!is_array($tree)) {
-            $tree = [];
-        }
-
-        IPS_LogMessage("LeuchtmittelSzenenMK", "Gefundene Topics: " . json_encode($topics));
-        IPS_LogMessage("LeuchtmittelSzenenMK", "Tree-Struktur: " . json_encode($tree));
-
-        $form = json_decode(file_get_contents(__DIR__ . "/form.json"), true);
-        $form['elements'][0]['items'][0]['values'] = $tree;
-
-        return json_encode($form);
+        return json_encode([
+            "elements" => [
+                [
+                    "type" => "ExpansionPanel",
+                    "caption" => "Leuchtmittel-Auswahl",
+                    "items" => [
+                        [
+                            "type" => "Select",
+                            "name" => "DeviceTopic",
+                            "caption" => "Verfügbare Leuchtmittel",
+                            "options" => $values
+                        ]
+                    ]
+                ]
+            ],
+            "actions" => []
+        ]);
     }
 
-    private function GetMQTTTopicsWithLeuchtmittel(): array
+    private function GetMQTTLeuchtmittelTopics(): array
     {
+        $configuratorID = $this->ReadPropertyInteger("MQTTConfiguratorID");
+        if (!IPS_InstanceExists($configuratorID)) {
+            IPS_LogMessage("LeuchtmittelSzenenMK", "MQTT-Konfigurator mit ID $configuratorID nicht gefunden.");
+            return [];
+        }
+
         $topics = [];
-        $configuratorID = $this->ReadPropertyInteger('MQTTConfiguratorID');
-        if ($configuratorID <= 0 || !IPS_InstanceExists($configuratorID)) {
-            IPS_LogMessage("LeuchtmittelSzenenMK", "Ungültige MQTT Configurator ID: $configuratorID");
+        $configuratorData = json_decode(IPS_GetConfigurationForm($configuratorID), true);
+
+        if (!isset($configuratorData['values']) || !is_array($configuratorData['values'])) {
+            IPS_LogMessage("LeuchtmittelSzenenMK", "Keine gültigen values im MQTT-Konfigurator.");
             return [];
         }
 
-        $configuratorData = json_decode(IPS_GetConfiguration($configuratorID), true);
-        if (!isset($configuratorData['Data'])) {
-            IPS_LogMessage("LeuchtmittelSzenenMK", "Keine Daten im Konfigurator gefunden");
-            return [];
-        }
-
-        $entries = json_decode($configuratorData['Data'], true);
-        if (!is_array($entries)) {
-            IPS_LogMessage("LeuchtmittelSzenenMK", "Datenformat ungültig im Konfigurator");
-            return [];
-        }
-
-        foreach ($entries as $entry) {
+        foreach ($configuratorData['values'] as $entry) {
             if (isset($entry['Topic']) && stripos($entry['Topic'], 'Leuchtmittel') !== false) {
-                $topics[] = $entry['Topic'];
+                $topics[] = [
+                    "caption" => $entry['Topic'],
+                    "value"   => $entry['Topic']
+                ];
             }
         }
 
         return $topics;
-    }
-
-    private function BuildTopicTree(array $topics): array
-    {
-        $tree = [];
-
-        foreach ($topics as $topic) {
-            $parts = explode('/', str_replace('zigbee2mqtt/Leuchtmittel/', '', $topic));
-            $current =& $tree;
-
-            foreach ($parts as $i => $part) {
-                $existing = &$this->FindChild($current, $part);
-
-                if (!isset($existing)) {
-                    $entry = [
-                        'caption' => $part,
-                        'value'   => ($i === count($parts) - 1) ? $topic : null,
-                        'children' => []
-                    ];
-                    $current[] = $entry;
-                    end($current);
-                    $existing = &$current[key($current)];
-                }
-
-                $current =& $existing['children'];
-            }
-        }
-
-        return $tree;
-    }
-
-    private function &FindChild(array &$array, string $caption)
-    {
-        foreach ($array as &$entry) {
-            if ($entry['caption'] === $caption) {
-                return $entry;
-            }
-        }
-
-        $null = null;
-        return $null;
     }
 }

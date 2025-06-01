@@ -2,18 +2,6 @@
   "elements": [
     {
       "type": "ExpansionPanel",
-      "caption": "Leuchtmittel-Auswahl",
-      "items": [
-        {
-          "type": "Tree",
-          "name": "DeviceTopics",
-          "caption": "Verfügbare Leuchtmittel",
-          "values": []
-        }
-      ]
-    },
-    {
-      "type": "ExpansionPanel",
       "caption": "Konfiguration",
       "items": [
         {
@@ -24,6 +12,19 @@
         }
       ]
     }
+    {
+      "type": "ExpansionPanel",
+      "caption": "Leuchtmittel-Auswahl",
+      "items": [
+        {
+          "type": "Tree",
+          "name": "DeviceTopics",
+          "caption": "Verfügbare Leuchtmittel",
+          "values": []
+        }
+      ]
+    },
+
   ],
   "actions": []
 }
