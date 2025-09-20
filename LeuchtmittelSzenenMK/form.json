@@ -17,22 +17,43 @@
       "type": "ExpansionPanel",
       "caption": "Szenensteuerung",
       "items": [
-        {
-          "type": "Button",
-          "caption": "Szene speichern",
-          "onClick": "SaveScene"
-        },
-        {
-          "type": "Select",
-          "name": "SceneList",
-          "caption": "Gespeicherte Szenen",
-          "options": []
-        },
-        {
-          "type": "Button",
-          "caption": "Szene anwenden",
-          "onClick": "ApplyScene"
-        }
+          {
+              "type": "Button",
+              "caption": "Szenensteuerung",
+              "confirm": "",
+              "download": "",
+              "enabled": true,
+              "link": false,
+              "name": "",
+              "onClick": "SaveScene",
+              "visible": true,
+              "width": ""
+          },
+          {
+              "type": "Select",
+              "caption": "Gespeicherte Szenen",
+              "download": "",
+              "enabled": true,
+              "link": false,
+              "name": "SceneList",
+              "options": [],
+              "onChange": "",
+              "value": "",
+              "visible": true,
+              "width": "300px"
+          },
+          {
+              "type": "Button",
+              "caption": "Szene anwenden",
+              "confirm": "",
+              "download": "",
+              "enabled": true,
+              "link": false,
+              "name": "",
+              "onClick": "ApplyScene",
+              "visible": false,
+              "width": ""
+          }
       ]
     }
   ],
