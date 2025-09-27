@@ -1,40 +1,47 @@
 {
-  "elements": [
-    {
-      "type": "ExpansionPanel",
-      "caption": "Leuchtmittel-Auswahl",
-      "items": [
+    "elements": [
         {
-          "type": "Select",
-          "name": "DeviceTopics",
-          "caption": "Verfügbare Leuchtmittel",
-          "multiple": true,
-          "options": []
-        }
-      ]
-    },
-    {
-      "type": "ExpansionPanel",
-      "caption": "Szenensteuerung",
-      "items": [
-        {
-          "type": "Button",
-          "caption": "Szene speichern",
-          "onClick": "SaveScene"
+            "type": "Label",
+            "caption": "Bereich & Parent"
         },
         {
-          "type": "Select",
-          "name": "SceneList",
-          "caption": "Gespeicherte Szenen",
-          "options": []
+            "type": "ValidationTextBox",
+            "name": "BereichName",
+            "caption": "Bereich Name"
         },
         {
-          "type": "Button",
-          "caption": "Szene anwenden",
-          "onClick": "ApplyScene"
+            "type": "Select",
+            "name": "ParentID",
+            "caption": "Parent-ID",
+            "options": []
+        },
+        {
+            "type": "Select",
+            "name": "UebersichtVarID",
+            "caption": "Übersicht-Variable",
+            "options": []
+        },
+        {
+            "type": "Label",
+            "caption": "Leuchtmittel und Parameter"
+        },
+        {
+            "type": "List",
+            "name": "Leuchtmittel",
+            "caption": "Leuchtmittel Gruppen",
+            "add": true,
+            "delete": true,
+            "columns": [
+                {"caption": "Parameter (JSON)", "name": "parameters", "width": "70%"},
+                {"caption": "IDs (JSON)", "name": "ids", "width": "30%"}
+            ]
         }
-      ]
-    }
-  ],
-  "actions": []
+    ],
+    "actions": [
+        {
+            "type": "Button",
+            "label": "Test Szene 1",
+            "onClick": "IPS_RequestAction($id, 'StatusSzene', 1);"
+        }
+    ]
 }
