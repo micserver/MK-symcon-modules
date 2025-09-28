@@ -1,9 +1,16 @@
 {
     "elements": [
         {
-<<<<<<< HEAD
             "type": "Label",
-            "caption": "Bereich & Parent"
+            "bold": false,
+            "caption": "Bereich & Parent",
+            "color": 0,
+            "italic": false,
+            "link": true,
+            "name": "",
+            "underline": false,
+            "visible": true,
+            "width": ""
         },
         {
             "type": "ValidationTextBox",
@@ -12,31 +19,74 @@
         },
         {
             "type": "Select",
+            "caption": "ParentID",
+            "download": "",
+            "enabled": true,
+            "link": false,
             "name": "ParentID",
-            "caption": "Parent-ID",
-            "options": []
+            "options": [],
+            "onChange": "",
+            "value": "",
+            "visible": true,
+            "width": "300px"
         },
         {
             "type": "Select",
-            "name": "UebersichtVarID",
             "caption": "Übersicht-Variable",
-            "options": []
+            "download": "",
+            "enabled": true,
+            "link": false,
+            "name": "UebersichtVarID",
+            "options": [],
+            "onChange": "",
+            "value": "",
+            "visible": true,
+            "width": "300px"
         },
         {
             "type": "Label",
-            "caption": "Leuchtmittel und Parameter"
+            "bold": false,
+            "caption": "Leuchtmittel und Parameter1",
+            "color": 0,
+            "italic": false,
+            "link": true,
+            "name": "",
+            "underline": false,
+            "visible": true,
+            "width": ""
         },
         {
             "type": "List",
-            "name": "Leuchtmittel",
-            "caption": "Leuchtmittel Gruppen",
             "add": true,
+            "caption": "Leuchtmittel Gruppen",
+            "changeOrder": false,
             "delete": true,
+            "download": "",
+            "enabled": true,
+            "form": "",
+            "link": false,
+            "loadValuesFromConfiguration": true,
+            "name": "Leuchtmittel",
+            "onAdd": "",
+            "onChangeOrder": "",
+            "onDelete": "",
+            "onEdit": "",
+            "rowCount": 0,
+            "visible": true,
             "columns": [
-                {"caption": "Parameter (JSON)", "name": "parameters", "width": "70%"},
-                {"caption": "IDs (JSON)", "name": "ids", "width": "30%"}
+                {
+                    "caption": "Parameter (JSON)",
+                    "name": "parameters",
+                    "width": "70%"
+                },
+                {
+                    "caption": "IDs (JSON)",
+                    "name": "ids",
+                    "width": "30%"
+                }
             ]
-        }
+        },
+
     ],
     "actions": [
         {
@@ -45,59 +95,4 @@
             "onClick": "IPS_RequestAction($id, 'StatusSzene', 1);"
         }
     ]
-=======
-          "type": "Select",
-          "name": "DeviceTopics",
-          "caption": "Verfügbare Leuchtmittel",
-          "multiple": true,
-          "options": []
-        }
-      ]
-    },
-    {
-      "type": "ExpansionPanel",
-      "caption": "Szenensteuerung",
-      "items": [
-          {
-              "type": "Button",
-              "caption": "Szenensteuerung",
-              "confirm": "",
-              "download": "",
-              "enabled": true,
-              "link": false,
-              "name": "",
-              "onClick": "SaveScene",
-              "visible": true,
-              "width": ""
-          },
-          {
-              "type": "Select",
-              "caption": "Gespeicherte Szenen",
-              "download": "",
-              "enabled": true,
-              "link": false,
-              "name": "SceneList",
-              "options": [],
-              "onChange": "",
-              "value": "",
-              "visible": true,
-              "width": "300px"
-          },
-          {
-              "type": "Button",
-              "caption": "Szene anwenden",
-              "confirm": "",
-              "download": "",
-              "enabled": true,
-              "link": false,
-              "name": "",
-              "onClick": "ApplyScene",
-              "visible": false,
-              "width": ""
-          }
-      ]
-    }
-  ],
-  "actions": []
->>>>>>> 60cce5d5eae04f2c700b9208170f1002469bcf92
 }
