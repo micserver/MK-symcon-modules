@@ -8,14 +8,14 @@
       {
           "type": "List",
           "add": true,
-          "caption": "Scenen1",
+          "caption": "Scene",
           "changeOrder": false,
           "columns": [
               {
                   "caption": "InstanceID",
                   "name": "InstanceID",
                   "width": "75px",
-                  "add": 0,
+                  "add": true,
                   "edit": {
                       "type": "SelectInstance"
                   }
@@ -24,19 +24,19 @@
                   "caption": "Name",
                   "name": "Name",
                   "width": "auto",
-                  "add": ""
+                  "add": true
               },
               {
                   "caption": "State",
                   "name": "State",
                   "width": "40px",
-                  "add": "New!"
+                  "add": true
               },
               {
                   "caption": "Temperature",
                   "name": "Temperature",
                   "width": "75px",
-                  "add": 20,
+                  "add": true,
                   "edit": {
                       "type": "NumberSpinner",
                       "digits": 2
