@@ -86,59 +86,6 @@ class LeuchtmittelSzenenMK extends IPSModule
         }
     }
 
-    public function GetConfigurationForm()
-    {
-        $form = [
-            'elements' => [
-                [
-                    'type'    => 'ValidationTextBox',
-                    'name'    => 'AreaName',
-                    'caption' => 'Bereichsname'
-                ],
-                [
-                    'type'    => 'List',
-                    'name'    => 'Scenes',
-                    'caption' => 'Szenen',
-                    'add'     => true,
-                    'delete'  => true,
-                    'rowCount'=> 5,
-                    'columns' => [
-                        [
-                            'caption' => 'Name',
-                            'name'    => 'Name',
-                            'width'   => '200px',
-                            'edit'    => ['type' => 'ValidationTextBox']
-                        ],
-                        [
-                            'caption' => 'Aktionen',
-                            'name'    => 'Actions',
-                            'width'   => 'auto',
-                            'edit'    => [
-                                'type'    => 'List',
-                                'add'     => true,
-                                'delete'  => true,
-                                'columns' => [
-                                    [
-                                        'caption' => 'Variable',
-                                        'name'    => 'VariableID',
-                                        'width'   => '200px',
-                                        'edit'    => ['type' => 'SelectVariable']
-                                    ],
-                                    [
-                                        'caption' => 'Wert',
-                                        'name'    => 'Value',
-                                        'width'   => '150px',
-                                        'edit'    => ['type' => 'ValidationTextBox']
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
 
-        return json_encode($form);
-    }
 }
 
