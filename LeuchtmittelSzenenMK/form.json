@@ -14,7 +14,7 @@
           "delete": true,
           "sort": {
             "column": "Name",
-            "direction": "ascending",
+            "direction": "ascending"
           },
           "columns": [
               {
@@ -54,25 +54,9 @@
             "Name": "ABCD",
             "State": "OK!",
             "Temperature": 23.31,
-            "rowColor": "#ff0000" //rot
-        }],
-          "download": "",
-          "enabled": true,
-          "form": "",
-          "link": false,
-          "loadValuesFromConfiguration": true,
-          "onAdd": "",
-          "onChangeOrder": "",
-          "onDelete": "",
-          "onEdit": "",
-          "visible": true
+            "rowColor": "#ff0000"
+        }]
       }
-  ],
-  "actions": [
-    {
-      "type": "Button",
-      "label": "Szene testen",
-      "onClick": "LeuchtmittelSzenenMK_TestScene($id);"
-    }
-  ]
+    ]
+  
 }
