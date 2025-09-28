@@ -1,55 +1,62 @@
 {
   "elements": [
-    {
-      "type": "ValidationTextBox",
-      "name": "BereichName",
-      "caption": "Bereich Name"
-    },
-    {
-      "type": "List",
-      "name": "Szenen",
-      "caption": "Szenen",
-      "add": true,
-      "delete": true,
-      "rowCount": 5,
-      "columns": [
-        {
-          "name": "Name",
-          "caption": "Szenenname",
-          "width": "200px",
-          "add": true,
-          "edit": { "type": "ValidationTextBox" }
-        },
-        {
-          "name": "Actions",
-          "caption": "Aktionen",
-          "width": "auto",
-          "add": true,
-          "edit": {
-            "type": "List",
-            "add": true,
-            "delete": true,
-            "columns": [
+      {
+          "type": "ValidationTextBox",
+          "name": "BereichName",
+          "caption": "Bereich Name"
+      },
+      {
+          "type": "List",
+          "add": false,
+          "caption": "Scenen",
+          "changeOrder": false,
+          "columns": [
               {
-                "name": "VariableID",
-                "caption": "Variable",
-                "width": "200px",
-                "add": true,
-                "edit": { "type": "SelectVariable" }
+                  "caption": "InstanceID",
+                  "name": "InstanceID",
+                  "width": "75px",
+                  "add": 0,
+                  "edit": {
+                      "type": "SelectInstance"
+                  }
               },
               {
-                "name": "Value",
-                "caption": "Wert",
-                "width": "150px",
-                "add": true,
-                "edit": { "type": "ValidationTextBox" }
+                  "caption": "Name",
+                  "name": "Name",
+                  "width": "auto",
+                  "add": ""
+              },
+              {
+                  "caption": "State",
+                  "name": "State",
+                  "width": "40px",
+                  "add": "New!"
+              },
+              {
+                  "caption": "Temperature",
+                  "name": "Temperature",
+                  "width": "75px",
+                  "add": 20,
+                  "edit": {
+                      "type": "NumberSpinner",
+                      "digits": 2
+                  }
               }
-            ]
-          }
-        }
-      ]
-    }
-  ],
+          ],
+          "delete": false,
+          "download": "",
+          "enabled": true,
+          "form": "",
+          "link": false,
+          "loadValuesFromConfiguration": true,
+          "name": "hugo1",
+          "onAdd": "",
+          "onChangeOrder": "",
+          "onDelete": "",
+          "onEdit": "",
+          "rowCount": 3,
+          "visible": true
+      },
   "actions": [
     {
       "type": "Button",
