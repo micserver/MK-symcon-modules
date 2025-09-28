@@ -1,4 +1,6 @@
+```php
 <?php
+
 declare(strict_types=1);
 
 class LeuchtmittelSzenenMK extends IPSModule
@@ -7,133 +9,139 @@ class LeuchtmittelSzenenMK extends IPSModule
     {
         parent::Create();
 
-        # ---------------- Properties ----------------
-        $this->RegisterPropertyString("BereichName", "Wohnzimmer");
-        $this->RegisterPropertyInteger("ParentID", 0);
-        $this->RegisterPropertyInteger("UebersichtVarID", 0);
+        // Bereichsname (Instanz repräsentiert einen Bereich)
+        $this->RegisterPropertyString('AreaName', '');
 
-        # Leuchtmittel IDs und Parameter als JSON (Array von Arrays)
-        $this->RegisterPropertyString("Leuchtmittel", json_encode([]));
-
-        # ---------------- Statusvariablen ----------------
-        $this->RegisterVariableInteger("StatusSzene", "StatusSzene", "");
-        $this->RegisterVariableBoolean("UebersichtEinAus", "ÜbersichtEinAus", "");
-
-        # Event-Handling vorbereiten (für Übersicht-Button)
-        $this->ConnectParent("{E6BCE2DB-5C6F-4EE0-99E1-9B06E6F3E3B0}"); // z.B. MQTT
+        // Szenen werden als JSON gespeichert
+        $this->RegisterPropertyString('Scenes', '[]');
     }
 
     public function ApplyChanges()
     {
         parent::ApplyChanges();
 
-        $this->EnableAction("StatusSzene");
-        $this->EnableAction("UebersichtEinAus");
-
-        # Event auf Übersicht-Variable, wenn gesetzt
-        $uebersichtID = $this->ReadPropertyInteger("UebersichtVarID");
-        if ($uebersichtID > 0) {
-            $this->RegisterMessage($uebersichtID, VM_UPDATE);
+        // Alte Variablen löschen (damit bei Konfigänderung nicht zu viele übrig bleiben)
+        foreach (IPS_GetChildrenIDs($this->InstanceID) as $childID) {
+            $obj = IPS_GetObject($childID);
+            if ($obj['ObjectType'] === OBJECTTYPE_VARIABLE) {
+                IPS_DeleteVariable($childID);
+            }
         }
-    }
 
-    public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
-    {
-        switch ($Message) {
-            case VM_UPDATE:
-                $wert = GetValue($SenderID);
-                $this->HandleUebersichtButton((bool)$wert);
-                break;
+        // Szenen auslesen
+        $scenes = json_decode($this->ReadPropertyString('Scenes'), true);
+
+        if (is_array($scenes)) {
+            foreach ($scenes as $scene) {
+                $ident = 'Scene_' . md5($scene['Name']);
+                $this->RegisterVariableBoolean($ident, $scene['Name'], '~Switch', 0);
+                $this->EnableAction($ident);
+            }
         }
     }
 
     public function RequestAction($Ident, $Value)
     {
-        switch ($Ident) {
-            case "StatusSzene":
-                $this->SetzeSzene(intval($Value));
-                break;
-            case "UebersichtEinAus":
-                $this->HandleUebersichtButton((bool)$Value);
-                break;
+        if (str_starts_with($Ident, 'Scene_') && $Value) {
+            $this->RunScene($Ident);
+
+            // Schalter nach Ausführung zurücksetzen
+            $this->SetValue($Ident, false);
         }
     }
 
-    # ---------------- Szenen setzen ----------------
-    public function SetzeSzene(int $szene)
+    private function RunScene(string $Ident)
     {
-        $parentID = $this->ReadPropertyInteger("ParentID");
-        $leuchtmittel = json_decode($this->ReadPropertyString("Leuchtmittel"), true);
+        $scenes = json_decode($this->ReadPropertyString('Scenes'), true);
+        if (!is_array($scenes)) {
+            return;
+        }
 
-        # Alles ausschalten
-        $this->AllesAusschalten();
+        foreach ($scenes as $scene) {
+            if ('Scene_' . md5($scene['Name']) === $Ident) {
+                // Aktionen abarbeiten
+                foreach ($scene['Actions'] as $action) {
+                    $varID = $action['VariableID'];
+                    $value = $action['Value'];
 
-        if ($szene === 0) return;
+                    if (IPS_VariableExists($varID)) {
+                        $var = IPS_GetVariable($varID);
+                        $type = $var['VariableType'];
 
-        # Szene setzen
-        foreach ($leuchtmittel as $gruppe) {
-            foreach ($gruppe['ids'] as $index => $ids) {
-                foreach ($ids as $i => $id) {
-                    if ($id !== "none" && IPS_VariableExists($id)) {
-                        $value = $gruppe['parameters'][$i][2] ?? 0;
-                        RequestAction($id, $value);
-                        IPS_Sleep(50);
+                        switch ($type) {
+                            case VARIABLETYPE_BOOLEAN:
+                                RequestAction($varID, (bool)$value);
+                                break;
+                            case VARIABLETYPE_INTEGER:
+                                RequestAction($varID, (int)$value);
+                                break;
+                            case VARIABLETYPE_FLOAT:
+                                RequestAction($varID, (float)$value);
+                                break;
+                            case VARIABLETYPE_STRING:
+                                RequestAction($varID, (string)$value);
+                                break;
+                        }
                     }
                 }
             }
         }
-
-        # Status setzen
-        SetValue($this->GetIDForIdent("StatusSzene"), $szene);
-
-        # Übersicht aktualisieren
-        SetValue($this->GetIDForIdent("UebersichtEinAus"), true);
-
-        # Buttonfarben setzen
-        $this->ButtonfarbenSetzen($szene);
     }
 
-    public function AllesAusschalten()
+    public function GetConfigurationForm()
     {
-        $parentID = $this->ReadPropertyInteger("ParentID");
+        $form = [
+            'elements' => [
+                [
+                    'type'    => 'ValidationTextBox',
+                    'name'    => 'AreaName',
+                    'caption' => 'Bereichsname'
+                ],
+                [
+                    'type'    => 'List',
+                    'name'    => 'Scenes',
+                    'caption' => 'Szenen',
+                    'add'     => true,
+                    'delete'  => true,
+                    'rowCount'=> 5,
+                    'columns' => [
+                        [
+                            'caption' => 'Name',
+                            'name'    => 'Name',
+                            'width'   => '200px',
+                            'edit'    => ['type' => 'ValidationTextBox']
+                        ],
+                        [
+                            'caption' => 'Aktionen',
+                            'name'    => 'Actions',
+                            'width'   => 'auto',
+                            'edit'    => [
+                                'type'    => 'List',
+                                'add'     => true,
+                                'delete'  => true,
+                                'columns' => [
+                                    [
+                                        'caption' => 'Variable',
+                                        'name'    => 'VariableID',
+                                        'width'   => '200px',
+                                        'edit'    => ['type' => 'SelectVariable']
+                                    ],
+                                    [
+                                        'caption' => 'Wert',
+                                        'name'    => 'Value',
+                                        'width'   => '150px',
+                                        'edit'    => ['type' => 'ValidationTextBox']
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
 
-        # alle Status-Variablen ausschalten
-        foreach (IPS_GetChildrenIDs($parentID) as $childID) {
-            $obj = IPS_GetObject($childID);
-            $parts = explode(" ", $obj['ObjectName']);
-            if (isset($parts[1], $parts[2]) && strtolower($parts[2]) === 'status') {
-                $target = intval($parts[1]);
-                if ($target && IPS_VariableExists($target)) {
-                    RequestAction($target, false);
-                    IPS_Sleep(50);
-                }
-            }
-        }
-
-        # Status zurücksetzen
-        SetValue($this->GetIDForIdent("StatusSzene"), 0);
-        SetValue($this->GetIDForIdent("UebersichtEinAus"), false);
-
-        # Buttons zurücksetzen
-        $this->ButtonfarbenSetzen(0);
-    }
-
-    public function HandleUebersichtButton(bool $wert)
-    {
-        $szene = $wert ? 1 : 0;
-        $this->SetzeSzene($szene);
-    }
-
-    public function ButtonfarbenSetzen(int $aktivSzene = 0)
-    {
-        $children = IPS_GetChildrenIDs($this->InstanceID);
-        foreach ($children as $childID) {
-            $name = IPS_GetName($childID);
-            $teile = explode(" ", $name);
-            $szeneNummer = intval($teile[1] ?? 0);
-            $value = ($szeneNummer === $aktivSzene) ? "00AC34" : "808080";
-            SetValue($childID, $value);
-        }
+        return json_encode($form);
     }
 }
-?>
+```
+

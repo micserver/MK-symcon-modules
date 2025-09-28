@@ -1,64 +1,14 @@
 {
     "elements": [
         {
-            "type": "Label",
-            "bold": false,
-            "caption": "Bereich & Parent",
-            "color": 0,
-            "italic": false,
-            "link": true,
-            "name": "",
-            "underline": false,
-            "visible": true,
-            "width": ""
-        },
-        {
             "type": "ValidationTextBox",
             "name": "BereichName",
             "caption": "Bereich Name"
         },
         {
-            "type": "Select",
-            "caption": "ParentID",
-            "download": "",
-            "enabled": true,
-            "link": false,
-            "name": "ParentID",
-            "options": [],
-            "onChange": "",
-            "value": "",
-            "visible": true,
-            "width": "300px"
-        },
-        {
-            "type": "Select",
-            "caption": "Übersicht-Variable",
-            "download": "",
-            "enabled": true,
-            "link": false,
-            "name": "UebersichtVarID",
-            "options": [],
-            "onChange": "",
-            "value": "",
-            "visible": true,
-            "width": "300px"
-        },
-        {
-            "type": "Label",
-            "bold": false,
-            "caption": "Leuchtmittel und Parameter1",
-            "color": 0,
-            "italic": false,
-            "link": true,
-            "name": "",
-            "underline": false,
-            "visible": true,
-            "width": ""
-        },
-        {
             "type": "List",
             "add": true,
-            "caption": "Leuchtmittel Gruppen",
+            "caption": "Szenen",
             "changeOrder": false,
             "delete": true,
             "download": "",
@@ -66,32 +16,25 @@
             "form": "",
             "link": false,
             "loadValuesFromConfiguration": true,
-            "name": "Leuchtmittel",
+            "name": "Szenen",
             "onAdd": "",
             "onChangeOrder": "",
             "onDelete": "",
             "onEdit": "",
-            "rowCount": 0,
+            "rowCount": 5,
             "visible": true,
             "columns": [
-                {
-                    "caption": "Parameter (JSON)",
-                    "name": "parameters",
-                    "width": "70%"
-                },
-                {
-                    "caption": "IDs (JSON)",
-                    "name": "ids",
-                    "width": "30%"
-                }
-            ]
+        { "name": "Name", "caption": "Szenenname", "width": "200px", "edit": { "type": "ValidationTextBox" } },
+        { "name": "Devices", "caption": "Leuchtmittel", "width": "auto", "edit": { "type": "Select", "options": [] } },
+        { "name": "Value", "caption": "Wert", "width": "100px", "edit": { "type": "ValidationTextBox" } }
+      ]
         }
     ],
     "actions": [
         {
             "type": "Button",
-            "label": "Test Szene 1",
-            "onClick": "IPS_RequestAction($id, 'StatusSzene', 1);"
+            "label": "Szene testen",
+            "onClick": "LeuchtmittelSzenenMK_TestScene($id);"
         }
     ]
 }
