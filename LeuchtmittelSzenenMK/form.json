@@ -7,15 +7,15 @@
       },
       {
           "type": "List",
-          "add": false,
-          "caption": "Scenen",
+          "add": true,
+          "caption": "Scenen1",
           "changeOrder": false,
           "columns": [
               {
                   "caption": "InstanceID",
                   "name": "InstanceID",
                   "width": "75px",
-                  "add": true,
+                  "add": 0,
                   "edit": {
                       "type": "SelectInstance"
                   }
@@ -24,7 +24,7 @@
                   "caption": "Name",
                   "name": "Name",
                   "width": "auto",
-                  "add": true
+                  "add": ""
               },
               {
                   "caption": "State",
@@ -57,7 +57,7 @@
           "rowCount": 3,
           "visible": true
       }
-    ],
+  ],
   "actions": [
     {
       "type": "Button",
