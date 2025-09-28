@@ -1,40 +1,88 @@
 {
-    "elements": [
+  "elements": [
+    {
+      "type": "ValidationTextBox",
+      "name": "BereichName",
+      "caption": "Bereich Name"
+    },
+    {
+      "type": "List",
+      "name": "Szenen",
+      "caption": "Szenen",
+      "rowCount": 5,
+      "add": true,
+      "delete": true,
+      "changeOrder": false,
+      "download": "",
+      "enabled": true,
+      "form": "",
+      "link": false,
+      "loadValuesFromConfiguration": true,
+      "onAdd": "",
+      "onChangeOrder": "",
+      "onDelete": "",
+      "onEdit": "",
+      "visible": true,
+      "columns": [
         {
-            "type": "ValidationTextBox",
-            "name": "BereichName",
-            "caption": "Bereich Name"
+          "name": "Name",
+          "caption": "Szenenname",
+          "width": "200px",
+          "add": "",
+          "delete": true,
+          "download": "",
+          "enabled": true,
+          "form": "",
+          "link": false,
+          "onAdd": "",
+          "onChangeOrder": "",
+          "onDelete": "",
+          "onEdit": "",
+          "visible": true,
+          "edit": { "type": "ValidationTextBox" }
         },
         {
-            "type": "List",
-            "add": true,
-            "caption": "Szenen",
-            "changeOrder": false,
-            "delete": true,
-            "download": "",
-            "enabled": true,
-            "form": "",
-            "link": false,
-            "loadValuesFromConfiguration": true,
-            "name": "Szenen",
-            "onAdd": "",
-            "onChangeOrder": "",
-            "onDelete": "",
-            "onEdit": "",
-            "rowCount": 5,
-            "visible": true,
-            "columns": [
-        { "name": "Name", "caption": "Szenenname", "width": "200px", "edit": { "type": "ValidationTextBox" } },
-        { "name": "Devices", "caption": "Leuchtmittel", "width": "auto", "edit": { "type": "Select", "options": [] } },
-        { "name": "Value", "caption": "Wert", "width": "100px", "edit": { "type": "ValidationTextBox" } }
-      ]
-        }
-    ],
-    "actions": [
+          "name": "Devices",
+          "caption": "Leuchtmittel",
+          "width": "auto",
+          "add": 0,
+          "delete": true,
+          "download": "",
+          "enabled": true,
+          "form": "",
+          "link": false,
+          "onAdd": "",
+          "onChangeOrder": "",
+          "onDelete": "",
+          "onEdit": "",
+          "visible": true,
+          "edit": { "type": "Select", "options": [] }
+        },
         {
-            "type": "Button",
-            "label": "Szene testen",
-            "onClick": "LeuchtmittelSzenenMK_TestScene($id);"
+          "name": "Value",
+          "caption": "Wert",
+          "width": "100px",
+          "add": "",
+          "delete": true,
+          "download": "",
+          "enabled": true,
+          "form": "",
+          "link": false,
+          "onAdd": "",
+          "onChangeOrder": "",
+          "onDelete": "",
+          "onEdit": "",
+          "visible": true,
+          "edit": { "type": "ValidationTextBox" }
         }
-    ]
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "label": "Szene testen",
+      "onClick": "LeuchtmittelSzenenMK_TestScene($id);"
+    }
+  ]
 }
