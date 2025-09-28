@@ -1,6 +1,4 @@
-```php
 <?php
-
 declare(strict_types=1);
 
 class LeuchtmittelSzenenMK extends IPSModule
