@@ -15,7 +15,7 @@
                   "caption": "InstanceID",
                   "name": "InstanceID",
                   "width": "75px",
-                  "add": 0,
+                  "add": true,
                   "edit": {
                       "type": "SelectInstance"
                   }
@@ -24,7 +24,7 @@
                   "caption": "Name",
                   "name": "Name",
                   "width": "auto",
-                  "add": ""
+                  "add": true
               },
               {
                   "caption": "State",
