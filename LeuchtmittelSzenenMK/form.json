@@ -9,71 +9,43 @@
       "type": "List",
       "name": "Szenen",
       "caption": "Szenen",
-      "rowCount": 5,
       "add": true,
       "delete": true,
-      "changeOrder": false,
-      "download": "",
-      "enabled": true,
-      "form": "",
-      "link": false,
-      "loadValuesFromConfiguration": true,
-      "onAdd": "",
-      "onChangeOrder": "",
-      "onDelete": "",
-      "onEdit": "",
-      "visible": true,
+      "rowCount": 5,
       "columns": [
         {
           "name": "Name",
           "caption": "Szenenname",
           "width": "200px",
           "add": true,
-          "delete": true,
-          "download": "",
-          "enabled": true,
-          "form": "",
-          "link": false,
-          "onAdd": "",
-          "onChangeOrder": "",
-          "onDelete": "",
-          "onEdit": "",
-          "visible": true,
           "edit": { "type": "ValidationTextBox" }
         },
         {
-          "name": "Devices",
-          "caption": "Leuchtmittel",
+          "name": "Actions",
+          "caption": "Aktionen",
           "width": "auto",
           "add": true,
-          "delete": true,
-          "download": "",
-          "enabled": true,
-          "form": "",
-          "link": false,
-          "onAdd": "",
-          "onChangeOrder": "",
-          "onDelete": "",
-          "onEdit": "",
-          "visible": true,
-          "edit": { "type": "Select", "options": [] }
-        },
-        {
-          "name": "Value",
-          "caption": "Wert",
-          "width": "100px",
-          "add": true,
-          "delete": true,
-          "download": "",
-          "enabled": true,
-          "form": "",
-          "link": false,
-          "onAdd": "",
-          "onChangeOrder": "",
-          "onDelete": "",
-          "onEdit": "",
-          "visible": true,
-          "edit": { "type": "ValidationTextBox" }
+          "edit": {
+            "type": "List",
+            "add": true,
+            "delete": true,
+            "columns": [
+              {
+                "name": "VariableID",
+                "caption": "Variable",
+                "width": "200px",
+                "add": true,
+                "edit": { "type": "SelectVariable" }
+              },
+              {
+                "name": "Value",
+                "caption": "Wert",
+                "width": "150px",
+                "add": true,
+                "edit": { "type": "ValidationTextBox" }
+              }
+            ]
+          }
         }
       ]
     }
