@@ -7,15 +7,21 @@
       },
       {
           "type": "List",
-          "add": true,
+          "name": "hugo1",
           "caption": "Scene",
-          "changeOrder": false,
+          "rowCount": 3,
+          "add": true,
+          "delete": true,
+          "sort": {
+            "column": "Name",
+            "direction": "ascending",
+          },
           "columns": [
               {
                   "caption": "InstanceID",
                   "name": "InstanceID",
                   "width": "75px",
-                  "add": true,
+                  "add": 0,
                   "edit": {
                       "type": "SelectInstance"
                   }
@@ -24,37 +30,41 @@
                   "caption": "Name",
                   "name": "Name",
                   "width": "auto",
-                  "add": true
+                  "add": ""
               },
               {
                   "caption": "State",
                   "name": "State",
                   "width": "40px",
-                  "add": true
+                  "add": "New!"
               },
               {
                   "caption": "Temperature",
                   "name": "Temperature",
                   "width": "75px",
-                  "add": true,
+                  "add": 20.0,
                   "edit": {
                       "type": "NumberSpinner",
                       "digits": 2
                   }
               }
           ],
-          "delete": false,
+        "values": [{
+            "InstanceID": 12435,
+            "Name": "ABCD",
+            "State": "OK!",
+            "Temperature": 23.31,
+            "rowColor": "#ff0000" //rot
+        }],
           "download": "",
           "enabled": true,
           "form": "",
           "link": false,
           "loadValuesFromConfiguration": true,
-          "name": "hugo1",
           "onAdd": "",
           "onChangeOrder": "",
           "onDelete": "",
           "onEdit": "",
-          "rowCount": 3,
           "visible": true
       }
   ],
