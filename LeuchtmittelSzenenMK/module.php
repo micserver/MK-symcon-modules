@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-class Szenensteuerung extends IPSModule
+class LeuchtmittelSzenenMK extends IPSModule
 {
     public function Create()
     {

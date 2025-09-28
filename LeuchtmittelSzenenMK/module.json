@@ -1,15 +1,15 @@
 {
-    "id": "{C0FFEE00-1234-5678-90AB-C0FFEE000001}",
-    "name": "Szenensteuerung",
-    "type": 3,
-    "vendor": "DeinName",
-    "version": "1.0",
-    "category": "homeautomation",
-    "parentRequirements": [],
-    "childRequirements": [],
-    "compatibility": {
-        "minimum": "6.3"
-    },
-    "icon": "settings",
-    "url": ""
+  "id": "{90458F65-91A4-139E-32EE-B6C1FD2F63F1}",
+  "name": "LeuchtmittelSzenenMK",
+  "type": 3,
+  "vendor": "",
+  "aliases":
+    [
+        "LeuchtmittelSzenenMK"
+    ],
+  "url": "https://github.com/micserver/symcon",
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "LS"
 }
