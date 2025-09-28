@@ -1,4 +1,4 @@
-
+```php
 <?php
 
 declare(strict_types=1);
@@ -143,5 +143,4 @@ class LeuchtmittelSzenenMK extends IPSModule
         return json_encode($form);
     }
 }
-
 
