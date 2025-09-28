@@ -56,7 +56,8 @@
           "onEdit": "",
           "rowCount": 3,
           "visible": true
-      },
+      }
+    ],
   "actions": [
     {
       "type": "Button",
