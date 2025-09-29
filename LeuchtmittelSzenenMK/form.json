@@ -29,11 +29,12 @@
           }
         },
         {
-        "caption": "Alias",
-        "name": "Alias",
-        "width": "150px",
-        "add": "Neue Szene",
-        "edit": { "type": "ValidationTextBox" }
+          "caption": "Alias",
+          "name": "Alias",
+          "width": "150px",
+          "add": "",
+          "edit": { "type": "ValidationTextBox" },
+          "onAdd": "function(row) { row.Alias = 'Szene ' + row.SzeneID; }"
         },
         {
           "caption": "Gerät",
