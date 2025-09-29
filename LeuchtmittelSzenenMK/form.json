@@ -29,6 +29,13 @@
           }
         },
         {
+        "caption": "Alias",
+        "name": "Alias",
+        "width": "150px",
+        "add": "Neue Szene",
+        "edit": { "type": "ValidationTextBox" }
+        },
+        {
           "caption": "Gerät",
           "name": "InstanceID",
           "width": "200px",
