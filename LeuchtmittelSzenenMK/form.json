@@ -1,62 +1,56 @@
 {
   "elements": [
-      {
-          "type": "ValidationTextBox",
-          "name": "BereichName",
-          "caption": "Bereich Name"
-      },
-      {
-          "type": "List",
-          "name": "hugo1",
-          "caption": "Scene",
-          "rowCount": 3,
-          "add": true,
-          "delete": true,
-          "sort": {
-            "column": "Name",
-            "direction": "ascending"
-          },
-          "columns": [
+    {
+      "type": "ValidationTextBox",
+      "name": "BereichName",
+      "caption": "Bereich Name"
+    },
+    {
+      "type": "List",
+      "name": "Szenen",
+      "caption": "Szenen",
+      "rowCount": 5,
+      "add": true,
+      "delete": true,
+      "columns": [
+        {
+          "caption": "Szenenname",
+          "name": "Name",
+          "width": "200px",
+          "add": ""
+        },
+        {
+          "caption": "Geräte",
+          "name": "Devices",
+          "width": "auto",
+          "add": "[]",
+          "edit": {
+            "type": "List",
+            "add": true,
+            "delete": true,
+            "columns": [
               {
-                  "caption": "InstanceID",
-                  "name": "InstanceID",
-                  "width": "75px",
-                  "add": 0,
-                  "edit": {
-                      "type": "SelectInstance"
-                  }
+                "caption": "InstanceID",
+                "name": "InstanceID",
+                "width": "200px",
+                "add": 0,
+                "edit": {
+                  "type": "SelectInstance"
+                }
               },
               {
-                  "caption": "Name",
-                  "name": "Name",
-                  "width": "auto",
-                  "add": ""
-              },
-              {
-                  "caption": "State",
-                  "name": "State",
-                  "width": "40px",
-                  "add": "New!"
-              },
-              {
-                  "caption": "Temperature",
-                  "name": "Temperature",
-                  "width": "75px",
-                  "add": 20.0,
-                  "edit": {
-                      "type": "NumberSpinner",
-                      "digits": 2
-                  }
+                "caption": "Wert",
+                "name": "Value",
+                "width": "100px",
+                "add": 0,
+                "edit": {
+                  "type": "ValidationTextBox"
+                }
               }
-          ],
-        "values": [{
-            "InstanceID": 12435,
-            "Name": "ABCD",
-            "State": "OK!",
-            "Temperature": 23.31,
-            "rowColor": "#ff0000"
-        }]
-      }
-    ]
-  
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }
