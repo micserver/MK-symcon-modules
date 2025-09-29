@@ -7,18 +7,20 @@ class LeuchtmittelSzenenMK extends IPSModule
     {
         parent::Create();
 
-        // Bereichsname (Instanz repräsentiert einen Bereich)
+        // Bereich-Name speichern
         $this->RegisterPropertyString('BereichName', '');
 
-        // Szenen werden als JSON gespeichert
-        $this->RegisterPropertyString('Scenes', '[]'); // JSON-Array der Szenen
+        // Szenen speichern (JSON-Array)
+        $this->RegisterPropertyString('Szenen', '[]');
     }
 
     public function ApplyChanges()
     {
         parent::ApplyChanges();
 
-        // Alte Variablen löschen (damit bei Konfigänderung nicht zu viele übrig bleiben)
+        $bereichName = $this->ReadPropertyString('BereichName');
+
+        // Alte Variablen löschen
         foreach (IPS_GetChildrenIDs($this->InstanceID) as $childID) {
             $obj = IPS_GetObject($childID);
             if ($obj['ObjectType'] === OBJECTTYPE_VARIABLE) {
@@ -27,13 +29,22 @@ class LeuchtmittelSzenenMK extends IPSModule
         }
 
         // Szenen auslesen
-        $scenes = json_decode($this->ReadPropertyString('Scenes'), true);
+        $scenes = json_decode($this->ReadPropertyString('Szenen'), true);
 
         if (is_array($scenes)) {
+            $addedScenes = [];
             foreach ($scenes as $scene) {
-                $ident = 'Scene_' . md5($scene['Name']);
-                $this->RegisterVariableBoolean($ident, $scene['Name'], '~Switch', 0);
-                $this->EnableAction($ident);
+                $sceneID = $scene['SzeneID'] ?? 0;
+                $alias   = $scene['Alias'] ?? 'Szene ' . $sceneID;
+
+                if (!in_array($sceneID, $addedScenes)) {
+                    $ident = 'Scene_' . $sceneID;
+                    $name = trim($bereichName . ' – ' . $alias);
+
+                    $this->RegisterVariableBoolean($ident, $name, '~Switch', 0);
+                    $this->EnableAction($ident);
+                    $addedScenes[] = $sceneID;
+                }
             }
         }
     }
@@ -42,50 +53,35 @@ class LeuchtmittelSzenenMK extends IPSModule
     {
         if (str_starts_with($Ident, 'Scene_') && $Value) {
             $this->RunScene($Ident);
-
-            // Schalter nach Ausführung zurücksetzen
             $this->SetValue($Ident, false);
         }
     }
 
     private function RunScene(string $Ident)
     {
-        $scenes = json_decode($this->ReadPropertyString('Scenes'), true);
-        if (!is_array($scenes)) {
-            return;
-        }
+        $scenes = json_decode($this->ReadPropertyString('Szenen'), true);
+        if (!is_array($scenes)) return;
+
+        $sceneID = (int)str_replace('Scene_', '', $Ident);
 
         foreach ($scenes as $scene) {
-            if ('Scene_' . md5($scene['Name']) === $Ident) {
-                // Aktionen abarbeiten
+            if (($scene['SzeneID'] ?? 0) === $sceneID && isset($scene['Actions']) && is_array($scene['Actions'])) {
                 foreach ($scene['Actions'] as $action) {
-                    $varID = $action['VariableID'];
-                    $value = $action['Value'];
+                    $varID = $action['InstanceID'] ?? 0;
+                    if (!IPS_VariableExists($varID)) continue;
 
-                    if (IPS_VariableExists($varID)) {
-                        $var = IPS_GetVariable($varID);
-                        $type = $var['VariableType'];
+                    $status = $action['Status'] ?? null;
+                    if ($status !== null) RequestAction($varID, (bool)$status);
 
-                        switch ($type) {
-                            case VARIABLETYPE_BOOLEAN:
-                                RequestAction($varID, (bool)$value);
-                                break;
-                            case VARIABLETYPE_INTEGER:
-                                RequestAction($varID, (int)$value);
-                                break;
-                            case VARIABLETYPE_FLOAT:
-                                RequestAction($varID, (float)$value);
-                                break;
-                            case VARIABLETYPE_STRING:
-                                RequestAction($varID, (string)$value);
-                                break;
-                        }
-                    }
+                    $brightness = $action['Brightness'] ?? null;
+                    if ($brightness !== null) RequestAction($varID, (int)$brightness);
+
+                    $colortemp = $action['ColorTemp'] ?? null;
+                    if ($colortemp !== null) RequestAction($varID, (int)$colortemp);
                 }
             }
         }
     }
-
-
 }
+
 

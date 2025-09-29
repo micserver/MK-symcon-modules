@@ -2,7 +2,8 @@
   "id": "{90458F65-91A4-139E-32EE-B6C1FD2F63F1}",
   "name": "LeuchtmittelSzenenMK",
   "type": 3,
-  "vendor": "",
+  "vendor": "MK",
+  "version": "0.1",
   "aliases":
     [
         "LeuchtmittelSzenenMK"
