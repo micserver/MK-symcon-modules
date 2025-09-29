@@ -52,14 +52,9 @@ class LeuchtmittelSzenenMK extends IPSModule
                 }
             }
 
-            // Geänderte Szene-Alias zurückschreiben
-            $this->UpdateFormScenes($scenes);
+            // Property aktualisieren
+            $this->WritePropertyString('Szenen', json_encode($scenes));
         }
-    }
-
-    private function UpdateFormScenes(array $scenes)
-    {
-        $this->WritePropertyString('Szenen', json_encode($scenes));
     }
 
     public function RequestAction($Ident, $Value)
@@ -97,5 +92,6 @@ class LeuchtmittelSzenenMK extends IPSModule
         }
     }
 }
+
 
 
