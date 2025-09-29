@@ -8,46 +8,57 @@
     {
       "type": "List",
       "name": "Szenen",
-      "caption": "Szenen",
-      "rowCount": 5,
+      "caption": "Szenen & Geräte",
+      "rowCount": 8,
       "add": true,
       "delete": true,
+      "sort": {
+        "column": "Szene",
+        "direction": "ascending"
+      },
       "columns": [
         {
-          "caption": "Szenenname",
-          "name": "Name",
-          "width": "200px",
+          "caption": "Szene",
+          "name": "Szene",
+          "width": "150px",
           "add": ""
         },
         {
-          "caption": "Geräte",
-          "name": "Devices",
-          "width": "auto",
-          "add": "[]",
+          "caption": "Gerät",
+          "name": "InstanceID",
+          "width": "200px",
+          "add": 0,
           "edit": {
-            "type": "List",
-            "add": true,
-            "delete": true,
-            "columns": [
-              {
-                "caption": "InstanceID",
-                "name": "InstanceID",
-                "width": "200px",
-                "add": 0,
-                "edit": {
-                  "type": "SelectInstance"
-                }
-              },
-              {
-                "caption": "Wert",
-                "name": "Value",
-                "width": "100px",
-                "add": 0,
-                "edit": {
-                  "type": "ValidationTextBox"
-                }
-              }
-            ]
+            "type": "SelectInstance"
+          }
+        },
+        {
+          "caption": "Status",
+          "name": "Status",
+          "width": "80px",
+          "add": false,
+          "edit": {
+            "type": "CheckBox"
+          }
+        },
+        {
+          "caption": "Helligkeit",
+          "name": "Brightness",
+          "width": "100px",
+          "add": 100,
+          "edit": {
+            "type": "NumberSpinner",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        {
+          "caption": "Farbe",
+          "name": "Color",
+          "width": "120px",
+          "add": "#ffffff",
+          "edit": {
+            "type": "ColorPicker"
           }
         }
       ]
