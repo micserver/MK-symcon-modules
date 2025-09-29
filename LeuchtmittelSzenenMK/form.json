@@ -1,61 +1,67 @@
 {
   "elements": [
-      {
-          "type": "ValidationTextBox",
-          "name": "BereichName",
-          "caption": "Bereich Name"
+    {
+      "type": "ValidationTextBox",
+      "name": "BereichName",
+      "caption": "Bereich Name"
+    },
+    {
+      "type": "List",
+      "name": "Szenen",
+      "caption": "Szenen & Geräte",
+      "rowCount": 8,
+      "add": true,
+      "delete": true,
+      "sort": {
+        "column": "Szene",
+        "direction": "ascending"
       },
-      {
-          "type": "List",
-          "name": "hugo1",
-          "caption": "Scene",
-          "rowCount": 3,
-          "add": true,
-          "delete": true,
-          "sort": {
-            "column": "Name",
-            "direction": "ascending"
-          },
-          "columns": [
-              {
-                  "caption": "InstanceID",
-                  "name": "InstanceID",
-                  "width": "75px",
-                  "add": 0,
-                  "edit": {
-                      "type": "SelectInstance"
-                  }
-              },
-              {
-                  "caption": "Name",
-                  "name": "Name",
-                  "width": "auto",
-                  "add": ""
-              },
-              {
-                  "caption": "State",
-                  "name": "State",
-                  "width": "40px",
-                  "add": "New!"
-              },
-              {
-                  "caption": "Temperature",
-                  "name": "Temperature",
-                  "width": "75px",
-                  "add": 20.0,
-                  "edit": {
-                      "type": "NumberSpinner",
-                      "digits": 2
-                  }
-              }
-          ],
-        "values": [{
-            "InstanceID": 12435,
-            "Name": "ABCD",
-            "State": "OK!",
-            "Temperature": 23.31,
-            "rowColor": "#ff0000"
-        }]
-      }
-    ] 
+      "columns": [
+        {
+          "caption": "Szene",
+          "name": "Szene",
+          "width": "150px",
+          "add": ""
+        },
+        {
+          "caption": "Gerät",
+          "name": "InstanceID",
+          "width": "200px",
+          "add": 0,
+          "edit": {
+            "type": "SelectInstance"
+          }
+        },
+        {
+          "caption": "Status",
+          "name": "Status",
+          "width": "80px",
+          "add": false,
+          "edit": {
+            "type": "CheckBox"
+          }
+        },
+        {
+          "caption": "Helligkeit",
+          "name": "Brightness",
+          "width": "100px",
+          "add": 100,
+          "edit": {
+            "type": "NumberSpinner",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        {
+          "caption": "Farbe",
+          "name": "Color",
+          "width": "120px",
+          "add": "#ffffff",
+          "edit": {
+            "type": "ValidationTextBox"
+          }
+        }
+      ]
+    }
+  ]
 }
