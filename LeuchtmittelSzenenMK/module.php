@@ -33,10 +33,15 @@ class LeuchtmittelSzenenMK extends IPSModule
 
         if (is_array($scenes)) {
             $addedScenes = [];
-            foreach ($scenes as $scene) {
+            foreach ($scenes as &$scene) {
                 $sceneID = $scene['SzeneID'] ?? 0;
-                $alias   = $scene['Alias'] ?? 'Szene ' . $sceneID;
 
+                // Alias automatisch setzen, falls leer
+                if (empty($scene['Alias'])) {
+                    $scene['Alias'] = 'Szene ' . $sceneID;
+                }
+
+                $alias = $scene['Alias'];
                 if (!in_array($sceneID, $addedScenes)) {
                     $ident = 'Scene_' . $sceneID;
                     $name = trim($bereichName . ' – ' . $alias);
@@ -46,7 +51,15 @@ class LeuchtmittelSzenenMK extends IPSModule
                     $addedScenes[] = $sceneID;
                 }
             }
+
+            // Geänderte Szene-Alias zurückschreiben
+            $this->UpdateFormScenes($scenes);
         }
+    }
+
+    private function UpdateFormScenes(array $scenes)
+    {
+        $this->WritePropertyString('Szenen', json_encode($scenes));
     }
 
     public function RequestAction($Ident, $Value)
@@ -70,14 +83,15 @@ class LeuchtmittelSzenenMK extends IPSModule
                     $varID = $action['InstanceID'] ?? 0;
                     if (!IPS_VariableExists($varID)) continue;
 
-                    $status = $action['Status'] ?? null;
-                    if ($status !== null) RequestAction($varID, (bool)$status);
-
-                    $brightness = $action['Brightness'] ?? null;
-                    if ($brightness !== null) RequestAction($varID, (int)$brightness);
-
-                    $colortemp = $action['ColorTemp'] ?? null;
-                    if ($colortemp !== null) RequestAction($varID, (int)$colortemp);
+                    if (isset($action['Status'])) {
+                        RequestAction($varID, (bool)$action['Status']);
+                    }
+                    if (isset($action['Brightness'])) {
+                        RequestAction($varID, (int)$action['Brightness']);
+                    }
+                    if (isset($action['ColorTemp'])) {
+                        RequestAction($varID, (int)$action['ColorTemp']);
+                    }
                 }
             }
         }

@@ -33,8 +33,7 @@
           "name": "Alias",
           "width": "150px",
           "add": "",
-          "edit": { "type": "ValidationTextBox" },
-          "onAdd": "function(row) { row.Alias = 'Szene ' + row.SzeneID; }"
+          "edit": { "type": "ValidationTextBox" }
         },
         {
           "caption": "Gerät",
