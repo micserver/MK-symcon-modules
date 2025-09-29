@@ -8,10 +8,10 @@ class LeuchtmittelSzenenMK extends IPSModule
         parent::Create();
 
         // Bereichsname (Instanz repräsentiert einen Bereich)
-        $this->RegisterPropertyString('AreaName', '');
+        $this->RegisterPropertyString('BereichName', '');
 
         // Szenen werden als JSON gespeichert
-        $this->RegisterPropertyString('Scenes', '[]');
+        $this->RegisterPropertyString('Szenen', '[]'); // JSON-Array der Szenen
     }
 
     public function ApplyChanges()
