@@ -65,12 +65,14 @@
           }
         },
         {
-          "caption": "Farbe",
-          "name": "Color",
+          "caption": "Farbtemperatur (mired)",
+          "name": "ColorTemp",
           "width": "120px",
-          "add": "#ffffff",
+          "add": 370,
           "edit": {
-            "type": "ValidationTextBox"
+            "type": "NumberSpinner",
+            "minimum": 250,
+            "maximum": 454
           }
         }
       ]
