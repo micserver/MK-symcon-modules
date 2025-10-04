@@ -29,13 +29,10 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
     // Timer zum automatischen Abrufen
-    $this->RegisterTimer("AbR_FetchTimer", 0, 'AbfallReminderMK_FetchTimer($_IPS["TARGET"]);');
-// Timer-Callback-Funktion, ruft die Modul-Methode direkt auf
-function AbfallReminderMK_FetchTimer($InstanceID) {
-    $object = IPS_GetObject($InstanceID);
-    if ($object["ObjectType"] == 2) { // Instanz
-        IPS_RunScriptEx($InstanceID, ["FUNCTION" => "AbR_FetchMails"]);
-    }
+    $this->RegisterTimer("AbR_FetchTimer", 0, 'AbfallReminderMK_AbR_FetchMails($_IPS["TARGET"]);');
+// Timer-Callback-Funktion, ruft die Modul-Methode über IPS_RequestAction auf
+function AbfallReminderMK_AbR_FetchMails($InstanceID) {
+    IPS_RequestAction($InstanceID, "FetchMails", "");
 }
     }
 
