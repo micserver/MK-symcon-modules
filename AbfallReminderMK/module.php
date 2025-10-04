@@ -41,6 +41,7 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function AbR_FetchMails()
+    $this->SendDebug("Mailarray", print_r($mailarray, true), 0);
     {
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
@@ -81,6 +82,8 @@ class AbfallReminderMK extends IPSModule
             // --- Parsing des Klartexts ---
             $text = strip_tags($text);
             $lines = explode("\n", $text);
+            $this->SendDebug("Mailtext", $text, 0);
+            $this->SendDebug("Lines", print_r($lines, true), 0);
 
             for ($k = 0; $k < count($lines); $k++) {
                 $line = trim($lines[$k]);
@@ -92,6 +95,7 @@ class AbfallReminderMK extends IPSModule
                                 'art' => $m[1],
                                 'datum' => $d[1]
                             ];
+                            $this->SendDebug("Treffer gefunden", print_r($treffer[count($treffer)-1], true), 0);
                             break;
                         }
                     }
