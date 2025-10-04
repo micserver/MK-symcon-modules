@@ -33,6 +33,7 @@ class AbfallReminderMK extends IPSModule
     // Timer zum automatischen Abrufen
     $this->RegisterTimer("AbR_FetchTimer", 0, 'AbfallReminderMK_AbR_FetchMails($_IPS["TARGET"]);');
     }
+    }
 
     public function ApplyChanges()
     {
