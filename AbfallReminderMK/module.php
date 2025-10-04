@@ -121,7 +121,7 @@ class AbfallReminderMK extends IPSModule
         }
     }
 
-    // Aktion für manuelles Abrufen
+    // Aktion für manuelles Abrufen 
     public function RequestAction($Ident, $Value)
     {
         $this->SendDebug("RequestAction", "Ident: $Ident, Value: $Value", 0);
