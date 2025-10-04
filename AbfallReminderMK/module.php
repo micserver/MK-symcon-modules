@@ -28,11 +28,13 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
-        // Timer zum automatischen Abrufen
-        $this->RegisterTimer("AbR_FetchTimer", 0, 'AbR_FetchMails($_IPS["TARGET"]);');
+    // Timer zum automatischen Abrufen
+    $this->RegisterTimer("AbR_FetchTimer", 0, 'IPS_RequestAction($_IPS["TARGET"], "FetchMails", "");');
     }
 
     public function ApplyChanges()
+    // Aktion für manuelles Abrufen registrieren
+    $this->RegisterAction("FetchMails");
     {
         parent::ApplyChanges();
 
@@ -41,6 +43,13 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function AbR_FetchMails()
+    // Aktion für manuelles Abrufen
+    public function RequestAction($Ident, $Value)
+    {
+        if ($Ident === "FetchMails") {
+            $this->AbR_FetchMails();
+        }
+    }
     {
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
