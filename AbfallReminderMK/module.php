@@ -21,7 +21,7 @@ class AbfallReminderMK extends IPSModule
             ["art" => "Gelber Sack"]
         ]));
         $this->RegisterPropertyString("OrtFilter", "Krombach");
-        $this->RegisterPropertyString("Testdatum", "");
+    $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
 
         // Variablen
