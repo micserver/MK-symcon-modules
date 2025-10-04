@@ -30,13 +30,6 @@ class AbfallReminderMK extends IPSModule
 
     // Timer zum automatischen Abrufen
     $this->RegisterTimer("AbR_FetchTimer", 0, 'AbfallReminderMK_AbR_FetchMails($_IPS["TARGET"]);');
-// Wrapper-Funktion für Timer
-function AbfallReminderMK_AbR_FetchMails($InstanceID) {
-    $instance = IPS_GetInstance($InstanceID);
-    if (method_exists($instance, "AbR_FetchMails")) {
-        $instance->AbR_FetchMails();
-    }
-}
     }
 
     public function ApplyChanges()
@@ -161,4 +154,13 @@ function AbfallReminderMK_AbR_FetchMails($InstanceID) {
         $timestamp = strtotime($datum);
         return ($timestamp >= $heute - 86400); // nicht älter als 1 Tag
     }
+}
+
+// Wrapper-Funktion für Timer (muss außerhalb der Klasse stehen!)
+function AbfallReminderMK_AbR_FetchMails($InstanceID) {
+    $instance = IPS_GetInstance($InstanceID);
+    if (method_exists($instance, "AbR_FetchMails")) {
+        $instance->AbR_FetchMails();
+    }
+}
 }
