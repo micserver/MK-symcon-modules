@@ -82,7 +82,7 @@
       "type": "Button",
       "name": "DiesisteinTest",
       "caption": "Mails manuell abrufen",
-      "onClick": "AbR_FetchMails($id);"
+      "onClick": "ARMK_FetchMails($id);"
     
     }
   ]
