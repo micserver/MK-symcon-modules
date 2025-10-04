@@ -1,0 +1,87 @@
+{
+  "title": "Abfall Reminder",
+  "type": "form",
+  "elements": [
+    {
+      "type": "Label",
+      "caption": "Abfall Reminder Modul - Konfiguration"
+    },
+    {
+      "type": "SelectInstance",
+      "name": "IMAP_InstanzID",
+      "caption": "IMAP Instanz"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "CacheSize",
+      "caption": "Cache Size (IMAP)",
+      "suffix": "Mails",
+      "minimum": 1,
+      "maximum": 100
+    },
+    {
+      "type": "List",
+      "name": "MailAbsender",
+      "caption": "Erlaubte Mail-Absender",
+      "add": true,
+      "delete": true,
+      "rowCount": 3,
+      "columns": [
+        {
+          "caption": "Absender-Adresse",
+          "name": "sender",
+          "width": "300px",
+          "edit": {
+            "type": "ValidationTextBox",
+            "required": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "List",
+      "name": "Abfallarten",
+      "caption": "Müllarten",
+      "add": true,
+      "delete": true,
+      "rowCount": 5,
+      "columns": [
+        {
+          "caption": "Müllart",
+          "name": "art",
+          "width": "300px",
+          "edit": {
+            "type": "ValidationTextBox",
+            "required": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "OrtFilter",
+      "caption": "Optional: Ort/Filter",
+      "required": false
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "Testdatum",
+      "caption": "Optional: Testdatum (YYYY-MM-DD)",
+      "required": false
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "FetchInterval",
+      "caption": "Intervall (Sekunden)",
+      "minimum": 60,
+      "maximum": 86400
+    }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "caption": "Mails manuell abrufen",
+      "onClick": "AbR_FetchMails($id);"
+    }
+  ]
+}

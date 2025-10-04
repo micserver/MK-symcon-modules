@@ -1,0 +1,18 @@
+{
+  "id": "{A83D9C72-6F2E-4D3B-9F1A-1A2B3C4D5E6F}",
+  "name": "AbfallReminderMK",
+  "type": 3,
+  "vendor": "MK",
+  "version": "0.1",
+  "aliases":
+    [
+        "AbfallReminderMK"
+    ],
+  "url": "https://github.com/micserver/symcon",
+  "description": "Erkennt Abfalltermine aus IMAP-Mails (konfigurierbare Absender + Müllarten) und schreibt Variablen.",
+  "help": "README.md",
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "ARMK"
+}
