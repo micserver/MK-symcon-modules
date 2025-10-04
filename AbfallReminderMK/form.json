@@ -4,7 +4,7 @@
   "elements": [
     {
       "type": "Label",
-      "caption": "Abfall Reminder Modul - Konfiguration"
+      "caption": "Abfall Reminder Modul  Konfiguration"
     },
     {
       "type": "SelectInstance",
@@ -22,13 +22,13 @@
     {
       "type": "List",
       "name": "MailAbsender",
-      "caption": "Erlaubte Mail-Absender",
+      "caption": "Erlaubte Mail Absender",
       "add": true,
       "delete": true,
       "rowCount": 3,
       "columns": [
         {
-          "caption": "Absender-Adresse",
+          "caption": "Absender Adresse",
           "name": "sender",
           "width": "300px",
           "edit": {
@@ -81,7 +81,6 @@
     {
       "type": "Button",
       "caption": "Mails manuell abrufen",
-      "onClick": "echo 'hurra';",
       "action": "FetchMails"
     }
   ]
