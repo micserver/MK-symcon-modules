@@ -124,7 +124,6 @@ class AbfallReminderMK extends IPSModule
     // Aktion für manuelles Abrufen 
     public function RequestAction($Ident, $Value)
     {
-        $this->SendDebug("RequestAction", "Ident: $Ident, Value: $Value", 0);
         if ($Ident === "FetchMails") {
             $this->AbR_FetchMails();
         }
