@@ -33,16 +33,17 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function ApplyChanges()
-    // Aktion für manuelles Abrufen registrieren
-    $this->RegisterAction("FetchMails");
     {
         parent::ApplyChanges();
-
+        // Aktion für manuelles Abrufen registrieren
+        $this->RegisterAction("FetchMails");
         $interval = $this->ReadPropertyInteger("FetchInterval");
         $this->SetTimerInterval("AbR_FetchTimer", $interval * 1000);
     }
 
     public function AbR_FetchMails()
+    // ...existing code...
+
     // Aktion für manuelles Abrufen
     public function RequestAction($Ident, $Value)
     {
