@@ -43,7 +43,6 @@ class AbfallReminderMK extends IPSModule
     public function AbR_FetchMails()
     {
         $this->SendDebug("Start AbR_FetchMails", "Methode wurde aufgerufen", 0);
-        {
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
             $this->LogMessage("IMAP-Instanz nicht konfiguriert.", KL_WARNING);
