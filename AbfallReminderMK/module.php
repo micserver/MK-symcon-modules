@@ -42,15 +42,6 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function AbR_FetchMails()
-    // ...existing code...
-
-    // Aktion für manuelles Abrufen
-    public function RequestAction($Ident, $Value)
-    {
-        if ($Ident === "FetchMails") {
-            $this->AbR_FetchMails();
-        }
-    }
     {
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
@@ -124,6 +115,14 @@ class AbfallReminderMK extends IPSModule
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
             SetValue($this->GetIDForIdent("Aktiv"), false);
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
+        }
+    }
+
+    // Aktion für manuelles Abrufen
+    public function RequestAction($Ident, $Value)
+    {
+        if ($Ident === "FetchMails") {
+            $this->AbR_FetchMails();
         }
     }
 
