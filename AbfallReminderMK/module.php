@@ -30,22 +30,22 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
-    // Timer zum automatischen Abrufen
-    $this->RegisterTimer("AbR_FetchTimer", 0, 'AbfallReminderMK_AbR_FetchMails($_IPS["TARGET"]);');
+    // Timer zum automatischen ARMKufen
+    $this->RegisterTimer("ARMK_FetchTimer", 0, 'AbfallReminderMK_ARMK_FetchMails($_IPS["TARGET"]);');
     }
     }
 
     public function ApplyChanges()
     {
         parent::ApplyChanges();
-    // Aktion für manuelles Abrufen wird über form.json und RequestAction behandelt
+    // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
     $interval = $this->ReadPropertyInteger("FetchInterval");
-    $this->SetTimerInterval("AbR_FetchTimer", $interval * 1000);
+    $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
     }
 
     public function FetchMails()
     {
-        $this->SendDebug("AbR_FetchMails", "Start", 0);
+        $this->SendDebug("ARMK_FetchMails", "Start", 0);
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
             $this->LogMessage("IMAP-Instanz nicht konfiguriert.", KL_WARNING);
@@ -124,12 +124,12 @@ class AbfallReminderMK extends IPSModule
         }
     }
 
-    // Aktion für manuelles Abrufen 
+    // Aktion für manuelles ARMKufen 
     public function RequestAction($Ident, $Value)
     {
         if ($Ident === "FetchMails") {
-            $this->LogMessage("Button 'Mails manuell abrufen' wurde geklickt!", KL_NOTIFY);
-            $this->AbR_FetchMails();
+            $this->LogMessage("Button 'Mails manuell ARMKufen' wurde geklickt!", KL_NOTIFY);
+            $this->ARMK_FetchMails();
         }
     }
 
@@ -165,7 +165,7 @@ class AbfallReminderMK extends IPSModule
 }
 
 // Wrapper-Funktion für Timer (muss außerhalb der Klasse stehen!)
-function AbfallReminderMK_AbR_FetchMails($InstanceID) {
+function AbfallReminderMK_ARMK_FetchMails($InstanceID) {
     IPS_RequestAction($InstanceID, "FetchMails", "");
 }
 
