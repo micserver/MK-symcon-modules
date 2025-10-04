@@ -43,7 +43,7 @@ class AbfallReminderMK extends IPSModule
     $this->SetTimerInterval("AbR_FetchTimer", $interval * 1000);
     }
 
-    public function AbR_FetchMails()
+    public function FetchMails()
     {
         $this->SendDebug("AbR_FetchMails", "Start", 0);
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
