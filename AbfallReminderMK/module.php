@@ -4,7 +4,8 @@ declare(strict_types=1);
 class AbfallReminderMK extends IPSModule
 {
     public function Create()
-    $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
+    {
+        $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
     {
         parent::Create();
 
