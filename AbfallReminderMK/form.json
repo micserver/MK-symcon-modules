@@ -80,9 +80,10 @@
   "actions": [
     {
       "type": "Button",
+      "name": "DiesisteinTest",
       "caption": "Mails manuell abrufen",
-      "onClick": "AbR_FetchMails($id);",
-      "action": "FetchMails"
+      "onClick": "AbR_FetchMails($id);"
+    
     }
   ]
 }
