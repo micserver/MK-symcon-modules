@@ -81,6 +81,7 @@
     {
       "type": "Button",
       "caption": "Mails manuell abrufen",
+      "onClick": "AbR_FetchMails($id);",
       "action": "FetchMails"
     }
   ]
