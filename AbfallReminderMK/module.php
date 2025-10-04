@@ -163,4 +163,4 @@ function AbfallReminderMK_AbR_FetchMails($InstanceID) {
         $instance->AbR_FetchMails();
     }
 }
-}
+
