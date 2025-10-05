@@ -7,7 +7,6 @@ class AbfallReminderMK extends IPSModule
     {
         // Properties immer zuerst registrieren!
         $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
-        $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
         $this->RegisterPropertyInteger("CacheSize", 20);
         $this->RegisterPropertyString("MailAbsender", json_encode([
             ["sender" => "noreply@awido.de"],
@@ -54,22 +53,6 @@ class AbfallReminderMK extends IPSModule
                 IPS_SetEventActive($eid, true);
             }
         }
-        $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
-        $this->RegisterPropertyInteger("CacheSize", 20);
-        $this->RegisterPropertyString("MailAbsender", json_encode([
-            ["sender" => "noreply@awido.de"],
-            ["sender" => "noreply@cubefour.de"]
-        ]));
-        $this->RegisterPropertyString("Abfallarten", json_encode([
-            ["art" => "Biomüll"],
-            ["art" => "Papiertonne"],
-            ["art" => "Restmüll"],
-            ["art" => "Gelber Sack"]
-        ]));
-        $this->RegisterPropertyString("OrtFilter", "Krombach");
-        $this->RegisterPropertyString("Testdatum", "2025-10-01");
-        $this->RegisterPropertyInteger("FetchInterval", 3600);
-        $this->RegisterPropertyInteger("EventVariableID", 0);
 
         // Variablen
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
