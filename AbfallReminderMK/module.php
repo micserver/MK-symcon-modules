@@ -26,7 +26,7 @@ class AbfallReminderMK extends IPSModule
             ["art" => "Gelber Sack"]
         ]));
         $this->RegisterPropertyString("OrtFilter", "Krombach");
-    $this->RegisterPropertyString("Testdatum", "2025-10-01");
+        $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
 
         // Variablen
@@ -34,9 +34,8 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
-    // Timer zum automatischen aufrufen
-    $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
-    }
+        // Timer zum automatischen aufrufen
+        $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
     }
 
     public function ApplyChanges()
