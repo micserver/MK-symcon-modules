@@ -122,10 +122,16 @@ class AbfallReminderMK extends IPSModule
                 $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
                 $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold;">';
                 foreach ($gueltigeTreffer as $t) {
-                    $anzeige .= "{$t['art']}\t{$t['datum']}\n";
+                    $kurzdatum = '';
+                    if (preg_match('/^(\d{2})\.(\d{2})\.\d{4}$/', $t['datum'], $dm)) {
+                        $kurzdatum = $dm[1] . '.' . $dm[2] . '.';
+                    } else {
+                        $kurzdatum = $t['datum'];
+                    }
+                    $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
                     $html .= '<tr>';
                     $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000;">' . htmlspecialchars($t['art']) . '</td>';
-                    $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000;">' . htmlspecialchars($t['datum']) . '</td>';
+                    $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000;">' . htmlspecialchars($kurzdatum) . '</td>';
                     $html .= '</tr>';
                 }
                 $html .= '</table></div>';
