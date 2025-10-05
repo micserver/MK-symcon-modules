@@ -170,22 +170,22 @@ class AbfallReminderMK extends IPSModule
 
         if (count($gueltigeTreffer) > 0) {
             $anzeige = "";
-                $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
-                $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold;">';
-                foreach ($gueltigeTreffer as $t) {
-                    $kurzdatum = '';
-                    if (preg_match('/^(\d{2})\.(\d{2})\.\d{4}$/', $t['datum'], $dm)) {
-                        $kurzdatum = $dm[1] . '.' . $dm[2] . '.';
-                    } else {
-                        $kurzdatum = $t['datum'];
-                    }
-                    $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
-                    $html .= '<tr>';
-                    $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000;">' . htmlspecialchars($t['art']) . '</td>';
-                    $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; text-align:right;">' . htmlspecialchars($kurzdatum) . '</td>';
-                    $html .= '</tr>';
+            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
+            $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold;">';
+            foreach ($gueltigeTreffer as $t) {
+                $kurzdatum = '';
+                if (preg_match('/^(\d{2})\.(\d{2})\.\d{4}$/', $t['datum'], $dm)) {
+                    $kurzdatum = $dm[1] . '.' . $dm[2] . '.';
+                } else {
+                    $kurzdatum = $t['datum'];
                 }
-                $html .= '</table></div>';
+                $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
+                $html .= '<tr>';
+                $html .= '<td style="padding:4px 32px 4px 8px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; width:60%;">' . htmlspecialchars($t['art']) . '</td>';
+                $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; text-align:right; width:40%;">' . htmlspecialchars($kurzdatum) . '</td>';
+                $html .= '</tr>';
+            }
+            $html .= '</table></div>';
 
             SetValue($this->GetIDForIdent("AnzeigenText"), $anzeige);
             SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
