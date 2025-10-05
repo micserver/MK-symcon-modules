@@ -2,9 +2,10 @@
 
 ## Installation
 1. Neues Verzeichnis anlegen: `IP-Symcon/modules/AbfallReminderMK/`
-2. Dateien kopieren:
+2. enthält Dateien:
+   - `form.json`
    - `module.json`
-   - `AbfallReminder.module.php`
+   - `module.php`
    - `README.md`
 3. IP-Symcon: Modulverwaltung öffnen und auf "Module neu laden" klicken.
 4. Unter Instanzen ein neues "Abfall Reminder" Modul anlegen.
@@ -20,7 +21,8 @@
 
 ## Variablen (vom Modul angelegt)
 - **NächsteAbfalltermine** (String)
-- **AbfallHeute** (Boolean)
+- **NächsteAbfalltermine** (HTML)
+- **Aktiv** (Boolean) <= relevante Mail gefunden?
 - **LetzterFehler** (String)
 - **TimeoutCounter** (Integer)
 
@@ -30,6 +32,4 @@
 ## Hinweise
 - Das Modul benutzt die IMAP-Funktionen `IMAP_GetCachedMails` und `IMAP_GetMailEx`.
 - Parser ist zeilenbasiert (robust) — kein gieriges Regex.
-- Optional: `form.json` anlegen, um die Konfigurationsoberfläche schöner zu gestalten.
-
 ---
