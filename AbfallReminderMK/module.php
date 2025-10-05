@@ -4,6 +4,9 @@ declare(strict_types=1);
 class AbfallReminderMK extends IPSModule
 {
     public function Create()
+    // Fehlerüberwachungs-Variablen
+    $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
+    $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
     {
         $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
     {
@@ -45,6 +48,21 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function FetchMails()
+        // --- Fehlerbehandlung IMAP ---
+        $e = error_get_last();
+        if (!empty($e) && array_key_exists('message', $e)) {
+            $Mail_Timeout_Counter = GetValue($this->GetIDForIdent("MailTimeoutCounter"));
+            if ($Mail_Timeout_Counter > 3) {
+                SetValue($this->GetIDForIdent("MailTimeoutStatus"), "Mail IMAP Timeout");
+                $this->LogMessage("Abfall email prüfen  => Timeout Counter > 3 !", KL_ERROR);
+                return;
+            }
+            SetValue($this->GetIDForIdent("MailTimeoutCounter"), $Mail_Timeout_Counter + 1);
+            return;
+        } else {
+            SetValue($this->GetIDForIdent("MailTimeoutCounter"), 0);
+            SetValue($this->GetIDForIdent("MailTimeoutStatus"), "OK");
+        }
     {
         $this->SendDebug("ARMK_FetchMails", "Start", 0);
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
