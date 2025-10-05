@@ -112,9 +112,13 @@ class AbfallReminderMK extends IPSModule
         }
 
         // --- Ausgabe / Speicherung ---
-        if (count($treffer) > 0) {
+        $gueltigeTreffer = array_filter($treffer, function($t) {
+            return $this->datumpruefen($t['datum']);
+        });
+
+        if (count($gueltigeTreffer) > 0) {
             $anzeige = "";
-            foreach ($treffer as $t) {
+            foreach ($gueltigeTreffer as $t) {
                 $anzeige .= "{$t['art']}\t=>  {$t['datum']}\n";
             }
 
@@ -128,16 +132,6 @@ class AbfallReminderMK extends IPSModule
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
         }
     }
-
-    // Aktion für manuelles aufrufen
-    /* 
-    public function RequestAction($Ident, $Value)
-    {
-        if ($Ident === "FetchMails") {
-            $this->LogMessage("Button 'Mails manuell aufrufen' wurde geklickt!", KL_NOTIFY);
-            $this->ARMK_FetchMails();
-        }
-    */
 
     private function Base64DecodeIfNeeded(string $text): ?string
     {
