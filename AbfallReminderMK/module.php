@@ -121,8 +121,8 @@ class AbfallReminderMK extends IPSModule
             $anzeige = "";
                 $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
                 foreach ($gueltigeTreffer as $t) {
-                    $anzeige .= "{$t['art']}\t=>  {$t['datum']}\n";
-                    $html .= htmlspecialchars($t['art']) . ' =&gt; ' . htmlspecialchars($t['datum']) . '<br>';
+                    $anzeige .= "{$t['art']}\t{$t['datum']}\n";
+                    $html .= htmlspecialchars($t['art']) . '<br>' . htmlspecialchars($t['datum']) . '<br><br>';
                 }
                 $html .= '</div>';
 
