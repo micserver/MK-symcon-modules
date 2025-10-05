@@ -28,6 +28,7 @@ class AbfallReminderMK extends IPSModule
 
         // Variablen
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
+        $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
     // Timer zum automatischen aufrufen
@@ -118,16 +119,21 @@ class AbfallReminderMK extends IPSModule
 
         if (count($gueltigeTreffer) > 0) {
             $anzeige = "";
+            $html = '<table style="width:100%">';
             foreach ($gueltigeTreffer as $t) {
                 $anzeige .= "{$t['art']}\t=>  {$t['datum']}\n";
+                $html .= '<tr><td>' . htmlspecialchars($t['art']) . '</td><td>' . htmlspecialchars($t['datum']) . '</td></tr>';
             }
+            $html .= '</table>';
 
             SetValue($this->GetIDForIdent("AnzeigenText"), $anzeige);
+            SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
             SetValue($this->GetIDForIdent("Aktiv"), true);
 
             $this->SendDebug("Treffer", $anzeige, 0);
         } else {
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
+            SetValue($this->GetIDForIdent("AnzeigenHTML"), "");
             SetValue($this->GetIDForIdent("Aktiv"), false);
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
         }
