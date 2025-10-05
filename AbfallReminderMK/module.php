@@ -69,7 +69,6 @@ class AbfallReminderMK extends IPSModule
         $abfallarten = json_decode($this->ReadPropertyString("Abfallarten"), true);
         $arten = array_map(function($a) { return preg_quote($a['art'], '/'); }, $abfallarten);
         $artenRegex = implode('|', $arten);
-        $this->SendDebug("Abfallarten", $artenRegex, 0);
     
         for ($i = 0; $i < count($mailarray); $i++) {
             $sender = $mailarray[$i]['SenderAddress'] ?? '';
