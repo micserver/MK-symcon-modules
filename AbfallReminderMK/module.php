@@ -82,7 +82,11 @@ class AbfallReminderMK extends IPSModule
 
     public function FetchMails()
     {
-        // --- Fehlerbehandlung IMAP ---
+    // Debug: Event-ID ausgeben
+    $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+    $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
+    IPS_LogMessage("AbfallReminderMK", "Manueller Abruf: EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'));
+    // --- Fehlerbehandlung IMAP ---
         $e = error_get_last();
         if (!empty($e) && array_key_exists('message', $e)) {
             $Mail_Timeout_Counter = GetValue($this->GetIDForIdent("MailTimeoutCounter"));
