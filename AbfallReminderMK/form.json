@@ -78,6 +78,14 @@
       "minimum": 60,
       "maximum": 86400
     }
+      ,
+      {
+        "type": "NumberSpinner",
+        "name": "EventVariableID",
+        "caption": "ID der Trigger-Variable",
+        "minimum": 1,
+        "maximum": 99999
+      }
   ],
   "actions": [
     {
