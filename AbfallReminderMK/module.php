@@ -4,13 +4,13 @@ declare(strict_types=1);
 class AbfallReminderMK extends IPSModule
 {
     public function Create()
-    // Fehlerüberwachungs-Variablen
-    $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
-    $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
-    {
-        $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
     {
         parent::Create();
+        $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
+
+        // Fehlerüberwachungs-Variablen
+        $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
+        $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
 
         // Eigenschaften aus der form.json
         $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
