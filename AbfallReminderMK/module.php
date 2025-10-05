@@ -120,11 +120,15 @@ class AbfallReminderMK extends IPSModule
         if (count($gueltigeTreffer) > 0) {
             $anzeige = "";
                 $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
+                $html .= '<table style="width:100%; border-collapse:collapse;">';
                 foreach ($gueltigeTreffer as $t) {
                     $anzeige .= "{$t['art']}\t{$t['datum']}\n";
-                    $html .= htmlspecialchars($t['art']) . '<br>' . htmlspecialchars($t['datum']) . '<br><br>';
+                    $html .= '<tr>';
+                    $html .= '<td style="padding:4px;">' . htmlspecialchars($t['art']) . '</td>';
+                    $html .= '<td style="padding:4px;">' . htmlspecialchars($t['datum']) . '</td>';
+                    $html .= '</tr>';
                 }
-                $html .= '</div>';
+                $html .= '</table></div>';
 
             SetValue($this->GetIDForIdent("AnzeigenText"), $anzeige);
             SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
