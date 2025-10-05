@@ -18,6 +18,7 @@
 - **OrtFilter**: Optional, nur Treffer mit diesem Ortsstring werden gewertet (z. B. "Krombach").
 - **Testdatum**: Optional, setze `YYYY-MM-DD` um Tests zu fahren (z. B. `2025-09-30`).
 - **FetchInterval**: Intervall in Sekunden (Standard 3600 = 1 Stunde).
+- **EventVariableID**: Event auf Änderung der IMAP Variable 'Letze Nachricht'.
 
 ## Variablen (vom Modul angelegt)
 - **NächsteAbfalltermine** (String)
