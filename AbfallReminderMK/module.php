@@ -26,7 +26,7 @@ class AbfallReminderMK extends IPSModule
             ["art" => "Gelber Sack"]
         ]));
         $this->RegisterPropertyString("OrtFilter", "Krombach");
-        $this->RegisterPropertyString("Testdatum", "2025-10-01");
+    $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
 
         // Variablen
@@ -34,8 +34,9 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
-        // Timer zum automatischen aufrufen
-        $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
+    // Timer zum automatischen aufrufen
+    $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
+    }
     }
 
     public function ApplyChanges()
@@ -47,7 +48,6 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function FetchMails()
-    {
         // --- Fehlerbehandlung IMAP ---
         $e = error_get_last();
         if (!empty($e) && array_key_exists('message', $e)) {
@@ -63,6 +63,7 @@ class AbfallReminderMK extends IPSModule
             SetValue($this->GetIDForIdent("MailTimeoutCounter"), 0);
             SetValue($this->GetIDForIdent("MailTimeoutStatus"), "OK");
         }
+    {
         $this->SendDebug("ARMK_FetchMails", "Start", 0);
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
@@ -196,8 +197,6 @@ class AbfallReminderMK extends IPSModule
     }
 }
 
-
-}
 // Wrapper-Funktion für Timer (muss außerhalb der Klasse stehen!)
 function AbfallReminderMK_ARMK_FetchMails($InstanceID) {
     IPS_RequestAction($InstanceID, "FetchMails", "");
