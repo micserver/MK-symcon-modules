@@ -50,7 +50,7 @@
           "caption": "Müllart",
           "name": "art",
           "width": "300px",
-          "add":true,
+          "add": "neu",
           "edit": {
             "type": "ValidationTextBox",
             "required": true
