@@ -5,6 +5,16 @@ class AbfallReminderMK extends IPSModule
 {
     public function Create()
     {
+        // Event für IMAP-LastMessage
+        $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
+        if ($eid === false) {
+            $eid = IPS_CreateEvent(0); // 0 = Trigger
+            IPS_SetEventTrigger($eid, 1, 37572); // 1 = bei Variablenänderung
+            IPS_SetParent($eid, $this->InstanceID);
+            IPS_SetName($eid, "IMAPLastMessageEvent");
+            IPS_SetEventActive($eid, true);
+            IPS_SetEventScript($eid, 'AbfallReminderMK_ARMK_FetchMails(' . $this->InstanceID . ');');
+        }
         parent::Create();
         $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
 
@@ -41,6 +51,11 @@ class AbfallReminderMK extends IPSModule
 
     public function ApplyChanges()
     {
+        // Event bei Variablenänderung aktivieren
+        $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
+        if ($eid !== false) {
+            IPS_SetEventActive($eid, true);
+        }
         parent::ApplyChanges();
     // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
     $interval = $this->ReadPropertyInteger("FetchInterval");
