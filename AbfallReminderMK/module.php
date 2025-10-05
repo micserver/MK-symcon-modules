@@ -160,7 +160,7 @@ class AbfallReminderMK extends IPSModule
         }
 
         $timestamp = strtotime($datum);
-        return ($timestamp >= $heute - 86400); // nicht älter als 1 Tag
+        return ($timestamp >= $heute); // nur heute oder Zukunft
     }
 }
 
