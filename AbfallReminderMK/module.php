@@ -47,6 +47,7 @@ class AbfallReminderMK extends IPSModule
     }
 
     public function FetchMails()
+    {
         // --- Fehlerbehandlung IMAP ---
         $e = error_get_last();
         if (!empty($e) && array_key_exists('message', $e)) {
@@ -62,7 +63,6 @@ class AbfallReminderMK extends IPSModule
             SetValue($this->GetIDForIdent("MailTimeoutCounter"), 0);
             SetValue($this->GetIDForIdent("MailTimeoutStatus"), "OK");
         }
-    {
         $this->SendDebug("ARMK_FetchMails", "Start", 0);
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
