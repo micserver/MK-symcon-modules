@@ -31,7 +31,6 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
 
     // Timer zum automatischen aufrufen
-    #$this->RegisterTimer("ARMK_FetchTimer", 0, 'AbfallReminderMK_ARMK_FetchMails($_IPS["TARGET"]);');
     $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
     }
     }
@@ -66,6 +65,12 @@ class AbfallReminderMK extends IPSModule
         $anzeige = "";
         $treffer = [];
 
+        // Dynamischen Regex für Abfallarten bauen
+        $abfallarten = json_decode($this->ReadPropertyString("Abfallarten"), true);
+        $arten = array_map(function($a) { return preg_quote($a['art'], '/'); }, $abfallarten);
+        $artenRegex = implode('|', $arten);
+         $this->SendDebug("Abfallarten", $artenRegex, 0);
+         
         for ($i = 0; $i < count($mailarray); $i++) {
             $sender = $mailarray[$i]['SenderAddress'] ?? '';
             if (!in_array($sender, $allowedSenders)) {
@@ -92,7 +97,7 @@ class AbfallReminderMK extends IPSModule
             for ($k = 0; $k < count($lines); $k++) {
                 $line = trim($lines[$k]);
 
-                if (preg_match('/^(Papiertonne|Biomüll|Restmüll|Gelber Sack)\b/i', $line, $m)) {
+                if (preg_match('/^(' . $artenRegex . ')\b/i', $line, $m)) {
                     for ($j = $k + 1; $j <= $k + 3 && $j < count($lines); $j++) {
                         if (preg_match('/(\d{2}\.\d{2}\.\d{4})/', $lines[$j], $d)) {
                             $treffer[] = [
@@ -125,14 +130,15 @@ class AbfallReminderMK extends IPSModule
         }
     }
 
-    // Aktion für manuelles ARMKufen 
+    // Aktion für manuelles aufrufen
+    /* 
     public function RequestAction($Ident, $Value)
     {
         if ($Ident === "FetchMails") {
-            $this->LogMessage("Button 'Mails manuell ARMKufen' wurde geklickt!", KL_NOTIFY);
+            $this->LogMessage("Button 'Mails manuell aufrufen' wurde geklickt!", KL_NOTIFY);
             $this->ARMK_FetchMails();
         }
-    }
+    */
 
     private function Base64DecodeIfNeeded(string $text): ?string
     {
