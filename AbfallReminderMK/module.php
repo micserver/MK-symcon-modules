@@ -162,12 +162,12 @@ class AbfallReminderMK extends IPSModule
     {
         $testdate = $this->ReadPropertyString("Testdatum");
         if ($testdate != "") {
-            $heute = strtotime($testdate);
+            $heute = strtotime(date('Y-m-d', strtotime($testdate)));
         } else {
-            $heute = time();
+            $heute = strtotime(date('Y-m-d'));
         }
 
-        $timestamp = strtotime($datum);
+        $timestamp = strtotime(date('Y-m-d', strtotime($datum)));
         return ($timestamp >= $heute); // nur heute oder Zukunft
     }
 }
