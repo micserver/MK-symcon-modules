@@ -58,9 +58,6 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
-
-    // Timer zum automatischen aufrufen
-    $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
     }
     
 
