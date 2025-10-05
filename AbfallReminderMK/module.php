@@ -127,6 +127,7 @@ class AbfallReminderMK extends IPSModule
                 $html .= '</div>';
 
             SetValue($this->GetIDForIdent("AnzeigenText"), $anzeige);
+            SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
             SetValue($this->GetIDForIdent("Aktiv"), true);
 
             $this->SendDebug("Treffer", $anzeige, 0);
