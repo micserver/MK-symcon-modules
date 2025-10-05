@@ -7,6 +7,7 @@ class AbfallReminderMK extends IPSModule
     {
         // Properties immer zuerst registrieren!
         $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
+        $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
         $this->RegisterPropertyInteger("CacheSize", 20);
         $this->RegisterPropertyString("MailAbsender", json_encode([
             ["sender" => "noreply@awido.de"],
@@ -25,6 +26,18 @@ class AbfallReminderMK extends IPSModule
 
         parent::Create();
 
+        // Fehlerüberwachungs-Variablen
+        $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
+        $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
+
+        // Variablen
+        $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
+        $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
+        $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
+
+        // Timer zum automatischen aufrufen
+        $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
+
         // Event für konfigurierbare Variable (erst nach parent::Create())
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         if ($eventVarID > 0) {
@@ -41,14 +54,6 @@ class AbfallReminderMK extends IPSModule
                 IPS_SetEventActive($eid, true);
             }
         }
-        parent::Create();
-        $this->LogMessage("Modul wurde geladen!", KL_NOTIFY);
-
-        // Fehlerüberwachungs-Variablen
-        $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
-        $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
-
-        // Eigenschaften aus der form.json
         $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
         $this->RegisterPropertyInteger("CacheSize", 20);
         $this->RegisterPropertyString("MailAbsender", json_encode([
