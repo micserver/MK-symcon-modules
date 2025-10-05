@@ -119,8 +119,8 @@ class AbfallReminderMK extends IPSModule
 
         if (count($gueltigeTreffer) > 0) {
             $anzeige = "";
-                $html = '<div style="background:rgba(255,255,0,0.5); font-family:Roboto,Arial,sans-serif; font-weight:bold; color:#000; padding:8px;">';
-                $html .= '<table style="width:100%; border-collapse:collapse; background:transparent;">';
+                $html = '<div style="background:#FFFF00; font-family:Roboto,Arial,sans-serif; font-weight:bold; color:#000; padding:8px;">';
+                $html .= '<table style="width:100%; border-collapse:collapse;">';
                 foreach ($gueltigeTreffer as $t) {
                     $anzeige .= "{$t['art']}\t=>  {$t['datum']}\n";
                     $html .= '<tr>';
