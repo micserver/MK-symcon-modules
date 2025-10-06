@@ -60,38 +60,6 @@ class AbfallReminderMK extends IPSModule
                 IPS_SetEventScript($eid, $eventScript);
             }
         }
-        $this->EnableAction("FetchMails");
-        // Properties immer zuerst registrieren!
-        $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
-        $this->RegisterPropertyInteger("CacheSize", 20);
-        $this->RegisterPropertyString("MailAbsender", json_encode([
-            ["sender" => "noreply@awido.de"],
-            ["sender" => "noreply@cubefour.de"]
-        ]));
-        $this->RegisterPropertyString("Abfallarten", json_encode([
-            ["art" => "Biomüll"],
-            ["art" => "Papiertonne"],
-            ["art" => "Restmüll"],
-            ["art" => "Gelber Sack"]
-        ]));
-        $this->RegisterPropertyString("OrtFilter", "Krombach");
-        $this->RegisterPropertyString("Testdatum", "2025-10-01");
-        $this->RegisterPropertyInteger("FetchInterval", 3600);
-        $this->RegisterPropertyInteger("EventVariableID", 0);
-
-        parent::Create();
-
-    // Mail Fehlerüberwachungs-Variablen
-    $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
-    $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
-
-    // Variablen
-    $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
-    $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
-    $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
-    // Timer zum automatischen aufrufen
-    $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
-    }
     
 
     public function ApplyChanges()
