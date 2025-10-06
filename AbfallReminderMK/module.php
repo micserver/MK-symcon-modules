@@ -59,7 +59,7 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
-    }
+    // entfernt: überflüssige schließende Klammer
     
 
     public function ApplyChanges()
