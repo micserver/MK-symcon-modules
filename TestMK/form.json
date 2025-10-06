@@ -4,7 +4,7 @@
   "elements": [
     {
       "type": "Label",
-      "caption": "Testmodul für Event-Auslösung bei Variablenänderung"
+      "caption": "Testmodul für Event-Auslösung bei Variablenänderung "
     },
     {
       "type": "SelectObject",
