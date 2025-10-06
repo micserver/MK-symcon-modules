@@ -34,13 +34,20 @@ class TestMK extends IPSModule
     {
     
     
-    $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-    $this->SendDebug("ApplyChanges", "EventVariableID=" . $eventVarID, 0);
+        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+        $this->SendDebug("ApplyChanges", "EventVariableID=" . $eventVarID, 0);
         $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
-        if ($eid !== false && $eventVarID > 0) {
+        $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
+        if ($eventVarID > 0) {
+            if ($eid === false) {
+                $eid = IPS_CreateEvent(0); // 0 = Trigger
+                IPS_SetParent($eid, $this->InstanceID);
+                IPS_SetName($eid, "TestMKEvent");
+            }
             IPS_SetEventTrigger($eid, 1, $eventVarID);
             IPS_SetEventActive($eid, true);
-        } else if ($eid !== false && $eventVarID == 0) {
+            IPS_SetEventScript($eid, $eventScript);
+        } else if ($eid !== false) {
             IPS_SetEventActive($eid, false);
         }
         parent::ApplyChanges();
