@@ -19,11 +19,11 @@ class TestMK extends IPSModule
     }
 
     public function Create()
-
-    {
-        $this->RegisterPropertyInteger("EventVariableID", 0);
+    $this->RegisterPropertyInteger("EventVariableID", 0);
     $this->RegisterAction("LogEventDebug");
     $this->RegisterAction("TestEvent");
+    {
+    
     
         $this->RegisterPropertyInteger("EventVariableID", 0);
         $this->SendDebug("Create", "EventVariableID=" . $this->ReadPropertyInteger("EventVariableID"), 0);
