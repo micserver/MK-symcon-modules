@@ -36,11 +36,11 @@ class TestMK extends IPSModule
     
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         $this->SendDebug("ApplyChanges", "EventVariableID=" . $eventVarID, 0);
-        // Alle Events mit Ident "TestMKEvent" unterhalb der Instanz löschen
+        // Alle Events mit Name "TestMKEvent" unterhalb der Instanz löschen
         $children = IPS_GetChildrenIDs($this->InstanceID);
         foreach ($children as $childID) {
             if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
-                if (@IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID) === $childID) {
+                if (IPS_GetObject($childID)['ObjectName'] == "TestMKEvent") {
                     IPS_DeleteEvent($childID);
                     $this->SendDebug("ApplyChanges", "Doppeltes Event gelöscht: EventID=$childID", 0);
                 }
