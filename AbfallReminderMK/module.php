@@ -26,7 +26,7 @@ class AbfallReminderMK extends IPSModule
 
         parent::Create();
 
-        // Fehlerüberwachungs-Variablen
+        // Mail Fehlerüberwachungs-Variablen
         $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
         $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
 
@@ -37,7 +37,7 @@ class AbfallReminderMK extends IPSModule
         // Timer zum automatischen aufrufen
         $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
 
-        // Event für konfigurierbare Variable (erst nach parent::Create())
+        // Event für konfigurierbare Variable
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         if ($eventVarID > 0) {
             $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
