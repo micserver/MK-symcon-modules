@@ -4,6 +4,7 @@ declare(strict_types=1);
 class AbfallReminderMK extends IPSModule
 {
     public function Create()
+    $this->EnableAction("FetchMails");
     {
         // Properties immer zuerst registrieren!
         $this->RegisterPropertyInteger("IMAP_InstanzID", 0);
@@ -63,19 +64,42 @@ class AbfallReminderMK extends IPSModule
 
     public function ApplyChanges()
     {
-        // Event bei Variablenänderung aktivieren (nur wenn konfiguriert)
+        // Event bei Variablenänderung robust verwalten
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
-        if ($eid !== false && $eventVarID > 0) {
+        // Alle Events mit Name oder Ident "IMAPLastMessageEvent" unterhalb der Instanz löschen
+        $children = IPS_GetChildrenIDs($this->InstanceID);
+        foreach ($children as $childID) {
+            if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
+                $obj = IPS_GetObject($childID);
+                if ($obj['ObjectName'] == "IMAPLastMessageEvent" || (isset($obj['ObjectIdent']) && $obj['ObjectIdent'] == "IMAPLastMessageEvent")) {
+                    IPS_DeleteEvent($childID);
+                    $this->SendDebug("ApplyChanges", "Altes Event gelöscht: EventID=$childID", 0);
+                }
+            }
+        }
+        // Neues Event nur anlegen, wenn Variable > 0
+        if ($eventVarID > 0) {
+            $eid = IPS_CreateEvent(0); // 0 = Trigger
+            IPS_SetParent($eid, $this->InstanceID);
+            IPS_SetName($eid, "IMAPLastMessageEvent");
+            IPS_SetIdent($eid, "IMAPLastMessageEvent");
             IPS_SetEventTrigger($eid, 1, $eventVarID);
             IPS_SetEventActive($eid, true);
-        } else if ($eid !== false && $eventVarID == 0) {
-            IPS_SetEventActive($eid, false);
+            // Event-Script ruft FetchMails per RequestAction auf
+            $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
+            IPS_SetEventScript($eid, $eventScript);
+            $this->SendDebug("ApplyChanges", "Neues Event angelegt: EventID=$eid für Variable $eventVarID", 0);
         }
         parent::ApplyChanges();
-    // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
-    $interval = $this->ReadPropertyInteger("FetchInterval");
-    $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
+        // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
+        $interval = $this->ReadPropertyInteger("FetchInterval");
+        $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
+    public function RequestAction($Ident, $Value)
+    {
+        if ($Ident == "FetchMails") {
+            $this->FetchMails();
+        }
+    }
     }
 
     public function FetchMails()
