@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 class TestMK extends IPSModule
+{
     public function LogEventDebug($VariableID)
     {
         $this->SendDebug("EventTrigger", "Event ausgelöst für Variable $VariableID", 0);
@@ -16,7 +17,7 @@ class TestMK extends IPSModule
             $this->TestEvent();
         }
     }
-{
+
     public function Create()
     $this->RegisterPropertyInteger("EventVariableID", 0);
     $this->RegisterAction("LogEventDebug");
