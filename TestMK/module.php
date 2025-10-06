@@ -58,15 +58,7 @@ class TestMK extends IPSModule
         }
     }
 
-    public function TestEvent()
-    {
-    $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-    $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
-    $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
-    }
+    // ...TestEvent-Methode entfernt...
 }
 
-// Wrapper-Funktion für Button
-function TestMK_TestEvent($InstanceID) {
-    IPS_RequestAction($InstanceID, "TestEvent", "");
-}
+// ...Wrapper-Funktion entfernt...
