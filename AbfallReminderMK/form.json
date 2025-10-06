@@ -12,12 +12,12 @@
       "caption": "IMAP Instanz"
     },
     {
-      "type": "NumberSpinner",
-      "name": "CacheSize",
-      "caption": "Cache Size (IMAP)",
-      "suffix": "Mails",
-      "minimum": 1,
-      "maximum": 100
+  "type": "NumberSpinner",
+  "name": "CacheSize",
+  "caption": "Cache Size (IMAP)",
+  "suffix": "Mails",
+  "minimum": 1,
+  "maximum": 20
     },
     {
       "type": "List",
