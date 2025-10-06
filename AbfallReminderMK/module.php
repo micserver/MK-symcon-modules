@@ -4,6 +4,29 @@ declare(strict_types=1);
 class AbfallReminderMK extends IPSModule
 {
     public function Create()
+        // Event für konfigurierbare Variable (nur anlegen, wenn noch keines existiert)
+        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+        if ($eventVarID > 0) {
+            $children = IPS_GetChildrenIDs($this->InstanceID);
+            $existingEventID = false;
+            foreach ($children as $childID) {
+                if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
+                    $event = IPS_GetEvent($childID);
+                    if ($event['TriggerType'] == 1 && $event['TriggerValue'] == $eventVarID) {
+                        $existingEventID = $childID;
+                    }
+                }
+            }
+            if ($existingEventID === false) {
+                $eid = IPS_CreateEvent(0); // 0 = Trigger
+                IPS_SetParent($eid, $this->InstanceID);
+                IPS_SetName($eid, "Event für Variable $eventVarID");
+                IPS_SetEventTrigger($eid, 1, $eventVarID);
+                IPS_SetEventActive($eid, true);
+                $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
+                IPS_SetEventScript($eid, $eventScript);
+            }
+        }
     {
         $this->EnableAction("FetchMails");
         // Properties immer zuerst registrieren!
