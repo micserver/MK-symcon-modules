@@ -81,22 +81,16 @@ class AbfallReminderMK extends IPSModule
 
         parent::Create();
 
-        // Mail Fehlerüberwachungs-Variablen
-        $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
-        $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
+    // Mail Fehlerüberwachungs-Variablen
+    $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
+    $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
 
-        // Variablen
-        $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
-        $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
-        $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
-        // Timer zum automatischen aufrufen
-        $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
-
-
-        // Variablen
-        $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
-        $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
-        $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
+    // Variablen
+    $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
+    $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
+    $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
+    // Timer zum automatischen aufrufen
+    $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
     }
     
 
