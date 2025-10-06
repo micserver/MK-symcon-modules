@@ -7,11 +7,11 @@ class TestMK extends IPSModule
     {
     
     
-    $this->RegisterPropertyInteger("EventVariableID", 0);
-    $this->SendDebug("Create", "EventVariableID=" . $this->ReadPropertyInteger("EventVariableID"), 0);
+        $this->RegisterPropertyInteger("EventVariableID", 0);
+        $this->SendDebug("Create", "EventVariableID=" . $this->ReadPropertyInteger("EventVariableID"), 0);
         parent::Create();
         // Event für konfigurierbare Variable
-    $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         if ($eventVarID > 0) {
             $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
             $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
@@ -48,9 +48,9 @@ class TestMK extends IPSModule
 
     public function TestEvent()
     {
-    $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-    $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
+        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
+        $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
         IPS_LogMessage("TestMK", "Manueller Test: EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'));
     }
 }
