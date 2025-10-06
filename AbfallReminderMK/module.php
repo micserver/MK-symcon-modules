@@ -37,22 +37,7 @@ class AbfallReminderMK extends IPSModule
         // Timer zum automatischen aufrufen
         $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
 
-        // Event für konfigurierbare Variable
-        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        if ($eventVarID > 0) {
-            $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
-            if ($eid === false) {
-                $eid = IPS_CreateEvent(0); // 0 = Trigger
-                IPS_SetEventTrigger($eid, 1, $eventVarID); // 1 = bei Variablenänderung
-                IPS_SetParent($eid, $this->InstanceID);
-                IPS_SetName($eid, "IMAPLastMessageEvent");
-                IPS_SetEventActive($eid, true);
-                IPS_SetEventScript($eid, 'AbfallReminderMK_ARMK_FetchMails(' . $this->InstanceID . ');');
-            } else {
-                IPS_SetEventTrigger($eid, 1, $eventVarID);
-                IPS_SetEventActive($eid, true);
-            }
-        }
+        // Keine Event-Logik mehr nötig
 
         // Variablen
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
@@ -63,36 +48,36 @@ class AbfallReminderMK extends IPSModule
 
     public function ApplyChanges()
     {
-        // Event bei Variablenänderung
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        // Alle Events mit Name oder Ident "IMAPLastMessageEvent" unterhalb der Instanz löschen
-        $children = IPS_GetChildrenIDs($this->InstanceID);
-        foreach ($children as $childID) {
-            if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
-                $obj = IPS_GetObject($childID);
-                if ($obj['ObjectName'] == "IMAPLastMessageEvent" || (isset($obj['ObjectIdent']) && $obj['ObjectIdent'] == "IMAPLastMessageEvent")) {
-                    IPS_DeleteEvent($childID);
-                    $this->SendDebug("ApplyChanges", "Altes Event gelöscht: EventID=$childID", 0);
-                }
-            }
-        }
-        // Neues Event nur anlegen, wenn Variable > 0
-        if ($eventVarID > 0) {
-            $eid = IPS_CreateEvent(0); // 0 = Trigger
-            IPS_SetParent($eid, $this->InstanceID);
-            IPS_SetName($eid, "IMAPLastMessageEvent");
-            IPS_SetIdent($eid, "IMAPLastMessageEvent");
-            IPS_SetEventTrigger($eid, 1, $eventVarID);
-            IPS_SetEventActive($eid, true);
-            // Event-Script ruft FetchMails per RequestAction auf
-            $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
-            IPS_SetEventScript($eid, $eventScript);
-            $this->SendDebug("ApplyChanges", "Neues Event angelegt: EventID=$eid für Variable $eventVarID", 0);
+        $this->SendDebug("ApplyChanges", "EventVariableID=" . $eventVarID, 0);
+        $this->UnregisterAllMessages();
+        if ($eventVarID > 0 && IPS_VariableExists($eventVarID)) {
+            $this->RegisterMessage($eventVarID, 10603); // 10603 = VM_UPDATE
+            $this->SendDebug("ApplyChanges", "MessageSink für Variable $eventVarID registriert", 0);
         }
         parent::ApplyChanges();
-        // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
         $interval = $this->ReadPropertyInteger("FetchInterval");
         $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
+
+    }
+
+    private function UnregisterAllMessages()
+    {
+        $children = IPS_GetChildrenIDs($this->InstanceID);
+        foreach ($children as $childID) {
+            if (IPS_GetObject($childID)['ObjectType'] == 2) { // 2 = Variable
+                $this->UnregisterMessage($childID, 10603);
+            }
+        }
+    }
+
+    public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    {
+        if ($Message == 10603) { // VM_UPDATE
+            $this->SendDebug("MessageSink", "Variable $SenderID geändert: Neuer Wert=" . GetValue($SenderID), 0);
+            // Hier: Mails abrufen
+            $this->FetchMails();
+        }
     }
 
     public function RequestAction($Ident, $Value)
