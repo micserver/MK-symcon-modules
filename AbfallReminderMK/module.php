@@ -245,10 +245,9 @@ class AbfallReminderMK extends IPSModule
         return ($timestamp >= $heute); // nur heute oder Zukunft
     }
 
-
+}
 // Wrapper-Funktion für Timer (muss außerhalb der Klasse stehen!)
 function AbfallReminderMK_ARMK_FetchMails($InstanceID) {
     IPS_RequestAction($InstanceID, "FetchMails", "");
 }
 
-}
