@@ -37,22 +37,6 @@ class AbfallReminderMK extends IPSModule
         // Timer zum automatischen aufrufen
         $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
 
-        // Event für konfigurierbare Variable
-        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        if ($eventVarID > 0) {
-            $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
-            if ($eid === false) {
-                $eid = IPS_CreateEvent(0); // 0 = Trigger
-                IPS_SetEventTrigger($eid, 1, $eventVarID); // 1 = bei Variablenänderung
-                IPS_SetParent($eid, $this->InstanceID);
-                IPS_SetName($eid, "IMAPLastMessageEvent");
-                IPS_SetEventActive($eid, true);
-                IPS_SetEventScript($eid, 'AbfallReminderMK_ARMK_FetchMails(' . $this->InstanceID . ');');
-            } else {
-                IPS_SetEventTrigger($eid, 1, $eventVarID);
-                IPS_SetEventActive($eid, true);
-            }
-        }
 
         // Variablen
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
