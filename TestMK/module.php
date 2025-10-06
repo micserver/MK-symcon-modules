@@ -2,6 +2,10 @@
 declare(strict_types=1);
 
 class TestMK extends IPSModule
+    public function LogEventDebug($VariableID)
+    {
+        $this->SendDebug("EventTrigger", "Event ausgelöst für Variable $VariableID", 0);
+    }
 {
     public function Create()
     {
@@ -54,7 +58,8 @@ class TestMK extends IPSModule
             IPS_SetIdent($eid, "TestMKEvent");
             IPS_SetEventTrigger($eid, 1, $eventVarID);
             IPS_SetEventActive($eid, true);
-            $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
+            // Event-Script ruft die Debug-Funktion des Moduls auf
+            $eventScript = 'TestMK_LogEventDebug(' . $this->InstanceID . ', ' . $eventVarID . ');';
             IPS_SetEventScript($eid, $eventScript);
             $this->SendDebug("ApplyChanges", "Neues Event angelegt: EventID=$eid für Variable $eventVarID", 0);
         }
