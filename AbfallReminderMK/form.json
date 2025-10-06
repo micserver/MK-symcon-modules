@@ -82,7 +82,8 @@
       {
         "type": "SelectObject",
         "name": "EventVariableID",
-        "caption": "Trigger-Variable"
+        "caption": "Trigger-Variable",
+        "validParentTypes": ["Variable"]
       }
   ],
   "actions": [
