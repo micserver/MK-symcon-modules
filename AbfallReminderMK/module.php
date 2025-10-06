@@ -246,7 +246,8 @@ class AbfallReminderMK extends IPSModule
     }
 
 }
-// Wrapper-Funktion für Timer (muss  außerhalb der Klasse stehen!)
+
+// Wrapper-Funktion für Timer (muss außerhalb der Klasse stehen!)
 function AbfallReminderMK_ARMK_FetchMails($InstanceID) {
     IPS_RequestAction($InstanceID, "FetchMails", "");
 }

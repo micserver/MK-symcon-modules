@@ -80,11 +80,9 @@
     }
       ,
       {
-        "type": "NumberSpinner",
+        "type": "SelectObject",
         "name": "EventVariableID",
-        "caption": "ID der Trigger-Variable",
-        "minimum": 1,
-        "maximum": 99999
+        "caption": "Trigger-Variable"
       }
   ],
   "actions": [
