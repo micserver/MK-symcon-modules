@@ -39,6 +39,7 @@ class AbfallReminderMK extends IPSModule
 
         // Event für konfigurierbare Variable (nur anlegen, wenn noch keines existiert)
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+        $this->SendDebug("Create", "EventVariableID=" . $eventVarID, 0);
         if ($eventVarID > 0) {
             $children = IPS_GetChildrenIDs($this->InstanceID);
             $existingEventID = false;
