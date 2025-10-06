@@ -68,32 +68,40 @@ class AbfallReminderMK extends IPSModule
         $eventFound = false;
         $children = IPS_GetChildrenIDs($this->InstanceID);
         $eventIdent = "IMAPLastMessageEvent_" . $eventVarID;
+        $existingEventID = false;
         foreach ($children as $childID) {
             if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
                 $event = IPS_GetEvent($childID);
+                // Prüfe, ob Event für die aktuelle Variable existiert
                 if ($event['TriggerType'] == 1 && $event['TriggerValue'] == $eventVarID) {
-                    // Event existiert bereits für die gewünschte Variable
-                    $eventFound = true;
-                    // Event ggf. aktualisieren (aktivieren, Script setzen, Ident setzen)
-                    IPS_SetEventActive($childID, true);
-                    IPS_SetIdent($childID, $eventIdent);
-                    $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
-                    IPS_SetEventScript($childID, $eventScript);
-                    $this->SendDebug("ApplyChanges", "Event für Variable $eventVarID bereits vorhanden: EventID=$childID", 0);
+                    $existingEventID = $childID;
+                }
+                // Prüfe, ob Event-Ident doppelt ist (für andere Variable), dann Ident zurücksetzen
+                if ($event['TriggerType'] == 1 && $event['TriggerValue'] != $eventVarID && isset($event['Ident']) && $event['Ident'] == $eventIdent) {
+                    IPS_SetIdent($childID, "");
                 }
             }
         }
-        // Falls kein Event für die Variable existiert, neu anlegen
-        if ($eventVarID > 0 && !$eventFound) {
-            $eid = IPS_CreateEvent(0); // 0 = Trigger
-            IPS_SetParent($eid, $this->InstanceID);
-            IPS_SetName($eid, "IMAPLastMessageEvent");
-            IPS_SetIdent($eid, $eventIdent);
-            IPS_SetEventTrigger($eid, 1, $eventVarID);
-            IPS_SetEventActive($eid, true);
-            $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
-            IPS_SetEventScript($eid, $eventScript);
-            $this->SendDebug("ApplyChanges", "Neues Event angelegt: EventID=$eid für Variable $eventVarID", 0);
+        if ($eventVarID > 0) {
+            if ($existingEventID !== false) {
+                // Event existiert, nur aktualisieren
+                IPS_SetEventActive($existingEventID, true);
+                IPS_SetIdent($existingEventID, $eventIdent);
+                $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
+                IPS_SetEventScript($existingEventID, $eventScript);
+                $this->SendDebug("ApplyChanges", "Event für Variable $eventVarID bereits vorhanden: EventID=$existingEventID", 0);
+            } else {
+                // Event existiert nicht, neu anlegen
+                $eid = IPS_CreateEvent(0); // 0 = Trigger
+                IPS_SetParent($eid, $this->InstanceID);
+                IPS_SetName($eid, "IMAPLastMessageEvent");
+                IPS_SetIdent($eid, $eventIdent);
+                IPS_SetEventTrigger($eid, 1, $eventVarID);
+                IPS_SetEventActive($eid, true);
+                $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
+                IPS_SetEventScript($eid, $eventScript);
+                $this->SendDebug("ApplyChanges", "Neues Event angelegt: EventID=$eid für Variable $eventVarID", 0);
+            }
         }
         parent::ApplyChanges();
         // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
