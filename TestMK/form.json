@@ -8,14 +8,14 @@
     },
     {
       "type": "SelectObject",
-      "name": "TMK_EventVariableID",
+      "name": "EventVariableID",
       "caption": "Zu überwachende Variable auswählen"
     }
   ],
   "actions": [
     {
       "type": "Button",
-      "name": "TMK_TestEvent",
+      "name": "TestEvent",
       "caption": "Event testen",
       "onClick": "TMK_TestEvent($id);"
     }
