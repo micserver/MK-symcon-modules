@@ -94,6 +94,7 @@ class AbfallReminderMK extends IPSModule
         // Aktion für manuelles ARMKufen wird über form.json und RequestAction behandelt
         $interval = $this->ReadPropertyInteger("FetchInterval");
         $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
+    }
     public function RequestAction($Ident, $Value)
     {
         if ($Ident == "FetchMails") {
