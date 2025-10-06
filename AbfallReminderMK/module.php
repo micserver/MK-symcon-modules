@@ -67,14 +67,16 @@ class AbfallReminderMK extends IPSModule
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         $eventFound = false;
         $children = IPS_GetChildrenIDs($this->InstanceID);
+        $eventIdent = "IMAPLastMessageEvent_" . $eventVarID;
         foreach ($children as $childID) {
             if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
                 $event = IPS_GetEvent($childID);
                 if ($event['TriggerType'] == 1 && $event['TriggerValue'] == $eventVarID) {
                     // Event existiert bereits für die gewünschte Variable
                     $eventFound = true;
-                    // Event ggf. aktualisieren (aktivieren, Script setzen)
+                    // Event ggf. aktualisieren (aktivieren, Script setzen, Ident setzen)
                     IPS_SetEventActive($childID, true);
+                    IPS_SetIdent($childID, $eventIdent);
                     $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
                     IPS_SetEventScript($childID, $eventScript);
                     $this->SendDebug("ApplyChanges", "Event für Variable $eventVarID bereits vorhanden: EventID=$childID", 0);
@@ -86,7 +88,7 @@ class AbfallReminderMK extends IPSModule
             $eid = IPS_CreateEvent(0); // 0 = Trigger
             IPS_SetParent($eid, $this->InstanceID);
             IPS_SetName($eid, "IMAPLastMessageEvent");
-            IPS_SetIdent($eid, "IMAPLastMessageEvent");
+            IPS_SetIdent($eid, $eventIdent);
             IPS_SetEventTrigger($eid, 1, $eventVarID);
             IPS_SetEventActive($eid, true);
             $eventScript = 'IPS_RequestAction(' . $this->InstanceID . ', "FetchMails", "");';
