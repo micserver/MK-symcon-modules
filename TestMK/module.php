@@ -37,18 +37,33 @@ class TestMK extends IPSModule
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
         $this->SendDebug("ApplyChanges", "EventVariableID=" . $eventVarID, 0);
         $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
-        $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
-        if ($eventVarID > 0) {
-            if ($eid === false) {
-                $eid = IPS_CreateEvent(0); // 0 = Trigger
-                IPS_SetParent($eid, $this->InstanceID);
-                IPS_SetName($eid, "TestMKEvent");
+        $eventNeedsUpdate = true;
+        if ($eid !== false) {
+            $eventInfo = IPS_GetEvent($eid);
+            // Prüfen, ob das Event bereits auf die gewünschte Variable zeigt
+            if ($eventVarID > 0 && $eventInfo['TriggerValue'] == $eventVarID && $eventInfo['TriggerType'] == 1) {
+                $eventNeedsUpdate = false;
+                $this->SendDebug("ApplyChanges", "Event existiert und zeigt bereits auf Variable $eventVarID (EventID=$eid)", 0);
+                // Event aktivieren und Script aktualisieren (falls nötig)
+                IPS_SetEventActive($eid, true);
+                $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
+                IPS_SetEventScript($eid, $eventScript);
+            } else {
+                // Event löschen, wenn Variable geändert oder auf 0 gesetzt
+                IPS_DeleteEvent($eid);
+                $this->SendDebug("ApplyChanges", "Altes Event gelöscht: EventID=$eid", 0);
             }
+        }
+        // Neues Event nur anlegen, wenn Variable > 0 und kein passendes Event existiert
+        if ($eventVarID > 0 && $eventNeedsUpdate) {
+            $eid = IPS_CreateEvent(0); // 0 = Trigger
+            IPS_SetParent($eid, $this->InstanceID);
+            IPS_SetName($eid, "TestMKEvent");
             IPS_SetEventTrigger($eid, 1, $eventVarID);
             IPS_SetEventActive($eid, true);
+            $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
             IPS_SetEventScript($eid, $eventScript);
-        } else if ($eid !== false) {
-            IPS_SetEventActive($eid, false);
+            $this->SendDebug("ApplyChanges", "Neues Event angelegt: EventID=$eid für Variable $eventVarID", 0);
         }
         parent::ApplyChanges();
     }
