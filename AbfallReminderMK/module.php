@@ -67,6 +67,7 @@ class AbfallReminderMK extends IPSModule
     {
         // Event bei Variablenänderung
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+        $this->SendDebug("ApplyChanges", "EventVariableID=" . $eventVarID, 0);
         $children = IPS_GetChildrenIDs($this->InstanceID);
         $existingEventID = false;
         foreach ($children as $childID) {
