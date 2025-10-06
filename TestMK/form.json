@@ -1,0 +1,25 @@
+{
+  "title": "TestMK Event Testmodul",
+  "type": "form",
+  "elements": [
+    {
+      "type": "Label",
+      "caption": "Testmodul für Event-Auslösung bei Variablenänderung"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "EventVariableID",
+      "caption": "ID der zu überwachenden Variable",
+      "minimum": 1,
+      "maximum": 99999
+    }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "name": "TestEvent",
+      "caption": "Event testen",
+      "onClick": "TestMK_TestEvent($id);"
+    }
+  ]
+}
