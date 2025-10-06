@@ -39,7 +39,6 @@ class AbfallReminderMK extends IPSModule
 
         // Event für konfigurierbare Variable
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        $this->SendDebug("in Create", "EventVariableID=" . $eventVarID, 0);
         if ($eventVarID > 0) {
             $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
             if ($eid === false) {
@@ -64,9 +63,8 @@ class AbfallReminderMK extends IPSModule
 
     public function ApplyChanges()
     {
-        // Event bei Variablenänderung robust verwalten
+        // Event bei Variablenänderung
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        $this->SendDebug("in ApplyChanges", "EventVariableID=" . $eventVarID, 0);
         // Alle Events mit Name oder Ident "IMAPLastMessageEvent" unterhalb der Instanz löschen
         $children = IPS_GetChildrenIDs($this->InstanceID);
         foreach ($children as $childID) {
