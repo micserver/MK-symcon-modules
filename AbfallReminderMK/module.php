@@ -83,7 +83,7 @@ class AbfallReminderMK extends IPSModule
                 }
             }
         }
-        // Falls kein Event für die Variable existiert, neu anlegen
+        // Falls kein Event für die Variable existiert,  neu anlegen
         if ($eventVarID > 0 && !$eventFound) {
             $eid = IPS_CreateEvent(0); // 0 = Trigger
             IPS_SetParent($eid, $this->InstanceID);
