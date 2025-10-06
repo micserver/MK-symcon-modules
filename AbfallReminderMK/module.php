@@ -61,7 +61,7 @@ class AbfallReminderMK extends IPSModule
             }
         }
     
-
+    }
     public function ApplyChanges()
     {
         // Event bei Variablenänderung
