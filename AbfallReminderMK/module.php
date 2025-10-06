@@ -94,12 +94,12 @@ class AbfallReminderMK extends IPSModule
         $interval = $this->ReadPropertyInteger("FetchInterval");
         $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
     }
+
     public function RequestAction($Ident, $Value)
     {
         if ($Ident == "FetchMails") {
             $this->FetchMails();
         }
-    }
     }
 
     public function FetchMails()
@@ -251,3 +251,4 @@ function AbfallReminderMK_ARMK_FetchMails($InstanceID) {
     IPS_RequestAction($InstanceID, "FetchMails", "");
 }
 
+}
