@@ -48,9 +48,8 @@ class TestMK extends IPSModule
 
     public function TestEvent()
     {
-    $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
-    
     $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+    $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
         $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
         IPS_LogMessage("TestMK", "Manueller Test: EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'));
     }
