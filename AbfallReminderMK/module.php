@@ -73,6 +73,7 @@ class AbfallReminderMK extends IPSModule
         foreach ($children as $childID) {
             if (IPS_GetObject($childID)['ObjectType'] == 4) { // 4 = Event
                 $event = IPS_GetEvent($childID);
+                $this->SendDebug("ApplyChanges", "EventID=$childID, TriggerType=" . $event['TriggerType'] . ", TriggerValue=" . $event['TriggerValue'], 0);
                 // Prüfe, ob Event für die aktuelle Variable existiert (unabhängig von Name/Ident)
                 if ($event['TriggerType'] == 1 && $event['TriggerValue'] == $eventVarID) {
                     $existingEventID = $childID;
