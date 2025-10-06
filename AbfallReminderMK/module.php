@@ -124,6 +124,7 @@ class AbfallReminderMK extends IPSModule
     
         for ($i = 0; $i < count($mailarray); $i++) {
             $sender = $mailarray[$i]['SenderAddress'] ?? '';
+            $this
             if (!in_array($sender, $allowedSenders)) {
                 continue;
             }
