@@ -80,10 +80,10 @@
     }
       ,
       {
-        "type": "SelectObject",
-        "name": "EventVariableID",
-        "caption": "Trigger-Variable",
-        "validParentTypes": ["Variable"]
+  "type": "SelectObject",
+  "name": "EventVariableID",
+  "caption": "Trigger-Variable",
+  "objectTypeFilter": ["Variable"]
       }
   ],
   "actions": [
