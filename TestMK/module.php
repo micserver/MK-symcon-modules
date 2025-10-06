@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 class TestMK extends IPSModule
 {
-    public function LogEventDebug($VariableID)
+    public function LogEventDebug(int $VariableID)
     {
         $this->SendDebug("EventTrigger", "Event ausgelöst für Variable $VariableID", 0);
     }
 
-    public function RequestAction($Ident, $Value)
+    public function RequestAction(string $Ident, $Value)
     {
         if ($Ident == "LogEventDebug") {
             $this->LogEventDebug($Value);
