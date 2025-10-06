@@ -51,6 +51,7 @@ class TestMK extends IPSModule
             $eid = IPS_CreateEvent(0); // 0 = Trigger
             IPS_SetParent($eid, $this->InstanceID);
             IPS_SetName($eid, "TestMKEvent");
+            IPS_SetIdent($eid, "TestMKEvent");
             IPS_SetEventTrigger($eid, 1, $eventVarID);
             IPS_SetEventActive($eid, true);
             $eventScript = 'IPS_LogMessage("TestMK", "Event ausgelöst für Variable ' . $eventVarID . '");';
@@ -62,10 +63,9 @@ class TestMK extends IPSModule
 
     public function TestEvent()
     {
-        $eventVarID = $this->ReadPropertyInteger("EventVariableID");
-        $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
-        $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
-        IPS_LogMessage("TestMK", "Manueller Test: EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'));
+    $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+    $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
+    $this->SendDebug("TestEvent", "EventVariableID=$eventVarID, EventID=" . ($eid !== false ? $eid : 'nicht vorhanden'), 0);
     }
 }
 
