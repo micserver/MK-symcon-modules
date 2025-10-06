@@ -1,0 +1,13 @@
+{
+  "id": "{A1B2C3D4-E5F6-4711-ABCD-1234567890AB}",
+  "name": "TestMK",
+  "type": 3,
+  "vendor": "MK",
+  "version": "0.1",
+  "aliases": ["TestMK"],
+  "url": "https://github.com/micserver/symcon",
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "TMK"
+}

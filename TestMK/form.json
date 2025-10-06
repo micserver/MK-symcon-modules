@@ -7,19 +7,17 @@
       "caption": "Testmodul für Event-Auslösung bei Variablenänderung"
     },
     {
-      "type": "NumberSpinner",
-      "name": "EventVariableID",
-      "caption": "ID der zu überwachenden Variable",
-      "minimum": 1,
-      "maximum": 99999
+      "type": "SelectObject",
+      "name": "TMK_EventVariableID",
+      "caption": "Zu überwachende Variable auswählen"
     }
   ],
   "actions": [
     {
       "type": "Button",
-      "name": "TestEvent",
+      "name": "TMK_TestEvent",
       "caption": "Event testen",
-      "onClick": "TestMK_TestEvent($id);"
+      "onClick": "TMK_TestEvent($id);"
     }
   ]
 }
