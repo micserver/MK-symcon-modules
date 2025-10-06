@@ -39,6 +39,7 @@ class AbfallReminderMK extends IPSModule
 
         // Event für konfigurierbare Variable
         $eventVarID = $this->ReadPropertyInteger("EventVariableID");
+        $this->SendDebug("in Create", "EventVariableID=" . $eventVarID, 0);
         if ($eventVarID > 0) {
             $eid = @IPS_GetObjectIDByIdent("IMAPLastMessageEvent", $this->InstanceID);
             if ($eid === false) {
