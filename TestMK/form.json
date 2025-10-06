@@ -12,12 +12,5 @@
       "caption": "Zu überwachende Variable auswählen"
     }
   ],
-  "actions": [
-    {
-      "type": "Button",
-      "name": "TestEvent",
-      "caption": "Event testen",
-      "onClick": "TMK_TestEvent($id);"
-    }
-  ]
+  "actions": []
 }
