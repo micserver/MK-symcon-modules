@@ -30,8 +30,9 @@ class TestMK extends IPSModule
     }
 
     public function ApplyChanges()
-    $this->SendDebug("ApplyChanges", "TMK_EventVariableID=" . $eventVarID, 0);
     {
+    $this->SendDebug("ApplyChanges", "TMK_EventVariableID=" . $eventVarID, 0);
+    
     $eventVarID = $this->ReadPropertyInteger("TMK_EventVariableID");
         $eid = @IPS_GetObjectIDByIdent("TestMKEvent", $this->InstanceID);
         if ($eid !== false && $eventVarID > 0) {
