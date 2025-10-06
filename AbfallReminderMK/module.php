@@ -105,6 +105,7 @@ class AbfallReminderMK extends IPSModule
         }
 
         $cacheSize = $this->ReadPropertyInteger("CacheSize");
+        $this->SendDebug("CacheSize", $cacheSize, 0);
         $mailSenders = json_decode($this->ReadPropertyString("MailAbsender"), true);
         $allowedSenders = array_column($mailSenders, "sender");
 
