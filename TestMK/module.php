@@ -20,9 +20,9 @@ class TestMK extends IPSModule
 
     public function Create()
     {
-        $this->RegisterPropertyInteger("EventVariableID", 0);
-        $this->RegisterAction("LogEventDebug");
-        $this->RegisterAction("TestEvent");
+    $this->RegisterPropertyInteger("EventVariableID", 0);
+    $this->EnableAction("LogEventDebug");
+    $this->EnableAction("TestEvent");
         $this->SendDebug("Create", "EventVariableID=" . $this->ReadPropertyInteger("EventVariableID"), 0);
         parent::Create();
         // Event für konfigurierbare Variable
