@@ -231,5 +231,3 @@ class AbfallReminderMK extends IPSModule
     }
 
 }
-
-// Wrapper-Funktion für Timer entfernt, da keine Events mehr verwendet werden
