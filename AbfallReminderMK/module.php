@@ -184,6 +184,11 @@ class AbfallReminderMK extends IPSModule
             $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
             $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold;">';
             
+            // === Ersten Treffer für gekürzte Version verwenden ===
+            $ersterTreffer = reset($gueltigeTreffer);
+            $anzeige_kurz = $this->getMuellartAbkuerzung($ersterTreffer['art']);
+            $datum_kurz = $this->formatiertesDatum($ersterTreffer['datum']);
+            
             foreach ($gueltigeTreffer as $index => $t) {
                 $kurzdatum = '';
                 if (preg_match('/^(\d{2})\.(\d{2})\.\d{4}$/', $t['datum'], $dm)) {
@@ -193,13 +198,6 @@ class AbfallReminderMK extends IPSModule
                 }
                 
                 $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
-                
-                // === Gekürzte Version (ID 39312 und ID 59562) ===
-                if ($index === 0) {
-                    // Nur für den ersten Treffer
-                    $anzeige_kurz = $this->getMuellartAbkuerzung($t['art']);
-                    $datum_kurz = $this->formatiertesDatum($t['datum']);
-                }
                 
                 $html .= '<tr>';
                 $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000;">' . htmlspecialchars($t['art']) . '</td>';
@@ -217,6 +215,7 @@ class AbfallReminderMK extends IPSModule
             SetValue(59562, $datum_kurz);
             
             $this->SendDebug("Treffer", $anzeige, 0);
+            $this->SendDebug("DEBUG", "Kurz: $anzeige_kurz | Datum: $datum_kurz", 0);
         } else {
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
             SetValue($this->GetIDForIdent("AnzeigenHTML"), "");
