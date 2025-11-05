@@ -299,7 +299,7 @@ class AbfallReminderMK extends IPSModule
 
     private function formatiertesDatum(string $datum): string
     {
-        // Datum-Format: DD.MM.YYYY -> WWW MM.TT (Wochentag 3 Buchstaben + Monat und Tag)
+        // Datum-Format: DD.MM.YYYY -> ww tt.mm. (Wochentag + Tag.Monat mit Punkt)
         if (!preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $datum, $m)) {
             return $datum;
         }
@@ -310,11 +310,11 @@ class AbfallReminderMK extends IPSModule
         
         // Timestamp erstellen und Wochentag berechnen
         $timestamp = mktime(0, 0, 0, $monat, $tag, $jahr);
-        $wochentag = date('D', $timestamp);  // Mon, Tue, Wed, etc. (in Englisch)
+        $wochentag = date('D', $timestamp);  // Mon, Tue, Wed, etc.
         
         $wochentag_de = self::WOCHENTAGE_DE[$wochentag] ?? $wochentag;
         
-        return sprintf("%s %02d.%02d", $wochentag_de, $monat, $tag);
+        return sprintf("%s %02d.%02d.", $wochentag_de, $tag, $monat);
     }
     
     private function datumpruefen(string $datum): bool
