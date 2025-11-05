@@ -115,21 +115,6 @@
   "caption": "Trigger-Variable",
   "objectTypeFilter": ["Variable"]
       }
-    ,
-    {
-      "type": "SelectVariable",
-      "name": "AnzeigenKurzVariableID",
-      "caption": "Variable für Müllart (gekürzt)",
-      "objectTypeFilter": ["Variable"],
-      "required": false
-    },
-    {
-      "type": "SelectVariable",
-      "name": "AnzeigenDatumVariableID",
-      "caption": "Variable für Datum (gekürzt)",
-      "objectTypeFilter": ["Variable"],
-      "required": false
-    }
   ],
   "actions": [
     {
