@@ -29,6 +29,8 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
         $this->RegisterPropertyInteger("EventVariableID", 0);
+        $this->RegisterPropertyInteger("AnzeigenKurzVariableID", 0);
+        $this->RegisterPropertyInteger("AnzeigenDatumVariableID", 0);
 
         parent::Create();
 
@@ -210,20 +212,34 @@ class AbfallReminderMK extends IPSModule
             SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
             SetValue($this->GetIDForIdent("Aktiv"), true);
             
-            // === Externe Variablen schreiben (IDs 39312 und 59562) ===
-            SetValue(39312, $anzeige_kurz);
-            SetValue(59562, $datum_kurz);
+            // === Externe Variablen schreiben (wenn konfiguriert) ===
+            $kurzVarID = $this->ReadPropertyInteger("AnzeigenKurzVariableID");
+            $datumVarID = $this->ReadPropertyInteger("AnzeigenDatumVariableID");
+            
+            if ($kurzVarID > 0) {
+                SetValue($kurzVarID, $anzeige_kurz);
+            }
+            if ($datumVarID > 0) {
+                SetValue($datumVarID, $datum_kurz);
+            }
             
             $this->SendDebug("Treffer", $anzeige, 0);
-            $this->SendDebug("DEBUG", "Kurz: $anzeige_kurz | Datum: $datum_kurz", 0);
+            $this->SendDebug("DEBUG", "Kurz (ID $kurzVarID): $anzeige_kurz | Datum (ID $datumVarID): $datum_kurz", 0);
         } else {
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
             SetValue($this->GetIDForIdent("AnzeigenHTML"), "");
             SetValue($this->GetIDForIdent("Aktiv"), false);
             
-            // === Externe Variablen leeren (IDs 39312 und 59562) ===
-            SetValue(39312, "");
-            SetValue(59562, "");
+            // === Externe Variablen leeren (wenn konfiguriert) ===
+            $kurzVarID = $this->ReadPropertyInteger("AnzeigenKurzVariableID");
+            $datumVarID = $this->ReadPropertyInteger("AnzeigenDatumVariableID");
+            
+            if ($kurzVarID > 0) {
+                SetValue($kurzVarID, "");
+            }
+            if ($datumVarID > 0) {
+                SetValue($datumVarID, "");
+            }
             
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
         }
