@@ -4,7 +4,7 @@
   "elements": [
     {
       "type": "Label",
-      "caption": "Abfall Reminder Modul  Konfiguration"
+      "caption": "Abfall Reminder Modul Konfiguration"
     },
     {
       "type": "SelectInstance",
