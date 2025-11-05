@@ -19,6 +19,12 @@ class AbfallReminderMK extends IPSModule
             ["art" => "Restmüll"],
             ["art" => "Gelber Sack"]
         ]));
+        $this->RegisterPropertyString("AbfallartAbkuerzungen", json_encode([
+            ["art" => "Biomüll", "kurz" => "Bio"],
+            ["art" => "Papiertonne", "kurz" => "Papier"],
+            ["art" => "Restmüll", "kurz" => "Rest"],
+            ["art" => "Papiersammlung", "kurz" => "Papsam"]
+        ]));
         $this->RegisterPropertyString("OrtFilter", "Krombach");
         $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
@@ -34,15 +40,12 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
+        $this->RegisterVariableString("AnzeigenKurz", "Müllart (gekürzt)", "~TextBox", 11);
+        $this->RegisterVariableString("AnzeigenDatum", "Datum (gekürzt)", "~TextBox", 12);
         // Timer zum automatischen aufrufen
         $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
 
         // Keine Event-Logik mehr nötig
-
-        // Variablen
-        $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
-        $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
-        $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
     }
     
 
@@ -172,29 +175,46 @@ class AbfallReminderMK extends IPSModule
 
         if (count($gueltigeTreffer) > 0) {
             $anzeige = "";
+            $anzeige_kurz = "";
+            $datum_kurz = "";
             $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:8px;">';
             $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold;">';
-            foreach ($gueltigeTreffer as $t) {
+            
+            foreach ($gueltigeTreffer as $index => $t) {
                 $kurzdatum = '';
                 if (preg_match('/^(\d{2})\.(\d{2})\.\d{4}$/', $t['datum'], $dm)) {
                     $kurzdatum = $dm[1] . '.' . $dm[2] . '.';
                 } else {
                     $kurzdatum = $t['datum'];
                 }
+                
                 $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
+                
+                // === Gekürzte Version (ID 39312 und ID 59562) ===
+                if ($index === 0) {
+                    // Nur für den ersten Treffer
+                    $anzeige_kurz = $this->getMuellartAbkuerzung($t['art']);
+                    $datum_kurz = $this->formatiertesDatum($t['datum']);
+                }
+                
                 $html .= '<tr>';
                 $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000;">' . htmlspecialchars($t['art']) . '</td>';
                 $html .= '<td style="padding:4px; font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; text-align:right;">' . htmlspecialchars($kurzdatum) . '</td>';
                 $html .= '</tr>';
             }
             $html .= '</table></div>';
+            
             SetValue($this->GetIDForIdent("AnzeigenText"), $anzeige);
             SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
+            SetValue($this->GetIDForIdent("AnzeigenKurz"), $anzeige_kurz);
+            SetValue($this->GetIDForIdent("AnzeigenDatum"), $datum_kurz);
             SetValue($this->GetIDForIdent("Aktiv"), true);
             $this->SendDebug("Treffer", $anzeige, 0);
         } else {
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
             SetValue($this->GetIDForIdent("AnzeigenHTML"), "");
+            SetValue($this->GetIDForIdent("AnzeigenKurz"), "");
+            SetValue($this->GetIDForIdent("AnzeigenDatum"), "");
             SetValue($this->GetIDForIdent("Aktiv"), false);
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
         }
@@ -215,6 +235,49 @@ class AbfallReminderMK extends IPSModule
             }
         }
         return null;
+    }
+
+    private function getMuellartAbkuerzung(string $art): string
+    {
+        $abkuerzungen = json_decode($this->ReadPropertyString("AbfallartAbkuerzungen"), true);
+        foreach ($abkuerzungen as $item) {
+            if (strcasecmp($item['art'], $art) === 0) {
+                return $item['kurz'];
+            }
+        }
+        // Falls keine Abkürzung gefunden, erste 3 Buchstaben verwenden
+        return substr($art, 0, 3);
+    }
+
+    private function formatiertesDatum(string $datum): string
+    {
+        // Datum-Format: DD.MM.YYYY -> WWW MM.TT (Wochentag 3 Buchstaben + Monat und Tag)
+        if (!preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $datum, $m)) {
+            return $datum;
+        }
+        
+        $tag = (int)$m[1];
+        $monat = (int)$m[2];
+        $jahr = (int)$m[3];
+        
+        // Timestamp erstellen und Wochentag berechnen
+        $timestamp = mktime(0, 0, 0, $monat, $tag, $jahr);
+        $wochentag = date('D', $timestamp);  // Mon, Tue, Wed, etc. (in Englisch)
+        
+        // Deutsche Wochentag-Abkürzungen
+        $wochentage_de = [
+            'Mon' => 'Mo',
+            'Tue' => 'Di',
+            'Wed' => 'Mi',
+            'Thu' => 'Do',
+            'Fri' => 'Fr',
+            'Sat' => 'Sa',
+            'Sun' => 'So'
+        ];
+        
+        $wochentag_de = $wochentage_de[$wochentag] ?? $wochentag;
+        
+        return sprintf("%s %02d.%02d", $wochentag_de, $monat, $tag);
     }
     
     private function datumpruefen(string $datum): bool

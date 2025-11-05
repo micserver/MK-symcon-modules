@@ -60,6 +60,36 @@
       ]
     },
     {
+      "type": "List",
+      "name": "AbfallartAbkuerzungen",
+      "caption": "Müllart-Abkürzungen (für gekürzte Anzeigen)",
+      "add": true,
+      "delete": true,
+      "rowCount": 5,
+      "columns": [
+        {
+          "caption": "Müllart",
+          "name": "art",
+          "width": "300px",
+          "add": "neu",
+          "edit": {
+            "type": "ValidationTextBox",
+            "required": true
+          }
+        },
+        {
+          "caption": "Abkürzung",
+          "name": "kurz",
+          "width": "200px",
+          "add": "bio",
+          "edit": {
+            "type": "ValidationTextBox",
+            "required": true
+          }
+        }
+      ]
+    },
+    {
       "type": "ValidationTextBox",
       "name": "OrtFilter",
       "caption": "Optional: Ort/Filter",
