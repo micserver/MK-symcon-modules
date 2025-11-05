@@ -3,6 +3,21 @@ declare(strict_types=1);
 
 class AbfallReminderMK extends IPSModule
 {
+    // ========================================
+    // === KONFIGURATIONEN ===
+    // ========================================
+    
+    // Deutsche Wochentag-Abkürzungen (für formatiertes Datum)
+    private const WOCHENTAGE_DE = [
+        'Mon' => 'Mo',
+        'Tue' => 'Di',
+        'Wed' => 'Mi',
+        'Thu' => 'Do',
+        'Fri' => 'Fr',
+        'Sat' => 'Sa',
+        'Sun' => 'So'
+    ];
+    
     public function Create()
     {
         $this->EnableAction("FetchMails");
@@ -13,18 +28,26 @@ class AbfallReminderMK extends IPSModule
             ["sender" => "noreply@awido.de"],
             ["sender" => "noreply@cubefour.de"]
         ]));
-        $this->RegisterPropertyString("Abfallarten", json_encode([
+        
+        // === Standard-Müllarten als Default-Werte ===
+        $defaultMuellarten = [
             ["art" => "Biomüll"],
             ["art" => "Papiertonne"],
             ["art" => "Restmüll"],
+            ["art" => "Papiersammlung"],
             ["art" => "Gelber Sack"]
-        ]));
-        $this->RegisterPropertyString("AbfallartAbkuerzungen", json_encode([
+        ];
+        $this->RegisterPropertyString("Abfallarten", json_encode($defaultMuellarten));
+        
+        $defaultAbkuerzungen = [
             ["art" => "Biomüll", "kurz" => "Bio"],
             ["art" => "Papiertonne", "kurz" => "Papier"],
             ["art" => "Restmüll", "kurz" => "Rest"],
-            ["art" => "Papiersammlung", "kurz" => "Papsam"]
-        ]));
+            ["art" => "Papiersammlung", "kurz" => "Papsam"],
+            ["art" => "Gelber Sack", "kurz" => "Gelb"]
+        ];
+        $this->RegisterPropertyString("AbfallartAbkuerzungen", json_encode($defaultAbkuerzungen));
+        
         $this->RegisterPropertyString("OrtFilter", "Krombach");
         $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
@@ -289,18 +312,7 @@ class AbfallReminderMK extends IPSModule
         $timestamp = mktime(0, 0, 0, $monat, $tag, $jahr);
         $wochentag = date('D', $timestamp);  // Mon, Tue, Wed, etc. (in Englisch)
         
-        // Deutsche Wochentag-Abkürzungen
-        $wochentage_de = [
-            'Mon' => 'Mo',
-            'Tue' => 'Di',
-            'Wed' => 'Mi',
-            'Thu' => 'Do',
-            'Fri' => 'Fr',
-            'Sat' => 'Sa',
-            'Sun' => 'So'
-        ];
-        
-        $wochentag_de = $wochentage_de[$wochentag] ?? $wochentag;
+        $wochentag_de = self::WOCHENTAGE_DE[$wochentag] ?? $wochentag;
         
         return sprintf("%s %02d.%02d", $wochentag_de, $monat, $tag);
     }
