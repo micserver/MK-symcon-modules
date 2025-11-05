@@ -52,8 +52,6 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterPropertyString("Testdatum", "2025-10-01");
         $this->RegisterPropertyInteger("FetchInterval", 3600);
         $this->RegisterPropertyInteger("EventVariableID", 0);
-        $this->RegisterPropertyInteger("AnzeigenKurzVariableID", 0);
-        $this->RegisterPropertyInteger("AnzeigenDatumVariableID", 0);
 
         parent::Create();
 
@@ -61,10 +59,15 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableInteger("MailTimeoutCounter", "MailTimeoutCounter", "", 40);
         $this->RegisterVariableString("MailTimeoutStatus", "MailTimeoutStatus", "", 41);
 
-        // Variablen
+        // Variablen für Anzeige
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
+        
+        // Gekürzte Variablen für Display/externe Systeme
+        $this->RegisterVariableString("AnzeigenKurz", "Anzeige Kurz (Müllart)", "~TextBox", 31);
+        $this->RegisterVariableString("AnzeigenDatum", "Anzeige Datum", "~TextBox", 32);
+        
         // Timer zum automatischen aufrufen
         $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
 
@@ -133,9 +136,6 @@ class AbfallReminderMK extends IPSModule
        
         $this->SendDebug("ARMK_FetchMails", "Start", 0);
         
-        // === DEBUG: Variable IDs prüfen ===
-        $this->SendDebug("DEBUG", "Externe Variable IDs: 39312 (Müllart gekürzt), 59562 (Datum gekürzt)", 0);
-        
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
             $this->LogMessage("IMAP-Instanz nicht konfiguriert.", KL_WARNING);
@@ -149,6 +149,11 @@ class AbfallReminderMK extends IPSModule
         $mailarray = @IMAP_GetCachedMails($imapID);
         if ($mailarray === false || count($mailarray) == 0) {
             $this->LogMessage("Keine Mails gefunden.", KL_WARNING);
+            
+            // === Externe Variablen auch leeren, wenn keine Mails gefunden ===
+            SetValue($this->GetIDForIdent("AnzeigenKurz"), "");
+            SetValue($this->GetIDForIdent("AnzeigenDatum"), "");
+            
             return;
         }
 
@@ -235,34 +240,20 @@ class AbfallReminderMK extends IPSModule
             SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
             SetValue($this->GetIDForIdent("Aktiv"), true);
             
-            // === Externe Variablen schreiben (wenn konfiguriert) ===
-            $kurzVarID = $this->ReadPropertyInteger("AnzeigenKurzVariableID");
-            $datumVarID = $this->ReadPropertyInteger("AnzeigenDatumVariableID");
-            
-            if ($kurzVarID > 0) {
-                SetValue($kurzVarID, $anzeige_kurz);
-            }
-            if ($datumVarID > 0) {
-                SetValue($datumVarID, $datum_kurz);
-            }
+            // === Gekürzte Variablen schreiben ===
+            SetValue($this->GetIDForIdent("AnzeigenKurz"), $anzeige_kurz);
+            SetValue($this->GetIDForIdent("AnzeigenDatum"), $datum_kurz);
             
             $this->SendDebug("Treffer", $anzeige, 0);
-            $this->SendDebug("DEBUG", "Kurz (ID $kurzVarID): $anzeige_kurz | Datum (ID $datumVarID): $datum_kurz", 0);
+            $this->SendDebug("DEBUG", "Kurz: $anzeige_kurz | Datum: $datum_kurz", 0);
         } else {
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
             SetValue($this->GetIDForIdent("AnzeigenHTML"), "");
             SetValue($this->GetIDForIdent("Aktiv"), false);
             
-            // === Externe Variablen leeren (wenn konfiguriert) ===
-            $kurzVarID = $this->ReadPropertyInteger("AnzeigenKurzVariableID");
-            $datumVarID = $this->ReadPropertyInteger("AnzeigenDatumVariableID");
-            
-            if ($kurzVarID > 0) {
-                SetValue($kurzVarID, "");
-            }
-            if ($datumVarID > 0) {
-                SetValue($datumVarID, "");
-            }
+            // === Gekürzte Variablen auch leeren ===
+            SetValue($this->GetIDForIdent("AnzeigenKurz"), "");
+            SetValue($this->GetIDForIdent("AnzeigenDatum"), "");
             
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
         }
