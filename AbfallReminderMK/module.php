@@ -40,8 +40,6 @@ class AbfallReminderMK extends IPSModule
         $this->RegisterVariableString("AnzeigenText", "AnzeigenText", "~TextBox", 10);
         $this->RegisterVariableString("AnzeigenHTML", "Anzeige (HTML)", "~HTMLBox", 30);
         $this->RegisterVariableBoolean("Aktiv", "Aktiv", "~Switch", 20);
-        $this->RegisterVariableString("AnzeigenKurz", "Müllart (gekürzt)", "~TextBox", 11);
-        $this->RegisterVariableString("AnzeigenDatum", "Datum (gekürzt)", "~TextBox", 12);
         // Timer zum automatischen aufrufen
         $this->RegisterTimer("ARMK_FetchTimer", 0, 'ARMK_FetchMails($_IPS["TARGET"]);');
 
@@ -109,6 +107,10 @@ class AbfallReminderMK extends IPSModule
         }
        
         $this->SendDebug("ARMK_FetchMails", "Start", 0);
+        
+        // === DEBUG: Variable IDs prüfen ===
+        $this->SendDebug("DEBUG", "Externe Variable IDs: 39312 (Müllart gekürzt), 59562 (Datum gekürzt)", 0);
+        
         $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
         if ($imapID == 0 || !IPS_InstanceExists($imapID)) {
             $this->LogMessage("IMAP-Instanz nicht konfiguriert.", KL_WARNING);
@@ -126,6 +128,8 @@ class AbfallReminderMK extends IPSModule
         }
 
         $anzeige = "";
+        $anzeige_kurz = "";
+        $datum_kurz = "";
         $treffer = [];
 
         // Dynamischen Regex für Abfallarten bauen
@@ -206,16 +210,22 @@ class AbfallReminderMK extends IPSModule
             
             SetValue($this->GetIDForIdent("AnzeigenText"), $anzeige);
             SetValue($this->GetIDForIdent("AnzeigenHTML"), $html);
-            SetValue($this->GetIDForIdent("AnzeigenKurz"), $anzeige_kurz);
-            SetValue($this->GetIDForIdent("AnzeigenDatum"), $datum_kurz);
             SetValue($this->GetIDForIdent("Aktiv"), true);
+            
+            // === Externe Variablen schreiben (IDs 39312 und 59562) ===
+            SetValue(39312, $anzeige_kurz);
+            SetValue(59562, $datum_kurz);
+            
             $this->SendDebug("Treffer", $anzeige, 0);
         } else {
             SetValue($this->GetIDForIdent("AnzeigenText"), "");
             SetValue($this->GetIDForIdent("AnzeigenHTML"), "");
-            SetValue($this->GetIDForIdent("AnzeigenKurz"), "");
-            SetValue($this->GetIDForIdent("AnzeigenDatum"), "");
             SetValue($this->GetIDForIdent("Aktiv"), false);
+            
+            // === Externe Variablen leeren (IDs 39312 und 59562) ===
+            SetValue(39312, "");
+            SetValue(59562, "");
+            
             $this->SendDebug("Treffer", "Keine gefunden.", 0);
         }
     }
