@@ -45,7 +45,7 @@ class AbfallReminderMK extends IPSModule
         }, self::DEFAULT_MUELLARTEN);
         $this->RegisterPropertyString("Abfallarten", json_encode($abfallarten));
         
-        // Die Abkürzungen als Property (vollständige Daten mit art + kurz)
+        // Die Abkürzungen als Property
         $this->RegisterPropertyString("AbfallartAbkuerzungen", json_encode(self::DEFAULT_MUELLARTEN));
         
         $this->RegisterPropertyString("OrtFilter", "Krombach");
