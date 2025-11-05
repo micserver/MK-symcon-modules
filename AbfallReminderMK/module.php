@@ -18,6 +18,15 @@ class AbfallReminderMK extends IPSModule
         'Sun' => 'So'
     ];
     
+    // Standard-Müllarten mit Abkürzungen
+    private const DEFAULT_MUELLARTEN = [
+        ["art" => "Biomüll", "kurz" => "Bio"],
+        ["art" => "Papiertonne", "kurz" => "Papier"],
+        ["art" => "Restmüll", "kurz" => "Rest"],
+        ["art" => "Papiersammlung", "kurz" => "Papsam"],
+        ["art" => "Gelber Sack", "kurz" => "Gelb"]
+    ];
+    
     public function Create()
     {
         $this->EnableAction("FetchMails");
@@ -29,24 +38,15 @@ class AbfallReminderMK extends IPSModule
             ["sender" => "noreply@cubefour.de"]
         ]));
         
-        // === Standard-Müllarten als Default-Werte ===
-        $defaultMuellarten = [
-            ["art" => "Biomüll"],
-            ["art" => "Papiertonne"],
-            ["art" => "Restmüll"],
-            ["art" => "Papiersammlung"],
-            ["art" => "Gelber Sack"]
-        ];
-        $this->RegisterPropertyString("Abfallarten", json_encode($defaultMuellarten));
+        // === Müllarten aus Konstante generieren ===
+        // Nur die Müllarten (ohne Abkürzungen) für das Abfallarten-Property
+        $abfallarten = array_map(function($item) { 
+            return ["art" => $item["art"]]; 
+        }, self::DEFAULT_MUELLARTEN);
+        $this->RegisterPropertyString("Abfallarten", json_encode($abfallarten));
         
-        $defaultAbkuerzungen = [
-            ["art" => "Biomüll", "kurz" => "Bio"],
-            ["art" => "Papiertonne", "kurz" => "Papier"],
-            ["art" => "Restmüll", "kurz" => "Rest"],
-            ["art" => "Papiersammlung", "kurz" => "Papsam"],
-            ["art" => "Gelber Sack", "kurz" => "Gelb"]
-        ];
-        $this->RegisterPropertyString("AbfallartAbkuerzungen", json_encode($defaultAbkuerzungen));
+        // Die Abkürzungen als Property (vollständige Daten mit art + kurz)
+        $this->RegisterPropertyString("AbfallartAbkuerzungen", json_encode(self::DEFAULT_MUELLARTEN));
         
         $this->RegisterPropertyString("OrtFilter", "Krombach");
         $this->RegisterPropertyString("Testdatum", "2025-10-01");
