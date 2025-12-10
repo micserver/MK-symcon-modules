@@ -211,8 +211,8 @@ class AbfallReminderMK extends IPSModule
             $anzeige = "";
             $anzeige_kurz = "";
             $datum_kurz = "";
-            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:0; display:flex; align-items:center; height:100%; width:100%;">';
-            $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold; table-layout:fixed;">';
+            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-weight:bold; color:#000; padding:0; display:flex; align-items:center; height:100%; width:100%;">';
+            $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-family:Roboto,Arial,sans-serif; font-weight:bold; table-layout:fixed;">';
             
             // === Ersten Treffer für gekürzte Version verwenden ===
             $ersterTreffer = reset($gueltigeTreffer);
@@ -230,8 +230,8 @@ class AbfallReminderMK extends IPSModule
                 $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
                 
                 $html .= '<tr style="height:100%;">';
-                $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; width:70%; vertical-align:middle;">' . htmlspecialchars($t['art']) . '</td>';
-                $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; text-align:right; width:30%; vertical-align:middle;">' . htmlspecialchars($kurzdatum) . '</td>';
+                $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:4.5vw; font-weight:bold; color:#000; width:70%; vertical-align:middle;">' . htmlspecialchars($t['art']) . '</td>';
+                $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:4.5vw; font-weight:bold; color:#000; text-align:right; width:30%; vertical-align:middle;">' . htmlspecialchars($kurzdatum) . '</td>';
                 $html .= '</tr>';
             }
             $html .= '</table></div>';
