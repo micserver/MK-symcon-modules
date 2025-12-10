@@ -211,7 +211,7 @@ class AbfallReminderMK extends IPSModule
             $anzeige = "";
             $anzeige_kurz = "";
             $datum_kurz = "";
-            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:4px;">';
+            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:2px;">';
             $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold; table-layout:fixed;">';
             
             // === Ersten Treffer für gekürzte Version verwenden ===
@@ -230,8 +230,8 @@ class AbfallReminderMK extends IPSModule
                 $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
                 
                 $html .= '<tr>';
-                $html .= '<td style="padding:2px 4px 2px 2px; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; width:65%;">' . htmlspecialchars($t['art']) . '</td>';
-                $html .= '<td style="padding:2px 2px 2px 4px; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; text-align:right; width:35%;">' . htmlspecialchars($kurzdatum) . '</td>';
+                $html .= '<td style="padding:2px 4px 2px 0; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; width:65%;">' . htmlspecialchars($t['art']) . '</td>';
+                $html .= '<td style="padding:2px 0 2px 4px; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; text-align:right; width:35%;">' . htmlspecialchars($kurzdatum) . '</td>';
                 $html .= '</tr>';
             }
             $html .= '</table></div>';
