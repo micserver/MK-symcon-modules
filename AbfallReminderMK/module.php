@@ -211,7 +211,7 @@ class AbfallReminderMK extends IPSModule
             $anzeige = "";
             $anzeige_kurz = "";
             $datum_kurz = "";
-            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:2px;">';
+            $html = '<div style="font-family:Roboto,Arial,sans-serif; font-size:22px; font-weight:bold; color:#000; padding:0;">';
             $html .= '<table style="width:100%; border-collapse:collapse; color:#000; font-size:22px; font-family:Roboto,Arial,sans-serif; font-weight:bold; table-layout:fixed;">';
             
             // === Ersten Treffer für gekürzte Version verwenden ===
