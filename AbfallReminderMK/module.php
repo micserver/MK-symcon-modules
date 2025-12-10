@@ -24,7 +24,7 @@ class AbfallReminderMK extends IPSModule
         ["art" => "Papiertonne", "kurz" => "Papier"],
         ["art" => "Restmüll", "kurz" => "Rest"],
         ["art" => "Papiersammlung", "kurz" => "Papsam"],
-        ["art" => "Gelber Sack", "kurz" => "Gelb"]
+        ["art" => "Gelber Sack", "kurz" => "GS"]
     ];
     
     public function Create()
