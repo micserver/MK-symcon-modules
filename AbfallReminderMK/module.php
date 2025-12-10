@@ -230,8 +230,8 @@ class AbfallReminderMK extends IPSModule
                 $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
                 
                 $html .= '<tr>';
-                $html .= '<td style="padding:2px 4px 2px 0; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; width:65%;">' . htmlspecialchars($t['art']) . '</td>';
-                $html .= '<td style="padding:2px 0 2px 4px; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; text-align:right; width:35%;">' . htmlspecialchars($kurzdatum) . '</td>';
+                $html .= '<td style="padding:2px 2px 2px 0; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; width:70%;">' . htmlspecialchars($t['art']) . '</td>';
+                $html .= '<td style="padding:2px 0 2px 2px; font-family:Roboto,Arial,sans-serif; font-size:20px; font-weight:bold; color:#000; text-align:right; width:30%;">' . htmlspecialchars($kurzdatum) . '</td>';
                 $html .= '</tr>';
             }
             $html .= '</table></div>';
