@@ -23,7 +23,7 @@ class AbfallReminderMK extends IPSModule
         ["art" => "Biomüll", "kurz" => "Bio", "medium" => "Biomüll"],
         ["art" => "Papiertonne", "kurz" => "Papier", "medium" => "Papier"],
         ["art" => "Restmüll", "kurz" => "Rest", "medium" => "Restmüll"],
-        ["art" => "Papiersammlung", "kurz" => "Papsam", "medium" => "Papier"],
+        ["art" => "Papiersammlung", "kurz" => "Papsam", "medium" => "Papiersam."],
         ["art" => "Gelber Sack", "kurz" => "GS", "medium" => "Gelb"]
     ];
     
