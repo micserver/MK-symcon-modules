@@ -3,13 +3,13 @@
   "name": "AbfallReminderMK",
   "type": 3,
   "vendor": "MK",
-  "version": "1.0",
+  "version": "1.1",
   "aliases":
     [
         "AbfallReminderMK"
     ],
   "url": "https://github.com/micserver/symcon",
-  "description": "Erkennt Abfalltermine aus IMAP-Mails (konfigurierbare Absender + Müllarten) und schreibt Variablen.",
+  "description": "Erkennt Abfalltermine aus IMAP-Mails (konfigurierbare Absender + Müllarten => Abkürzungen 'medium' und 'kurz'=> HASP Display) und schreibt Variablen.",
   "help": "README.md",
   "parentRequirements": [],
   "childRequirements": [],
