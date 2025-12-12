@@ -20,11 +20,11 @@ class AbfallReminderMK extends IPSModule
     
     // Standard-Müllarten mit Abkürzungen
     private const DEFAULT_MUELLARTEN = [
-        ["art" => "Biomüll", "kurz" => "Bio"],
-        ["art" => "Papiertonne", "kurz" => "Papier"],
-        ["art" => "Restmüll", "kurz" => "Rest"],
-        ["art" => "Papiersammlung", "kurz" => "Papsam"],
-        ["art" => "Gelber Sack", "kurz" => "GS"]
+        ["art" => "Biomüll", "kurz" => "Bio", "medium" => "Biomüll"],
+        ["art" => "Papiertonne", "kurz" => "Papier", "medium" => "Papier"],
+        ["art" => "Restmüll", "kurz" => "Rest", "medium" => "Restmüll"],
+        ["art" => "Papiersammlung", "kurz" => "Papsam", "medium" => "Papier"],
+        ["art" => "Gelber Sack", "kurz" => "GS", "medium" => "Gelb"]
     ];
     
     public function Create()
