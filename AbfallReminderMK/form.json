@@ -70,7 +70,7 @@
         {
           "caption": "Müllart",
           "name": "art",
-          "width": "300px",
+          "width": "200px",
           "add": "neu",
           "edit": {
             "type": "ValidationTextBox",
@@ -78,9 +78,19 @@
           }
         },
         {
-          "caption": "Abkürzung",
+          "caption": "Medium",
+          "name": "medium",
+          "width": "150px",
+          "add": "Müll",
+          "edit": {
+            "type": "ValidationTextBox",
+            "required": true
+          }
+        },
+        {
+          "caption": "Kurz",
           "name": "kurz",
-          "width": "200px",
+          "width": "100px",
           "add": "bio",
           "edit": {
             "type": "ValidationTextBox",

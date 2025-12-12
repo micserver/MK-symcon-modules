@@ -293,10 +293,19 @@ class AbfallReminderMK extends IPSModule
         $abkuerzungen = json_decode($this->ReadPropertyString("AbfallartAbkuerzungen"), true);
         foreach ($abkuerzungen as $item) {
             if (strcasecmp($item['art'], $art) === 0) {
-                return $item['medium'];
+                // Prüfe ob 'medium' Feld existiert
+                if (isset($item['medium']) && !empty($item['medium'])) {
+                    return $item['medium'];
+                }
+                // Fallback: Suche in DEFAULT_MUELLARTEN
+                foreach (self::DEFAULT_MUELLARTEN as $default) {
+                    if (strcasecmp($default['art'], $art) === 0) {
+                        return $default['medium'];
+                    }
+                }
             }
         }
-        // Falls keine Medium-Abkürzung gefunden, ersten 5 Buchstaben verwenden
+        // Falls nichts gefunden, ersten 5 Buchstaben verwenden
         return substr($art, 0, 5);
     }
 
