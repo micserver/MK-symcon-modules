@@ -24,7 +24,7 @@ class AbfallReminderMK extends IPSModule
         ["art" => "Papiertonne", "kurz" => "Papier", "medium" => "Papier"],
         ["art" => "Restmüll", "kurz" => "Rest", "medium" => "Restmüll"],
         ["art" => "Papiersammlung", "kurz" => "Papsam", "medium" => "Papiersam."],
-        ["art" => "Gelber Sack", "kurz" => "GS", "medium" => "Gelb"]
+        ["art" => "Gelber Sack", "kurz" => "GS", "medium" => "Gelber Sack"]
     ];
     
     public function Create()
@@ -230,7 +230,7 @@ class AbfallReminderMK extends IPSModule
                 $anzeige .= "{$t['art']}\t{$kurzdatum}\n";
                 
                 $html .= '<tr style="height:100%;">';
-                $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:10vw; font-weight:bold; color:#000; width:70%; vertical-align:middle;">' . htmlspecialchars($t['art']) . '</td>';
+                $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:10vw; font-weight:bold; color:#000; width:70%; vertical-align:middle;">' . htmlspecialchars($this->getMuellartMedium($t['art'])) . '</td>';
                 $html .= '<td style="padding:0; font-family:Roboto,Arial,sans-serif; font-size:10vw; font-weight:bold; color:#000; text-align:right; width:30%; vertical-align:middle;">' . htmlspecialchars($kurzdatum) . '</td>';
                 $html .= '</tr>';
             }
@@ -286,6 +286,18 @@ class AbfallReminderMK extends IPSModule
         }
         // Falls keine Abkürzung gefunden, erste 3 Buchstaben verwenden
         return substr($art, 0, 3);
+    }
+
+    private function getMuellartMedium(string $art): string
+    {
+        $abkuerzungen = json_decode($this->ReadPropertyString("AbfallartAbkuerzungen"), true);
+        foreach ($abkuerzungen as $item) {
+            if (strcasecmp($item['art'], $art) === 0) {
+                return $item['medium'];
+            }
+        }
+        // Falls keine Medium-Abkürzung gefunden, ersten 5 Buchstaben verwenden
+        return substr($art, 0, 5);
     }
 
     private function formatiertesDatum(string $datum): string
