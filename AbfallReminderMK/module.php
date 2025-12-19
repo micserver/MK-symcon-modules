@@ -1,6 +1,13 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * AbfallReminderMK - Abfallkalender aus E-Mails auslesen
+ * 
+ * Version: 1.5 (19.12.2025, 20:08)
+ * - IMAP CacheSize wird nun automatisch aus Modulkonfiguration übernommen
+ */
+
 class AbfallReminderMK extends IPSModule
 {
     // ========================================
@@ -85,6 +92,16 @@ class AbfallReminderMK extends IPSModule
             $this->SendDebug("ApplyChanges", "MessageSink für Variable $eventVarID registriert", 0);
         }
         parent::ApplyChanges();
+        
+        // IMAP CacheSize konfigurieren
+        $imapID = $this->ReadPropertyInteger("IMAP_InstanzID");
+        $cacheSize = $this->ReadPropertyInteger("CacheSize");
+        if ($imapID > 0 && IPS_InstanceExists($imapID)) {
+            IPS_SetProperty($imapID, "CacheSize", $cacheSize);
+            @IPS_ApplyChanges($imapID);
+            $this->SendDebug("ApplyChanges", "IMAP CacheSize auf $cacheSize gesetzt", 0);
+        }
+        
         $interval = $this->ReadPropertyInteger("FetchInterval");
         $this->SetTimerInterval("ARMK_FetchTimer", $interval * 1000);
 
