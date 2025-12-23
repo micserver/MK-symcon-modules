@@ -4,8 +4,10 @@ declare(strict_types=1);
 /**
  * AbfallReminderMK - Abfallkalender aus E-Mails auslesen
  * 
- * Version: 1.5 (19.12.2025, 20:08)
- * - IMAP CacheSize wird nun automatisch aus Modulkonfiguration übernommen
+ * Version: 1.6 (23.12.2025, 17:39)
+ * - Bugfix: Vergangene Termine werden nun korrekt herausgefiltert (deutsches Datumsformat)
+ * - Variablen werden geleert wenn alle Termine in der Vergangenheit liegen
+ * - IMAP CacheSize wird automatisch aus Modulkonfiguration übernommen
  */
 
 class AbfallReminderMK extends IPSModule
@@ -272,7 +274,7 @@ class AbfallReminderMK extends IPSModule
             SetValue($this->GetIDForIdent("AnzeigenKurz"), "");
             SetValue($this->GetIDForIdent("AnzeigenDatum"), "");
             
-            $this->SendDebug("Treffer", "Keine gefunden.", 0);
+            $this->SendDebug("Treffer", "Keine gültigen (zukünftigen) Termine gefunden.", 0);
         }
     }
 
