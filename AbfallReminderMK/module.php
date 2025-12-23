@@ -357,9 +357,15 @@ class AbfallReminderMK extends IPSModule
             $heute = strtotime(date('Y-m-d'));
         }
 
-        // Deutsches Datum dd.mm.yyyy zu yyyy-mm-dd konvertieren
+        // Deutsches Datum dd.mm.yyyy ODER dd.mm. (ohne Jahr) zu yyyy-mm-dd konvertieren
         if (preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $datum, $m)) {
+            // dd.mm.yyyy
             $datum_us = $m[3] . '-' . $m[2] . '-' . $m[1]; // yyyy-mm-dd
+            $timestamp = strtotime($datum_us);
+        } elseif (preg_match('/^(\d{2})\.(\d{2})\.$/', $datum, $m)) {
+            // dd.mm. (ohne Jahr) - aktuelles Jahr annehmen
+            $jahr = date('Y');
+            $datum_us = $jahr . '-' . $m[2] . '-' . $m[1]; // yyyy-mm-dd
             $timestamp = strtotime($datum_us);
         } else {
             $timestamp = strtotime($datum);
