@@ -371,7 +371,10 @@ class AbfallReminderMK extends IPSModule
             $timestamp = strtotime($datum);
         }
         
-        return ($timestamp >= $heute); // nur heute oder Zukunft
+        $result = ($timestamp >= $heute);
+        $this->SendDebug("datumpruefen", "Datum: $datum | Heute: " . date('Y-m-d', $heute) . " | Termin: " . date('Y-m-d', $timestamp) . " | Gültig: " . ($result ? "JA" : "NEIN"), 0);
+        
+        return $result; // nur heute oder Zukunft
     }
 
 }
