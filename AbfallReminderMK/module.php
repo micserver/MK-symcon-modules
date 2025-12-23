@@ -355,7 +355,14 @@ class AbfallReminderMK extends IPSModule
             $heute = strtotime(date('Y-m-d'));
         }
 
-        $timestamp = strtotime(date('Y-m-d', strtotime($datum)));
+        // Deutsches Datum dd.mm.yyyy zu yyyy-mm-dd konvertieren
+        if (preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $datum, $m)) {
+            $datum_us = $m[3] . '-' . $m[2] . '-' . $m[1]; // yyyy-mm-dd
+            $timestamp = strtotime($datum_us);
+        } else {
+            $timestamp = strtotime($datum);
+        }
+        
         return ($timestamp >= $heute); // nur heute oder Zukunft
     }
 
