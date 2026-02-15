@@ -1,0 +1,18 @@
+{
+  "id": "{E147D4C3-A21A-F7C9-EE09-F54D5FD91B86}",
+  "name": "BMW CarData Vehicle",
+  "type": 3,
+  "vendor": "BMW",
+  "aliases": [
+    "BMW CarData Vehicle"
+  ],
+  "url": "https://github.com/parcivad/ips-bmw-cardata",
+  "parentRequirements": [
+    "{3F5C23F7-AC9B-6BFE-C27C-3336F73568B4}"
+  ],
+  "childRequirements": [],
+  "implemented": [
+    "{C23F025F-A4CE-7F31-CE14-0AE225778FE7}"
+  ],
+  "prefix": "BMW"
+}
