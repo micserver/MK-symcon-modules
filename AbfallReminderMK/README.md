@@ -33,4 +33,4 @@
 ## Hinweise
 - Das Modul benutzt die IMAP-Funktionen `IMAP_GetCachedMails` und `IMAP_GetMailEx`.
 - Parser ist zeilenbasiert (robust) — kein gieriges Regex.
----
+----
